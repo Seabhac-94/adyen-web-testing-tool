@@ -94,6 +94,21 @@ const sessions = (paymentMethod, config = {}) => {
         .catch(console.error);
 };
 
+// Function in progress that will save the saved details for the next running of server
+const saveCase = () => 
+    httpPost('saveCase')
+        .catch(console.error);
+
+// Calls saveCase
+document.getElementById('saveCase').addEventListener('click', function(){
+    saveCase()
+})
+
+// Test call to savedCases.js
+document.getElementById('displaySavedCase').addEventListener('click', function(){
+    console.log(savedCases)
+})
+
 
 // Fetches an originKey from the local server
 const getOriginKey = () =>

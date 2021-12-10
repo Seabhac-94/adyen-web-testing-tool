@@ -9,11 +9,18 @@ require('api/payments.php');
 require('api/originKeys.php');
 require('api/clientKeys.php');
 require('api/sessions.php');
+require('api/saveCase.php');
 
 // Basic routing
 $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2);
 
 switch($request_uri[0]) {
+    // /saveCase
+    case '/saveCase':
+        header('Content-Type: application/json');
+        echo saveCase();
+        break;
+
     // /paymentMethods
     case '/paymentMethods':
         header('Content-Type: application/json');
