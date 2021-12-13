@@ -30,7 +30,7 @@ If the forms don't seem to load, please check if you have:
 Navigate to the root of the project and run the `start.sh` script:
 
 ```
-$ cd adyen-components-js-sample-code
+$ cd tech-support-repository
 $ ./start.sh
 ```
 
