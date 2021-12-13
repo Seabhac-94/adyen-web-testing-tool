@@ -6,13 +6,38 @@ getClientKey().then(clientKey => {
             clientKey: clientKey, // Mandatory. clientKey from Customer Area
             paymentMethodsResponse,
             removePaymentMethods: ['paysafecard', 'c_cash'],
+            paymentMethodsConfiguration :{
+                paypal: {
+                    amount: {
+                        value: value,
+                        currency: currency
+                    }
+                }
+            },
             onChange: state => {
                 updateStateContainer(state); // Demo purposes only
             },
             onSubmit: (state, dropin) => {
-                // state.data;
-                // state.isValid;
-                makePayment(state.data);
+                makePayment(state.data)
+                    .then(response => {
+                        if (response.action) {
+                            dropin.handleAction(response.action)
+                        } else {
+                            showFinalResult(response)
+                        }
+                    })
+            },
+            onAdditionalDetails: (state, dropin) => {
+                updateRequestContainer(state.data);
+                makeDetailsCall(state.data)
+                    .then(response => {
+                        updateResponseContainer(response)
+                        if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
+                            dropin.setStatus('success', { message: 'Payment successful!' });
+                        } else {
+                          dropin.setStatus('error', { message: 'Something went wrong.'});
+                        }
+                    })
             }
         };
 

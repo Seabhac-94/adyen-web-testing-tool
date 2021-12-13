@@ -1,32 +1,36 @@
-// Function to set returnUrl, for standard Drop-in and Components, return to placeholder,
+// Function to set returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
 function setReturnUrl(){
     if(window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
-        return 'https://your-company.com/'
+        return 'http://localhost:3000/paymentCompletion.html'
     }
 }
+
+const countryCode = 'NL';
+const currency = 'EUR';
+const value = 11800;
 
 const paymentMethodsConfig = {
     shopperReference: 'Checkout Components sample code test',
     reference: 'Checkout Components sample code test',
-    countryCode: 'NL',
+    countryCode: countryCode,
     amount: {
-        value: 1000,
-        currency: 'EUR'
+        value: value,
+        currency: currency
     }
 };
 
 const paymentsDefaultConfig = {
     shopperReference: 'Checkout Components sample code test',
     reference: 'Checkout Components sample code test',
-    countryCode: 'NL',
+    countryCode: countryCode,
     channel: 'Web',
     returnUrl: setReturnUrl(),
     amount: {
-        value: 1000,
-        currency: 'EUR'
+        value: value,
+        currency: currency
     },
     lineItems: [
         {
@@ -39,7 +43,11 @@ const paymentsDefaultConfig = {
             quantity: 1,
             taxCategory: 'High'
         }
-    ]
+    ],
+    additionalData: {
+        allow3DS2: true,
+        executeTheeD: true
+    }
 };
 
 // Generic POST Helper
@@ -73,13 +81,20 @@ const makePayment = (paymentMethod, config = {}) => {
     return httpPost('payments', paymentRequest)
         .then(response => {
             if (response.error) throw 'Payment initiation failed';
-
             updateResponseContainer(response);
-
             return response;
         })
         .catch(console.error);
 };
+
+
+// Get all available payment methods from the local server
+const makeDetailsCall = (details) =>
+    httpPost('paymentsDetails', details)
+        .then(response => {
+            return response;
+        })
+        .catch(console.error);
 
 // Posts a new payment into the local server
 const sessions = (paymentMethod, config = {}) => {

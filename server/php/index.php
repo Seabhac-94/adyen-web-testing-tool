@@ -6,6 +6,7 @@
 
 require('api/paymentMethods.php');
 require('api/payments.php');
+require('api/paymentsDetails.php');
 require('api/originKeys.php');
 require('api/clientKeys.php');
 require('api/sessions.php');
@@ -31,6 +32,12 @@ switch($request_uri[0]) {
     case '/payments':
         header('Content-Type: application/json');
         echo initiatePayment();
+        break;
+
+    // /payments
+    case '/paymentsDetails':
+        header('Content-Type: application/json');
+        echo makeDetailsCall();
         break;
 
     // /originKeys

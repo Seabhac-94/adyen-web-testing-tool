@@ -109,6 +109,16 @@ h1 {
     padding: 14px 0 14px;
 }
 
+#result {
+    margin-top: 5rem;
+    max-width: 80%;
+    margin: 1rem auto;
+}
+
+.back-button {
+    margin: 5rem;
+}
+
 @media (min-width: 780px) {
     .payment_methods__list {
         padding-left: 14px;
