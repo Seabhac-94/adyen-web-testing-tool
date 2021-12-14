@@ -1,4 +1,4 @@
-// Check URL for redirectResult and sessionId
+// Check URL for redirectResult
 const queryResultString = window.location.search;
 const urlParams = new URLSearchParams(queryResultString)
 const redirectResult = urlParams.get('redirectResult')

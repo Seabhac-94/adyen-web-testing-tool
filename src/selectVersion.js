@@ -25,7 +25,7 @@ function selectVersion(){
 	utilsScript.src = "../utils.js";
 	document.body.appendChild(utilsScript);
 
-	// We use this timout function to ensure the checkoutscript has loaded
+	// We use this timeout function to ensure the checkoutscript has loaded
 	// so that we don't receive a console error
 	setTimeout(function(){
 		var dropinScript = document.createElement("script");

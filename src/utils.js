@@ -4,7 +4,7 @@ function setReturnUrl() {
     if(window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
-        return 'http://localhost:3000/paymentCompletion.html'
+        return window.location.href
     }
 }
 
