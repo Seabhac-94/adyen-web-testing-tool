@@ -66,10 +66,9 @@ getClientKey().then(clientKey => {
                 console.info(result)
                 const paymentResult = result.resultCode
                 if (paymentResult === 'Authorised' || paymentResult === 'Received') {
-                    document.getElementById('result-container').innerHTML = '<img alt="Success" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.svg">';
-
+                    dropinComponent.setStatus('success')
                 } else {
-                    document.getElementById('result-container').innerHTML = '<img alt="Error" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.svg">'
+                    dropinComponent.setStatus('error')
                 }
                 updateResponseContainer(result);
             },
@@ -80,6 +79,8 @@ getClientKey().then(clientKey => {
         // Create an instance of AdyenCheckout to handle the shopper returning to your website.
         // Configure the instance with the sessionId you extracted from the returnUrl.
         const checkout = await AdyenCheckout(configuration);
+
+        const dropinComponent = checkout.create('dropin').mount('#dropin-container')
         // Submit the redirectResult value you extracted from the returnUrl.
         checkout.submitDetails({ details: { redirectResult } });
     }

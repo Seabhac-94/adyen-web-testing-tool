@@ -114,15 +114,15 @@ const saveCase = () =>
     httpPost('saveCase')
         .catch(console.error);
 
-// Calls saveCase
-document.getElementById('saveCase').addEventListener('click', function(){
-    saveCase()
-})
+// // Calls saveCase - commenting out temporarily
+// document.getElementById('saveCase').addEventListener('click', function(){
+//     saveCase()
+// });
 
-// Test call to savedCases.js
-document.getElementById('displaySavedCase').addEventListener('click', function(){
-    console.log(savedCases)
-})
+// // Test call to savedCases.js
+// document.getElementById('displaySavedCase').addEventListener('click', function(){
+//     console.log(savedCases)
+// });
 
 
 // Fetches an originKey from the local server
