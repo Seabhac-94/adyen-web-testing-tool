@@ -26,7 +26,7 @@ makeDetailsCall(detailsCall)
         if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
             dropin.setStatus('success', { message: 'Payment successful!' })
         } else {
-            dropin.setStatus('error', { message: 'Something went wrong.'}).mount('#result')
+            dropin.setStatus('error', { message: 'Something went wrong.'})
         }
     })
 })();
