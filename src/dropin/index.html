@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adyen Checkout Components sample code</title>
-    <link rel="stylesheet" href="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/5.2.0/adyen.css">
+    <!-- <link rel="stylesheet" href="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/5.2.0/adyen.css"> -->
+    
     <link rel="stylesheet" href="../demo.css">
 </head>
 
@@ -19,6 +20,13 @@
                     <!-- Buttons for testing the saved cases -->
                     <button id="saveCase">Save Case</button>
                     <button id="displaySavedCase">Display Saved Case</button>
+                    <select id="selectVersion">
+                        <option>5.0.0</option>
+                        <option>5.1.0</option>
+                        <option>5.2.0</option>
+                        <option>5.3.0</option>
+                    </select>
+                    <button id="loadCheckout">Load checkout</button>
                 </div>
                 <h1>Drop-in</h1>
                 <div class="payment-method">
@@ -87,11 +95,12 @@ const dropin = checkout
         </div>
     </div>
 
-    <script src="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/5.2.0/adyen.js"></script>
+    <script src="../selectVersion.js"></script>
+ <!--    <script src="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/5.2.0/adyen.js"></script>
     <script src="../savedCases.js"></script>
     <script src="../demo.js"></script>
     <script src="../utils.js"></script>
-    <script src="/dropin/dropin.js"></script>
+    <script src="/dropin/dropin.js"></script> -->
 </body>
 
 </html>
