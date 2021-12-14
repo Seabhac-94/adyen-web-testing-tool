@@ -1,6 +1,6 @@
-// Function to set returnUrl, for standard Drop-in and Components, return to standard redirect page,
+// This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
-function setReturnUrl(){
+function setReturnUrl() {
     if(window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
@@ -8,13 +8,32 @@ function setReturnUrl(){
     }
 }
 
+
+// This creates a unique reference for the payment and shopper
+function makeReference(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+};
+
+
+// We declare these values here to only need to change them in one place
 const countryCode = 'NL';
 const currency = 'EUR';
 const value = 11800;
+const shopperLocale = 'en_GB';
+const shopperReference = 'shopper_' + makeReference(10);
+const reference = 'testPayment_' + shopperReference;
+
 
 const paymentMethodsConfig = {
-    shopperReference: 'Checkout Components sample code test',
-    reference: 'Checkout Components sample code test',
+    shopperReference: shopperReference,
+    shopperLocale: shopperLocale,
+    reference: reference,
     countryCode: countryCode,
     amount: {
         value: value,
@@ -23,9 +42,12 @@ const paymentMethodsConfig = {
 };
 
 const paymentsDefaultConfig = {
-    shopperReference: 'Checkout Components sample code test',
-    reference: 'Checkout Components sample code test',
+    shopperReference: shopperReference,
+    reference: reference,
     countryCode: countryCode,
+    shopperLocale: shopperLocale,
+    shopperName: 'John Doe',
+    shopperEmail: 's.hopper@adyen.com',
     channel: 'Web',
     returnUrl: setReturnUrl(),
     amount: {
@@ -50,6 +72,7 @@ const paymentsDefaultConfig = {
     }
 };
 
+
 // Generic POST Helper
 const httpPost = (endpoint, data) =>
     fetch(`/${endpoint}`, {
@@ -60,6 +83,7 @@ const httpPost = (endpoint, data) =>
         },
         body: JSON.stringify(data)
     }).then(response => response.json());
+
 
 // Get all available payment methods from the local server
 const getPaymentMethods = () =>
@@ -96,6 +120,7 @@ const makeDetailsCall = (details) =>
         })
         .catch(console.error);
 
+
 // Posts a new payment into the local server
 const sessions = (paymentMethod, config = {}) => {
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };
@@ -108,6 +133,7 @@ const sessions = (paymentMethod, config = {}) => {
         })
         .catch(console.error);
 };
+
 
 // Function in progress that will save the saved details for the next running of server
 const saveCase = () => 
@@ -134,6 +160,7 @@ const getOriginKey = () =>
             return response.originKeys[Object.keys(response.originKeys)[0]];
         })
         .catch(console.error);
+
 
 // Fetches a clientKey from the 
 const getClientKey = () =>
