@@ -1,14 +1,20 @@
+// We retrieve this value as a function, and not natively so that it can be used in multiple pages
+function retrieveVersionValue() {
+	var checkoutVersion = document.getElementById("selectVersion").value;
+	return checkoutVersion
+};
+
+
 function selectVersion(){
 
-	var version = document.getElementById("selectVersion").value;
-
+	var checkoutVersion = retrieveVersionValue();
 	var baseStyle = document.createElement("link");
 	baseStyle.rel = "stylesheet";
-	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/"+version+"/adyen.css";
+	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + checkoutVersion + "/adyen.css";
 	document.getElementsByTagName('head')[0].append(baseStyle);
 
 	var baseScript = document.createElement("script");
-	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/"+version+"/adyen.js";
+	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + checkoutVersion + "/adyen.js";
 	document.body.appendChild(baseScript);
 
 	var demoScript = document.createElement("script");

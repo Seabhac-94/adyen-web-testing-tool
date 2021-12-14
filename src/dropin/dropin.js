@@ -1,12 +1,15 @@
+//
+var checkoutVersion = parseInt(retrieveVersionValue()[0])
+
 // 0. Get clientKey
 getClientKey().then(clientKey => {
-    getPaymentMethods().then(async paymentMethodsResponse => {
+    getPaymentMethods().then(paymentMethodsResponse => {
         const configuration = {
             environment: 'test',
             clientKey: clientKey, // Mandatory. clientKey from Customer Area
             paymentMethodsResponse,
             removePaymentMethods: ['paysafecard', 'c_cash'],
-            paymentMethodsConfiguration :{
+            paymentMethodsConfiguration: {
                 paypal: {
                     amount: {
                         value: value,
@@ -33,26 +36,46 @@ getClientKey().then(clientKey => {
                     .then(response => {
                         updateResponseContainer(response)
                         if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
-                            dropin.setStatus('success', { message: 'Payment successful!' });
+                            dropin.setStatus('success', {
+                                message: 'Payment successful!'
+                            });
                         } else {
-                          dropin.setStatus('error', { message: 'Something went wrong.'});
+                            dropin.setStatus('error', {
+                                message: 'Something went wrong.'
+                            });
                         }
                     })
             }
         };
 
-        // 1. Create an instance of AdyenCheckout
-            const checkout = await AdyenCheckout(configuration);
+        (function checkCheckoutVersion() {
+            if (checkoutVersion < 5) {
+                const checkout = new AdyenCheckout(configuration);
+                const dropin = checkout
+                    .create('dropin', {
+                        // Events
+                        onSelect: activeComponent => {
+                            if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
+                        }
+                    })
+                    .mount('#dropin-container');
+            } else {
+                (async function initiateCheckout() {
+                    // 1. Create an instance of AdyenCheckout
+                    const checkout = await AdyenCheckout(configuration);
 
-            // 2. Create and mount the Component
-            const dropin = checkout
-                .create('dropin', {
-                    // Events
-                    onSelect: activeComponent => {
-                        if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-                    }
-                })
-                .mount('#dropin-container');
+                    // 2. Create and mount the Component
+                    const dropin = checkout
+                        .create('dropin', {
+                            // Events
+                            onSelect: activeComponent => {
+                                if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
+                            }
+                        })
+                        .mount('#dropin-container');
+                })();
+            }
+        })();
 
     });
 });
