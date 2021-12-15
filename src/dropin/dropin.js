@@ -31,8 +31,10 @@ function initiateCheckout() {
                         .then(response => {
                             if (response.action) {
                                 dropin.handleAction(response.action)
+                            } else if (response.resultCode === "Authorised" || response.resultCode === "Received") {
+                                dropin.setStatus('success')
                             } else {
-                                showFinalResult(response)
+                                dropin.setStatus('error')
                             }
                         })
                 },
