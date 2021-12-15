@@ -4,7 +4,7 @@ function setReturnUrl() {
     if(window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
-        return window.location.href
+        return window.location.href+'?'+'sdkVersion='+retrieveVersionValue()
     }
 }
 
@@ -53,6 +53,9 @@ const paymentsDefaultConfig = {
     amount: {
         value: value,
         currency: currency
+    },
+    metadata: {
+        version: "5.0.0"
     },
     lineItems: [
         {

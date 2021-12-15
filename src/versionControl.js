@@ -1,6 +1,16 @@
+const queryResultString = window.location.search;
+const urlParams = new URLSearchParams(queryResultString)
+const checkoutVersionOnRedirect = urlParams.get('sdkVersion')
+const redirectResult = urlParams.get('redirectResult')
+console.log(checkoutVersionOnRedirect)
+
 // We retrieve this value as a function, and not natively so that it can be used in multiple pages
 function retrieveVersionValue() {
-	var checkoutVersion = document.getElementById("selectVersion").value;
+	if (!checkoutVersionOnRedirect) {
+		var checkoutVersion = document.getElementById("selectVersion").value;
+	} else {
+		var checkoutVersion = checkoutVersionOnRedirect
+	}
 	return checkoutVersion
 };
 
@@ -35,7 +45,20 @@ function selectVersion(){
 	
 };
 
-var loadCheckout = document.getElementById("loadCheckout");
-loadCheckout.addEventListener('click', function(){
+if (!checkoutVersionOnRedirect) {
+	var loadCheckout = document.getElementById("loadCheckout");
+	loadCheckout.addEventListener('click', function(){
+		selectVersion()
+	});	
+} else {
+	var loadCheckout = document.getElementById("loadCheckout");
+	var selectCheckoutVersion = document.getElementById("selectVersion")
+	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
+	optionCheckoutVersion.innerText = checkoutVersionOnRedirect;
+	selectCheckoutVersion.disabled = true;
+	loadCheckout.disabled = true;
+	optionCheckoutVersion.disabled = true;
 	selectVersion()
-});
+}
+
+

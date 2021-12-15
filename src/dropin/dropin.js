@@ -2,11 +2,6 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var checkoutVersion = parseInt(retrieveVersionValue()[0])
 
-// Check URL for redirectResult
-const queryResultString = window.location.search;
-const urlParams = new URLSearchParams(queryResultString)
-const redirectResult = urlParams.get('redirectResult')
-
 
 function initiateCheckout() {
     // 0. Get clientKey
@@ -94,7 +89,7 @@ function initiateCheckout() {
 
 
 function handleRedirect() {
-    
+
     const detailsCall = {
         'details': {
             'redirectResult': redirectResult
