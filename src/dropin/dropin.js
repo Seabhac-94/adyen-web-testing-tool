@@ -2,6 +2,9 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var checkoutVersion = parseInt(retrieveVersionValue()[0])
 
+// Uses urlParams from versionControl.js to retrieve redirectResult
+const redirectResult = urlParams.get('redirectResult')
+
 
 function initiateCheckout() {
     // 0. Get clientKey
@@ -146,11 +149,9 @@ function handleRedirect() {
             })();
         }
     })();
-
-
-
 };
 
+// Selects which flow based on result of urlParams
 if (!redirectResult) {
     initiateCheckout()
 } else {

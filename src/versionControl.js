@@ -1,10 +1,12 @@
+// This will retrieve values from the returnUrl
 const queryResultString = window.location.search;
 const urlParams = new URLSearchParams(queryResultString)
 const checkoutVersionOnRedirect = urlParams.get('sdkVersion')
-const redirectResult = urlParams.get('redirectResult')
-console.log(checkoutVersionOnRedirect)
+
 
 // We retrieve this value as a function, and not natively so that it can be used in multiple pages
+// If there's no value from the URL, then it presumes a new checkout allowing the user to select
+// Else it automatically selects it
 function retrieveVersionValue() {
 	if (!checkoutVersionOnRedirect) {
 		var checkoutVersion = document.getElementById("selectVersion").value;
@@ -15,7 +17,7 @@ function retrieveVersionValue() {
 };
 
 
-function selectVersion(){
+function loadCheckoutScripts(){
 
 	var checkoutVersion = retrieveVersionValue();
 	var baseStyle = document.createElement("link");
@@ -45,10 +47,14 @@ function selectVersion(){
 	
 };
 
+
+// If there's no value from the URL, then it presumes a new checkout allowing the user to select
+// Else it automatically selects it and calls loadCheckoutScripts() automatically
+
 if (!checkoutVersionOnRedirect) {
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
-		selectVersion()
+		loadCheckoutScripts()
 	});	
 } else {
 	var loadCheckout = document.getElementById("loadCheckout");
@@ -58,7 +64,7 @@ if (!checkoutVersionOnRedirect) {
 	selectCheckoutVersion.disabled = true;
 	loadCheckout.disabled = true;
 	optionCheckoutVersion.disabled = true;
-	selectVersion()
+	loadCheckoutScripts()
 }
 
 

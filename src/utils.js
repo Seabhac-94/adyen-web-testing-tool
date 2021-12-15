@@ -54,9 +54,6 @@ const paymentsDefaultConfig = {
         value: value,
         currency: currency
     },
-    metadata: {
-        version: "5.0.0"
-    },
     lineItems: [
         {
             id: '1',
