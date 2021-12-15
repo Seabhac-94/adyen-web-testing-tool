@@ -31,7 +31,7 @@ function selectVersion(){
 		var dropinScript = document.createElement("script");
 		dropinScript.src = "/dropin/dropin.js"
 		document.body.appendChild(dropinScript);
-	}, 1500)
+	}, 1000)
 	
 };
 

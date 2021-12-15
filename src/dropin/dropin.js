@@ -94,7 +94,7 @@ function initiateCheckout() {
 
 
 function handleRedirect() {
-
+    
     const detailsCall = {
         'details': {
             'redirectResult': redirectResult
@@ -105,27 +105,54 @@ function handleRedirect() {
         environment: 'test'
     };
 
-    (async function setDropinStatus() {
-        // Create an instance of AdyenCheckout using the configuration object.
-        const checkout = await AdyenCheckout(configuration);
+    (function checkCheckoutVersionOnRedirect() {
+        if (checkoutVersion < 5) {
+            // Create an instance of AdyenCheckout using the configuration object.
+            const checkout = new AdyenCheckout(configuration);
 
-        // Create an instance of Drop-in and mount it to the container you created.
-        const dropin = checkout.create('dropin').mount('#dropin-container')
+            // Create an instance of Drop-in and mount it to the container you created.
+            const dropin = checkout.create('dropin').mount('#dropin-container');
+            
+            makeDetailsCall(detailsCall)
+                .then(response => {
+                    if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
+                        dropin.setStatus('success', {
+                            message: 'Payment successful!'
+                        })
+                    } else {
+                        dropin.setStatus('error', {
+                            message: 'Something went wrong.'
+                        })
+                    }
+                })
+  
+        } else {
+            (async function setDropinStatus() {
 
+            // Create an instance of AdyenCheckout using the configuration object.
+            const checkout = await AdyenCheckout(configuration);
 
-        makeDetailsCall(detailsCall)
-            .then(response => {
-                if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
-                    dropin.setStatus('success', {
-                        message: 'Payment successful!'
-                    })
-                } else {
-                    dropin.setStatus('error', {
-                        message: 'Something went wrong.'
-                    })
-                }
-            })
+            // Create an instance of Drop-in and mount it to the container you created.
+            const dropin = checkout.create('dropin').mount('#dropin-container');
+
+            makeDetailsCall(detailsCall)
+                .then(response => {
+                    if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
+                        dropin.setStatus('success', {
+                            message: 'Payment successful!'
+                        })
+                    } else {
+                        dropin.setStatus('error', {
+                            message: 'Something went wrong.'
+                        })
+                    }
+                })
+
+            })();
+        }
     })();
+
+
 
 };
 
