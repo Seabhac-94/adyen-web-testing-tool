@@ -25,10 +25,11 @@ function retrieveVersionValue() {
 	}
 };
 
+// Global to make it accessible in other scripts when needed
+var apiSdkVersions = retrieveVersionValue()
+
 
 function loadInitialCheckoutScripts(){
-
-	var apiSdkVersions = retrieveVersionValue()
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
@@ -71,22 +72,20 @@ if (!sdkVersionOnLoad) {
 	});	
 } else {
 	var loadCheckout = document.getElementById("loadCheckout");
+	loadCheckout.disabled = true;
 
 	var selectCheckoutVersion = document.getElementById("selectVersion");
+	selectCheckoutVersion.disabled = true;
+
+	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
+	optionCheckoutVersion.innerText = sdkVersionOnLoad;
+	optionCheckoutVersion.disabled = true;
 
 	var selectApiVersion = document.getElementById("selectApiVersion");
+	selectApiVersion.disabled = true
 
 	var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
 	optionApiVersion.innerText = apiVersionOnLoad;
-
-	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
-
-	optionCheckoutVersion.innerText = sdkVersionOnLoad;
-	
-	selectCheckoutVersion.disabled = true;
-	loadCheckout.disabled = true;
-	selectApiVersion.disabled = true
-	optionCheckoutVersion.disabled = true;
 	optionApiVersion.disabled = true
 	loadInitialCheckoutScripts()
 }

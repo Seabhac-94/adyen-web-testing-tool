@@ -4,8 +4,8 @@ function setReturnUrl() {
     if(window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
-        var apiSdkVersions = retrieveVersionValue()
-        return window.location.href+'&'+'sdkVersion='+apiSdkVersions.sdkVersion
+        // var apiSdkVersions = retrieveVersionValue()
+        return window.location.href
     }
 }
 
