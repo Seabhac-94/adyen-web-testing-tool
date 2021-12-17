@@ -10,16 +10,22 @@ const checkoutVersionOnRedirect = urlParams.get('sdkVersion')
 function retrieveVersionValue() {
 	if (!checkoutVersionOnRedirect) {
 		var checkoutVersion = document.getElementById("selectVersion").value;
+		var apiVersion = document.getElementById("selectApiVersion").value
 	} else {
 		var checkoutVersion = checkoutVersionOnRedirect
 	}
-	return checkoutVersion
+
+	return {
+		checkoutVersion,
+		apiVersion
+	}
 };
 
+var apiSdkVersions = retrieveVersionValue()
 
 function loadCheckoutScripts(){
 
-	var checkoutVersion = retrieveVersionValue();
+	var checkoutVersion = apiSdkVersions.checkoutVersion;
 	var baseStyle = document.createElement("link");
 	baseStyle.rel = "stylesheet";
 	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + checkoutVersion + "/adyen.css";
