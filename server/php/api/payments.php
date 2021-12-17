@@ -15,9 +15,13 @@ function initiatePayment() {
         $request = array();
     }
 
+    $getVersion = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+    parse_str($getVersion, $output);
+    $version = (int) $output['apiVersion'];
+
     $apikey = getenv('CHECKOUT_APIKEY');
     $merchantAccount = getenv('MERCHANT_ACCOUNT');
-    $url = "https://checkout-test.adyen.com/v68/payments";
+    $url = "https://checkout-test.adyen.com/v".$version."/payments";
 
     $data = [
         'amount' => [

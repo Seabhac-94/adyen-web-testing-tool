@@ -16,17 +16,10 @@ function getPaymentMethods() {
         $request = array();
     }
 
-    // $myfile = file_get_contents("src/apiVersion.js", FALSE, NULL, 17, 25);
+    $getVersion = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
+    parse_str($getVersion, $output);
+    $version = (int) $output['apiVersion'];
 
-    $retrive = $_SERVER['HTTP_REFERER'];
-
-    $splitToNumber = filter_var($retrive, FILTER_SANITIZE_NUMBER_INT);
-
-
-
-    // var_dump($splitToNumber);
-    $version = (int) substr($splitToNumber, -2);
-    // var_dump($version);
     $apikey = getenv('CHECKOUT_APIKEY');
     $merchantAccount = getenv('MERCHANT_ACCOUNT');
     $url = "https://checkout-test.adyen.com/v".$version."/paymentMethods";
