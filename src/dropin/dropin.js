@@ -1,6 +1,8 @@
 // This calls the retrieveVersionValue() function and converts it to a number
 // We will use this to determine which instance of AdyenCheckout to create 
-var checkoutVersion = parseInt(apiSdkVersions.checkoutVersion[0])
+
+var apiSdkVersions = retrieveVersionValue()
+var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0])
 
 // Uses urlParams from versionControl.js to retrieve redirectResult
 const redirectResult = urlParams.get('redirectResult')
@@ -57,7 +59,7 @@ function initiateCheckout() {
             };
 
             (function checkCheckoutVersion() {
-                if (checkoutVersion < 5) {
+                if (sdkVersion < 5) {
                     // 1. Create an instance of AdyenCheckou
                     const checkout = new AdyenCheckout(configuration);
 
@@ -105,8 +107,8 @@ function handleRedirect() {
         environment: 'test'
     };
 
-    (function checkCheckoutVersionOnRedirect() {
-        if (checkoutVersion < 5) {
+    (function checkSdkVersionOnRedirect() {
+        if (sdkVersion < 5) {
             // Create an instance of AdyenCheckout using the configuration object.
             const checkout = new AdyenCheckout(configuration);
 

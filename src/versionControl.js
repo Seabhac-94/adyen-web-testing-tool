@@ -1,38 +1,43 @@
 // This will retrieve values from the returnUrl
 const queryResultString = window.location.search;
-const urlParams = new URLSearchParams(queryResultString)
-const checkoutVersionOnRedirect = urlParams.get('sdkVersion')
+const urlParams = new URLSearchParams(queryResultString);
+var sdkVersionOnLoad = urlParams.get('sdkVersion');
+var apiVersionOnLoad = urlParams.get('apiVersion');
 
 
 // We retrieve this value as a function, and not natively so that it can be used in multiple pages
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it
 function retrieveVersionValue() {
-	if (!checkoutVersionOnRedirect) {
-		var checkoutVersion = document.getElementById("selectVersion").value;
+	if (!sdkVersionOnLoad) {
+		var sdkVersion = document.getElementById("selectVersion").value;
+		console.log(sdkVersion);
 		var apiVersion = document.getElementById("selectApiVersion").value
+		console.log(apiVersion);
 	} else {
-		var checkoutVersion = checkoutVersionOnRedirect
+		var sdkVersion = sdkVersionOnLoad
+		var apiVersion = apiVersionOnLoad
 	}
 
 	return {
-		checkoutVersion,
+		sdkVersion,
 		apiVersion
 	}
 };
 
-var apiSdkVersions = retrieveVersionValue()
 
-function loadCheckoutScripts(){
+function loadInitialCheckoutScripts(){
 
-	var checkoutVersion = apiSdkVersions.checkoutVersion;
+	var apiSdkVersions = retrieveVersionValue()
+
+	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
 	baseStyle.rel = "stylesheet";
-	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + checkoutVersion + "/adyen.css";
+	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.css";
 	document.getElementsByTagName('head')[0].append(baseStyle);
 
 	var baseScript = document.createElement("script");
-	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + checkoutVersion + "/adyen.js";
+	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.js";
 	document.body.appendChild(baseScript);
 
 	var demoScript = document.createElement("script");
@@ -43,8 +48,8 @@ function loadCheckoutScripts(){
 	utilsScript.src = "../utils.js";
 	document.body.appendChild(utilsScript);
 
-	// We use this timeout function to ensure the checkoutscript has loaded
-	// so that we don't receive a console error
+	// // We use this timeout function to ensure the checkoutscript has loaded
+	// // so that we don't receive a console error
 	setTimeout(function(){
 		var dropinScript = document.createElement("script");
 		dropinScript.src = "/dropin/dropin.js"
@@ -57,20 +62,33 @@ function loadCheckoutScripts(){
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it and calls loadCheckoutScripts() automatically
 
-if (!checkoutVersionOnRedirect) {
+if (!sdkVersionOnLoad) {
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
-		loadCheckoutScripts()
+		retrieveVersionValue();
+		var apiSdkVersions = retrieveVersionValue();
+		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 	});	
 } else {
 	var loadCheckout = document.getElementById("loadCheckout");
-	var selectCheckoutVersion = document.getElementById("selectVersion")
+
+	var selectCheckoutVersion = document.getElementById("selectVersion");
+
+	var selectApiVersion = document.getElementById("selectApiVersion");
+
+	var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
+	optionApiVersion.innerText = apiVersionOnLoad;
+
 	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
-	optionCheckoutVersion.innerText = checkoutVersionOnRedirect;
+
+	optionCheckoutVersion.innerText = sdkVersionOnLoad;
+	
 	selectCheckoutVersion.disabled = true;
 	loadCheckout.disabled = true;
+	selectApiVersion.disabled = true
 	optionCheckoutVersion.disabled = true;
-	loadCheckoutScripts()
+	optionApiVersion.disabled = true
+	loadInitialCheckoutScripts()
 }
 
 
