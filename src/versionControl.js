@@ -10,10 +10,8 @@ var apiVersionOnLoad = urlParams.get('apiVersion');
 // Else it automatically selects it
 function retrieveVersionValue() {
 	if (!sdkVersionOnLoad) {
-		var sdkVersion = document.getElementById("selectVersion").value;
-		console.log(sdkVersion);
+		var sdkVersion = document.getElementById("selectSdkVersion").value;
 		var apiVersion = document.getElementById("selectApiVersion").value
-		console.log(apiVersion);
 	} else {
 		var sdkVersion = sdkVersionOnLoad
 		var apiVersion = apiVersionOnLoad
@@ -74,7 +72,7 @@ if (!sdkVersionOnLoad) {
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.disabled = true;
 
-	var selectCheckoutVersion = document.getElementById("selectVersion");
+	var selectCheckoutVersion = document.getElementById("selectSdkVersion");
 	selectCheckoutVersion.disabled = true;
 
 	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];

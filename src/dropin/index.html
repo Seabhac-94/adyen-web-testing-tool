@@ -16,24 +16,15 @@
         <div class="main">
             <div class="checkout-container">
                 <a href="../">Back</a>
+
                 <div>
                     <!-- Buttons for testing the saved cases -->
                     <button id="saveCase" disabled="true">Save Case</button>
                     <button id="displaySavedCase" disabled="true">Display Saved Case</button>
-                    <select id="selectVersion">
-                        <option>4.6.0</option>
-                        <option>4.7.0</option>
-                        <option>4.8.0</option>
-                        <option>4.9.0</option>
-                        <option>5.0.0</option>
-                        <option>5.1.0</option>
-                        <option>5.2.0</option>
-                        <option>5.3.0</option>
-                    </select>
-                    <select id="selectApiVersion">
-                        <option>68</option>
-                        <option>64</option>
-                    </select>
+                </div>
+
+                <div id="parameters">
+
                     <button id="loadCheckout">Load checkout</button>
                 </div>
                 <h1>Drop-in</h1>
@@ -103,6 +94,7 @@ const dropin = checkout
         </div>
     </div>
 
+    <script src="../form.js"></script>
     <script src="../apiVersion.js"></script>
     <script src="../versionControl.js"></script>
     

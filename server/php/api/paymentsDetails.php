@@ -15,7 +15,6 @@ function makeDetailsCall() {
         $request = array();
     }
 
-
     $getVersion = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_QUERY);
     parse_str($getVersion, $output);
     $version = (int) $output['apiVersion'];
