@@ -1,16 +1,4 @@
-var parametersForm = document.getElementById('parameters');
-
-let selectSdkVersionEl = document.createElement('select');
-selectSdkVersionEl.id = "selectSdkVersion";
-
-parametersForm.append(selectSdkVersionEl);
-
-let selectApiVersionEl = document.createElement('select');
-selectApiVersionEl.id = "selectApiVersion";
-
-parametersForm.append(selectApiVersionEl);
-
-var sdkVersionOption = [
+const sdkVersionOption = [
 						"5.3.0",
 						"5.2.0",
 						"5.1.0", 
@@ -21,22 +9,32 @@ var sdkVersionOption = [
 						"4.2.0", 
 						"4.0.0",
 						]
+						
 
-var apiVersionOption = [
+const apiVersionOption = [
 						68,
 						67,
 						66,
 						64
 						]
 
-for (var i = 0; i < sdkVersionOption.length; i++) {
-	var sdkOption = document.createElement('option');
-	sdkOption.innerHTML = sdkVersionOption[i]
-	selectSdkVersionEl.append(sdkOption)
-}
 
-for (var i = 0; i < apiVersionOption.length; i++) {
-	var apiOption = document.createElement('option');
-	apiOption.innerHTML = apiVersionOption[i]
-	selectApiVersionEl.append(apiOption)
-}
+// Creates the dropdown options for the form
+function createForm(selectElement, elId, options, optionEl) {
+
+	const parametersForm = document.getElementById('parameters');
+	const selectEl = document.createElement('select');
+	selectEl.id = elId;
+	parametersForm.append(selectEl);
+
+	for (var i = 0; i < options.length; i++) {
+		var optionEl = document.createElement('option');
+		optionEl.innerHTML = options[i];
+		selectEl.append(optionEl);
+		
+	}
+};
+
+createForm("selectSdkVersionEl", "selectSdkVersion", sdkVersionOption, "sdkOption");
+
+createForm("selectApiVersionEl", "selectApiVersion", apiVersionOption, "apiOption");
