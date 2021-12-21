@@ -23,6 +23,7 @@ function retrieveVersionValue() {
 	}
 };
 
+
 // Global to make it accessible in other scripts when needed
 var apiSdkVersions = retrieveVersionValue()
 
@@ -47,30 +48,41 @@ function loadInitialCheckoutScripts(){
 	utilsScript.src = "../utils.js";
 	document.body.appendChild(utilsScript);
 
+	var paymentMethodsConfiguration = document.createElement("script");
+	paymentMethodsConfiguration.src = "../paymentMethodsConfiguration.js";
+	document.body.appendChild(paymentMethodsConfiguration);
+
+
 	// // We use this timeout function to ensure the checkoutscript has loaded
 	// // so that we don't receive a console error
-	setTimeout(function(){
-		var dropinScript = document.createElement("script");
-		dropinScript.src = "/dropin/dropin.js"
-		document.body.appendChild(dropinScript);
-	}, 1000)
+	// setTimeout(function(){
+	// 	var dropinScript = document.createElement("script");
+	// 	dropinScript.src = "/dropin/dropin.js"
+	// 	document.body.appendChild(dropinScript);
+	// }, 1000)
 	
 };
+
+function loadComponentScript() {
+	var dropinScript = document.createElement("script");
+	dropinScript.src = "/dropin/dropin.js"
+	document.body.appendChild(dropinScript);
+}
 
 
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it and calls loadCheckoutScripts() automatically
 
 if (!sdkVersionOnLoad) {
-	var loadCheckout = document.getElementById("loadCheckout");
-	loadCheckout.addEventListener('click', function(){
+	var loadScripts = document.getElementById("loadScripts");
+	loadScripts.addEventListener('click', function(){
 		retrieveVersionValue();
 		var apiSdkVersions = retrieveVersionValue();
 		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 	});	
 } else {
-	var loadCheckout = document.getElementById("loadCheckout");
-	loadCheckout.disabled = true;
+	var loadScripts = document.getElementById("loadScripts");
+	loadScripts.disabled = true;
 
 	var selectCheckoutVersion = document.getElementById("selectSdkVersion");
 	selectCheckoutVersion.disabled = true;
@@ -85,7 +97,14 @@ if (!sdkVersionOnLoad) {
 	var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
 	optionApiVersion.innerText = apiVersionOnLoad;
 	optionApiVersion.disabled = true
-	loadInitialCheckoutScripts()
+	loadInitialCheckoutScripts();
+
+	var loadCheckout = document.getElementById("loadCheckout");
+	loadCheckout.addEventListener('click', function(){
+		loadComponentScript();
+		
+	});	
+
 }
 
 

@@ -34,6 +34,49 @@ h1 {
     line-height: 38px;
 }
 
+.parametersForm {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.selectDropdown {
+    padding: 2px;
+    margin:  2px 5px;
+    width: 4rem;
+    height: 2rem;
+    border: 0.5px solid grey;
+}
+
+#loadScripts{
+    height: 2rem;
+    padding: 0px 10px;
+    margin-left: 5px;
+    background: #0d6efd;
+    color: #fafafa;
+    border: 0.5px solid #0d6efd;
+}
+
+
+.selectDropdown,
+#loadScripts {
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+#loadScripts:hover{
+    color: #000000;
+    background: #ffffff;
+}
+
+#loadScripts:disabled {
+    color: #000000;
+    background: #ffffff;
+    cursor: not-allowed;
+    border-color: grey;
+    color: grey;
+}
+
 .sidebar .header {
     height: 60px;
     padding: 16px 24px;

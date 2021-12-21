@@ -9,32 +9,42 @@ const sdkVersionOption = [
 						"4.2.0", 
 						"4.0.0",
 						]
-						
+
 
 const apiVersionOption = [
 						68,
-						67,
-						66,
-						64
+						67
 						]
 
+const parametersForm = document.getElementById("parameters");
 
 // Creates the dropdown options for the form
 function createForm(selectElement, elId, options, optionEl) {
 
-	const parametersForm = document.getElementById('parameters');
-	const selectEl = document.createElement('select');
+	const selectEl = document.createElement("select");
 	selectEl.id = elId;
+	selectEl.className = "selectDropdown";
 	parametersForm.append(selectEl);
 
 	for (var i = 0; i < options.length; i++) {
-		var optionEl = document.createElement('option');
+		var optionEl = document.createElement("option");
+		optionEl.className = "optionDropdown"
 		optionEl.innerHTML = options[i];
 		selectEl.append(optionEl);
 		
 	}
 };
 
+
+// Create the SDK dropdown
 createForm("selectSdkVersionEl", "selectSdkVersion", sdkVersionOption, "sdkOption");
 
+// Create the API dropdown
 createForm("selectApiVersionEl", "selectApiVersion", apiVersionOption, "apiOption");
+
+
+const loadScriptsButton = document.createElement("button");
+loadScriptsButton.innerHTML = "Load Checkout";
+loadScriptsButton.id = "loadScripts";
+parametersForm.append(loadScriptsButton);
+

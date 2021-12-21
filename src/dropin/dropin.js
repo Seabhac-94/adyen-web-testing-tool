@@ -16,12 +16,8 @@ function initiateCheckout() {
                 paymentMethodsResponse,
                 removePaymentMethods: ['paysafecard', 'c_cash'],
                 paymentMethodsConfiguration: {
-                    paypal: {
-                        amount: {
-                            value: value,
-                            currency: currency
-                        }
-                    }
+                    paypal: paypalConfiguration(),
+                    card: cardConfiguration()
                 },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only

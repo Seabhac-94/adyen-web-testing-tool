@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adyen Checkout Components sample code</title>
-    <!-- <link rel="stylesheet" href="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/5.2.0/adyen.css"> -->
-    
+    <link rel="stylesheet" href="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/3.23.0/adyen.css">
     <link rel="stylesheet" href="../demo.css">
 </head>
 
@@ -17,24 +16,6 @@
             <div class="checkout-container">
                 <a href="../">Back</a>
 
- <!--                <div>
-                    <button id="saveCase" disabled="true">Save Case</button>
-                    <button id="displaySavedCase" disabled="true">Display Saved Case</button>
-                </div>
- -->
-                <div class="parametersForm">
-                   <div id="parameters"></div>
-                   <!-- <button id="loadCheckout">Load Checkout</button> -->
-                </div>
-                <div id="paypalConfiguration">
-                    <select id="paypalColor">
-                        <option>blue</option>
-                        <option>gold</option>
-                        <option>silver</option>
-                    </select>
-                 </div>
-                 <button id="loadCheckout">load checkout</button>
-                
                 <h1>Drop-in</h1>
                 <div class="payment-method">
                     <div id="dropin-container">
@@ -102,11 +83,12 @@ const dropin = checkout
         </div>
     </div>
 
-    <script src="../form.js"></script>
-    <script src="../versionControl.js"></script>
-    <!-- <script src="../paymentMethodsConfiguration.js"></script> -->
+    <script src="https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/3.23.0/adyen.js"></script>
+    <script src="../demo.js"></script>
+    <script src="../utils.js"></script>
+    <script src="/playground/dropin.js"></script>
+    <script type="text/javascript">saveCase()</script>
 
-    
 </body>
 
 </html>
