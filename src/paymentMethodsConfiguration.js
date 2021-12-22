@@ -1,3 +1,5 @@
+// As the value from HTML gets passed as a string, but Drop-in requires booleans-
+// we use this function to convert either true or false values to Booleans
 function convertToBoolean(v) {
 	if (v === "true") {
 		return true
@@ -9,6 +11,8 @@ function convertToBoolean(v) {
 };
 
 
+// Short hand function which will target the id and get the HTML value,
+// uses convertToBoolean() so the value can be passed directly to the config function
 function getValueOfConfig(component, param) {
 	
 	a = `${component}_${param}`;
@@ -19,9 +23,11 @@ function getValueOfConfig(component, param) {
 };
 
 
+// Payment methods configuration, called in dropin.js
 function cardConfiguration() {
 
 	var component = 'card'
+
 	return {
 		name: "Cards",
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
@@ -32,6 +38,7 @@ function cardConfiguration() {
 
 
 function paypalConfiguration() {
+
 	var component = 'paypal'
 	
 	return {
@@ -40,8 +47,8 @@ function paypalConfiguration() {
 			value: value
 		},
 		style: {
-	      shape: getValueOfConfig(component, 'shape'),
-	      color: getValueOfConfig(component, 'color')
+	    	shape: getValueOfConfig(component, 'shape'),
+	    	color: getValueOfConfig(component, 'color')
   		}
 	}
 

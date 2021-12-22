@@ -101,6 +101,7 @@ if (!sdkVersionOnLoad) {
 	optionApiVersion.disabled = true
 	loadInitialCheckoutScripts();
 
+	// If there's sdkVersions then we can present the loadComponent button
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
 		loadComponentScript();

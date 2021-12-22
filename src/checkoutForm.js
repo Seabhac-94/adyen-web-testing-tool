@@ -1,3 +1,6 @@
+// Creates the options for the front end based on available options
+// for each component
+
 const cardConfig = {
 
 	hasHolderName: [true, false],
@@ -17,7 +20,7 @@ const paypalConfig = {
 
 const componentParameters = document.getElementById("componentParameters");
 
-// Creates the dropdown options for the checkout form
+// Creates the dropdown options and the wrappers for the checkout form
 function createCheckoutForm(configObj, optionEl, component) {
 	
 	const configObjEl = document.createElement('div');
@@ -53,9 +56,9 @@ function createCheckoutForm(configObj, optionEl, component) {
 	componentParameters.append(configObjEl)
 };
 
-// Create paypal
+// Create forms below
+
+createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal")
 
-// Create card
-createCheckoutForm(cardConfig, "cardConfiguration", "card");
 
