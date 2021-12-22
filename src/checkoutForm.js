@@ -9,7 +9,6 @@ const cardConfig = {
 
 };
 
-
 const paypalConfig = {
 
 	color: ["silver", "blue", "gold" ],
@@ -17,8 +16,8 @@ const paypalConfig = {
 
 };
 
-
 const componentParameters = document.getElementById("componentParameters");
+
 
 // Creates the dropdown options and the wrappers for the checkout form
 function createCheckoutForm(configObj, optionEl, component) {
@@ -60,5 +59,3 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal")
-
-

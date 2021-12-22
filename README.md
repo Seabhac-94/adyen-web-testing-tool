@@ -36,6 +36,29 @@ $ ./start.sh
 
 A PHP server will start on `http://localhost:3000`.
 
+## Adding a new payment method
+
+If you want to add a new payment method (with configurable options) follow the steps:
+
+1. Add the configuration options in `checkoutForm.js`, follow the same format as cardConfig:
+
+```
+const brandConfig = {
+	parameter: ["option1", "option2"],
+	parameter2: [true, false]
+}
+```
+
+2. In checkoutForm.js, call `createCheckoutForm(configObj, optionEl, component)` with these parameters:
+
+- `configObj`: the brandObj you just created.
+- `optionEl`: 'brandConfiguration'
+- `component`: 'brand'
+
+3. Go to `paymentMethodsConfiguration` and add a new function following `function brandConfiguration()`, follow the same format as  `cardConfiguration()` function.
+
+4. In `dropin.js`, in `paymentMethodsConfiguration` add: `brand: brandConfiguration()`
+
 ## Documentation
 
 For the complete integration guide, refer to the [Web Components documentation](https://docs.adyen.com/checkout/components-web/).
