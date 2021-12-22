@@ -17,7 +17,15 @@ function initiateCheckout() {
                 removePaymentMethods: ['paysafecard', 'c_cash'],
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
-                    card: cardConfiguration()
+                    // paypal: {
+                       
+                    //     style: {
+                    //       layout: "rect",
+                    //       color: "blue"
+                    //     }
+                    // },
+
+                    card: cardConfiguration(),
                 },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only

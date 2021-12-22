@@ -48,25 +48,19 @@ function loadInitialCheckoutScripts(){
 	utilsScript.src = "../utils.js";
 	document.body.appendChild(utilsScript);
 
+	var checkoutForm = document.createElement("script");
+	checkoutForm.src = "../checkoutForm.js";
+	document.body.appendChild(checkoutForm);
 	var paymentMethodsConfiguration = document.createElement("script");
 	paymentMethodsConfiguration.src = "../paymentMethodsConfiguration.js";
 	document.body.appendChild(paymentMethodsConfiguration);
 
-
-	// // We use this timeout function to ensure the checkoutscript has loaded
-	// // so that we don't receive a console error
-	// setTimeout(function(){
-	// 	var dropinScript = document.createElement("script");
-	// 	dropinScript.src = "/dropin/dropin.js"
-	// 	document.body.appendChild(dropinScript);
-	// }, 1000)
-	
 };
 
 function loadComponentScript() {
-	var dropinScript = document.createElement("script");
-	dropinScript.src = "/dropin/dropin.js"
-	document.body.appendChild(dropinScript);
+		var dropinScript = document.createElement("script");
+		dropinScript.src = "/dropin/dropin.js"
+		document.body.appendChild(dropinScript);
 }
 
 
@@ -102,7 +96,6 @@ if (!sdkVersionOnLoad) {
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
 		loadComponentScript();
-		
 	});	
 
 }

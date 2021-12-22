@@ -16,7 +16,7 @@ const apiVersionOption = [
 						67
 						]
 
-const parametersForm = document.getElementById("parameters");
+const parameters = document.getElementById("parameters");
 
 // Creates the dropdown options for the form
 function createForm(selectElement, elId, options, optionEl) {
@@ -24,7 +24,7 @@ function createForm(selectElement, elId, options, optionEl) {
 	const selectEl = document.createElement("select");
 	selectEl.id = elId;
 	selectEl.className = "selectDropdown";
-	parametersForm.append(selectEl);
+	parameters.append(selectEl);
 
 	for (var i = 0; i < options.length; i++) {
 		var optionEl = document.createElement("option");
@@ -44,7 +44,6 @@ createForm("selectApiVersionEl", "selectApiVersion", apiVersionOption, "apiOptio
 
 
 const loadScriptsButton = document.createElement("button");
-loadScriptsButton.innerHTML = "Load Checkout";
+loadScriptsButton.innerHTML = "Load Versioned Scripts";
 loadScriptsButton.id = "loadScripts";
-parametersForm.append(loadScriptsButton);
-
+parameters.append(loadScriptsButton);
