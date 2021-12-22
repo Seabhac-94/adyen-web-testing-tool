@@ -236,7 +236,7 @@ a:link:hover {
 @media (min-width: 780px) {
     .main {
         padding: 18px 60px;
-        width: 60%;
+        width: 65%;
     }
 }
 
@@ -249,7 +249,7 @@ a:link:hover {
 
 @media (min-width: 780px) {
     .sidebar {
-        width: 40%;
+        width: 35%;
     }
 }
 

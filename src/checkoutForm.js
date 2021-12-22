@@ -6,12 +6,14 @@ const cardConfig = {
 
 };
 
+
 const paypalConfig = {
 
 	color: ["silver", "blue", "gold" ],
 	shape: ["pill", "rect"]
 
 };
+
 
 const componentParameters = document.getElementById("componentParameters");
 

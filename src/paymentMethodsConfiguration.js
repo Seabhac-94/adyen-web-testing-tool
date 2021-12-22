@@ -1,32 +1,38 @@
-function convertToBoolean(a) {
-	if (a === "true") {
+function convertToBoolean(v) {
+	if (v === "true") {
 		return true
-	} else {
+	} else if (v === "false"){
 		return false
+	} else {
+		return v
 	}
 };
+
+
+function getValueOfConfig(component, param) {
+	
+	a = `${component}_${param}`;
+	var b = document.getElementById(a).value;
+	c = convertToBoolean(b);
+
+	return c
+};
+
 
 function cardConfiguration() {
 
-	var hasHolderName = document.getElementById('card_hasHolderName').value;
-	// console.log(typeof hasHolderName);
-	var holderNameRequired = document.getElementById('card_holderNameRequired').value;
-	// console.log(holderNameRequired);
-	var positionHolderNameOnTop = document.getElementById('card_positionHolderNameOnTop').value;
-	// console.log(positionHolderNameOnTop);
-
+	var component = 'card'
 	return {
 		name: "Cards",
-		hasHolderName: convertToBoolean(hasHolderName),
-		holderNameRequired: convertToBoolean(holderNameRequired),
-		positionHolderNameOnTop: convertToBoolean(positionHolderNameOnTop)
+		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
+		holderNameRequired: getValueOfConfig(component, 'holderNameRequired'),
+		positionHolderNameOnTop: getValueOfConfig(component, 'positionHolderNameOnTop')
 	}
 };
 
-function paypalConfiguration() {
 
-	var paypalColor = document.getElementById('paypal_color').value;
-	var paypalShape = document.getElementById('paypal_shape').value;
+function paypalConfiguration() {
+	var component = 'paypal'
 	
 	return {
 		amount: {
@@ -34,8 +40,8 @@ function paypalConfiguration() {
 			value: value
 		},
 		style: {
-	      shape: paypalShape,
-	      color: paypalColor
+	      shape: getValueOfConfig(component, 'shape'),
+	      color: getValueOfConfig(component, 'color')
   		}
 	}
 
