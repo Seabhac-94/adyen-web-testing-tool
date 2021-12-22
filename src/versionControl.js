@@ -51,6 +51,7 @@ function loadInitialCheckoutScripts(){
 	var checkoutForm = document.createElement("script");
 	checkoutForm.src = "../checkoutForm.js";
 	document.body.appendChild(checkoutForm);
+
 	var paymentMethodsConfiguration = document.createElement("script");
 	paymentMethodsConfiguration.src = "../paymentMethodsConfiguration.js";
 	document.body.appendChild(paymentMethodsConfiguration);
@@ -75,6 +76,13 @@ if (!sdkVersionOnLoad) {
 		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 	});	
 } else {
+
+	const loadComponentsDiv = document.getElementById('loadComponents');
+	const loadCheckoutButton = document.createElement("button");
+	loadCheckoutButton.innerHTML = "Load Checkout";
+	loadCheckoutButton.id = "loadCheckout";
+	loadComponentsDiv.append(loadCheckoutButton);
+
 	var loadScripts = document.getElementById("loadScripts");
 	loadScripts.disabled = true;
 

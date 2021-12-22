@@ -34,12 +34,14 @@ h1 {
     line-height: 38px;
 }
 
-.parametersForm {
+.parametersForm,
+#componentParameters {
     /*display: flex;*/
     margin-top: 2rem;
 }
 
-.selectDropdown {
+.selectDropdown,
+.checkoutDropdown {
     padding: 2px;
     margin:  2px 5px;
     width: 4rem;
@@ -47,7 +49,8 @@ h1 {
     border: 0.5px solid grey;
 }
 
-#loadScripts{
+#loadScripts,
+#loadCheckout {
     height: 2rem;
     padding: 0px 10px;
     margin-left: 5px;
@@ -58,23 +61,41 @@ h1 {
 
 
 .selectDropdown,
-#loadScripts {
+.checkoutDropdown,
+#loadScripts,
+#loadCheckout {
     border-radius: 5px;
     cursor: pointer;
 }
 
 
-#loadScripts:hover{
+#loadScripts:hover,
+#loadCheckout:hover {
     color: #000000;
     background: #ffffff;
 }
 
-#loadScripts:disabled {
+#loadScripts:disabled,
+#loadCheckout:disabled {
     color: #000000;
     background: #ffffff;
     cursor: not-allowed;
     border-color: grey;
     color: grey;
+}
+
+.configWrapper {
+    margin: 3.5px;
+    padding: 3.5px;
+    background: #f7f8f9;
+}
+
+.configWrapper > p {
+    margin: 0.5rem 0;
+}
+
+#loadComponents {
+    margin-top: 1rem;
 }
 
 .sidebar .header {

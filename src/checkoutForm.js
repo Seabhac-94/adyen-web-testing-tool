@@ -5,16 +5,28 @@ const cardConfig = {
 };
 
 const paypalConfig = {
-	color: ["blue", "gold", "silver"],
-	shape: ["rect", "pill"]
+	color: ["silver", "blue", "gold" ],
+	shape: ["pill", "rect"]
 };
 
 const componentParameters = document.getElementById("componentParameters");
 
 // Creates the dropdown options for the checkout form
 function createCheckoutForm(configObj, optionEl, component) {
+	
 	const configObjEl = document.createElement('div');
+	configObjEl.className = "configWrapper"
+
+	const configObjTitle = document.createElement('p');
+	configObjTitle.innerHTML = component;
+	configObjEl.append(configObjTitle);
+	
 	for (let [key, option] of Object.entries(configObj)) {
+
+		const optionElSpan = document.createElement('span');
+		optionElSpan.innerHTML = key;
+		configObjEl.append(optionElSpan);
+
 		const selectEl = document.createElement("select");
 		selectEl.id = component+"_"+key;
 		selectEl.className = "checkoutDropdown";
