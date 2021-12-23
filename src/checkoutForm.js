@@ -3,10 +3,19 @@
 
 const cardConfig = {
 
-	name: ["Cards", "Payment Card", "Credit Card"],
+	name: ["input"],
+	showStoredPaymentMethods: [false, true],
+	// brands: ["input"],
+	showBrandIcon: [false, true],
+	enableStoreDetails: [true, false],
 	hasHolderName: [true, false],
 	holderNameRequired: [true, false],
-	positionHolderNameOnTop: [true, false]
+	positionHolderNameOnTop: [true, false],
+	hideCVC: [true, false],
+	socialSecurityNumberMode: ["show", "hide", "auto"],
+	billingAddressRequired: [true, false],
+	billingAddressAllowedCountries: ["input"],
+	minimumExpiryDate: ["input"]
 
 };
 
@@ -16,6 +25,12 @@ const paypalConfig = {
 	shape: ["pill", "rect"]
 
 };
+
+
+// const idealConfig = {
+// 	showImage: [false, true],
+// 	issuer: ["1161"]
+// }
 
 const componentParameters = document.getElementById("componentParameters");
 
@@ -42,17 +57,23 @@ function createCheckoutForm(configObj, optionEl, component) {
 		optionElDiv.hidden = true
 		checkoutDropdownWrapper.append(optionElDiv);
 
-		const selectEl = document.createElement("select");
+		if (option == "input") {
+			var selectEl = document.createElement("input");
+		}
+		else {
+			var selectEl = document.createElement("select");
+			for (var i = option.length - 1; i >= 0; i--) {
+		  		var optionEl = document.createElement("option");
+				optionEl.className = "checkoutOptionDropdown"
+				optionEl.innerHTML = option[i];
+				selectEl.append(optionEl);
+  			}
+		}
 		selectEl.id = component+"_"+key;
 		selectEl.className = "checkoutDropdown";
 		optionElDiv.append(selectEl);
 
-  		for (var i = option.length - 1; i >= 0; i--) {
-	  		var optionEl = document.createElement("option");
-			optionEl.className = "checkoutOptionDropdown"
-			optionEl.innerHTML = option[i];
-			selectEl.append(optionEl);
-  		}
+
 	  	configObjTitle.addEventListener('click', function(){
 			if (optionElDiv.hidden) {
 				optionElDiv.hidden = false
@@ -69,4 +90,6 @@ function createCheckoutForm(configObj, optionEl, component) {
 // Create forms below
 
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
-createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal")
+createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
+// createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
+

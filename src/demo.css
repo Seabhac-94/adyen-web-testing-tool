@@ -57,9 +57,11 @@ h1 {
     height: 2rem;
     padding: 0px 10px;
     margin-left: 5px;
-    background: #0d6efd;
+    background: #00112c;
+    /*background: #0d6efd;*/
     color: #fafafa;
-    border: 0.5px solid #0d6efd;
+    border: 0.5px solid;
+    /*border: 0.5px solid #0d6efd;*/
 }
 
 
@@ -79,9 +81,13 @@ h1 {
     padding: 5px;
 }
 
+input.checkoutDropdown {
+    border-bottom: 0.5px solid black;
+}
 
 .checkoutDropdownWrapper > div {
     display: inline-block;
+    /*display: block;*/
     padding: 8px 4px;
     margin: 4px;
     border:  0.2px solid grey;

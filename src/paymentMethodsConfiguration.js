@@ -30,9 +30,18 @@ function cardConfiguration() {
 
 	return {
 		name: getValueOfConfig(component, 'name'),
+		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
+		// brands: getValueOfConfig(component, 'brands'),
+		showBrandIcon: getValueOfConfig(component, 'showBrandIcon'),
+		enableStoreDetails: getValueOfConfig(component, 'enableStoreDetails'),
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
 		holderNameRequired: getValueOfConfig(component, 'holderNameRequired'),
-		positionHolderNameOnTop: getValueOfConfig(component, 'positionHolderNameOnTop')
+		positionHolderNameOnTop: getValueOfConfig(component, 'positionHolderNameOnTop'),
+		hideCVC: getValueOfConfig(component, 'hideCVC'),
+		socialSecurityNumberMode: "show",
+		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
+		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
+		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
 	}
 };
 

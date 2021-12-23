@@ -104,6 +104,11 @@ if (!sdkVersionOnLoad) {
 	// If there's sdkVersions then we can present the loadComponent button
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
+		var disableCheckout = document.getElementsByClassName('checkoutDropdown')
+		for (var i = disableCheckout.length - 1; i >= 0; i--) {
+			disableCheckout[i].disabled = true
+		}
+		loadCheckout.disabled = true;
 		loadComponentScript();
 	});	
 
