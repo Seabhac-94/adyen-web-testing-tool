@@ -30,6 +30,8 @@ var apiSdkVersions = retrieveVersionValue()
 
 function loadInitialCheckoutScripts(){
 
+	var additionalScripts = ["demo", "utils", "checkoutForm", "paymentMethodsConfiguration"]
+
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
 	baseStyle.rel = "stylesheet";
@@ -40,21 +42,11 @@ function loadInitialCheckoutScripts(){
 	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.js";
 	document.body.appendChild(baseScript);
 
-	var demoScript = document.createElement("script");
-	demoScript.src = "../demo.js";
-	document.body.appendChild(demoScript);
-
-	var utilsScript = document.createElement("script");
-	utilsScript.src = "../utils.js";
-	document.body.appendChild(utilsScript);
-
-	var checkoutForm = document.createElement("script");
-	checkoutForm.src = "../checkoutForm.js";
-	document.body.appendChild(checkoutForm);
-
-	var paymentMethodsConfiguration = document.createElement("script");
-	paymentMethodsConfiguration.src = "../paymentMethodsConfiguration.js";
-	document.body.appendChild(paymentMethodsConfiguration);
+	for (var i = 0; i < additionalScripts.length; i++) {
+		var scriptToAdd = document.createElement("script");
+		scriptToAdd.src = `../${additionalScripts[i]}.js`
+		document.body.appendChild(scriptToAdd)
+	}
 
 };
 
