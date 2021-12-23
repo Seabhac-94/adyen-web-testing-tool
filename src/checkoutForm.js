@@ -3,6 +3,7 @@
 
 const cardConfig = {
 
+	name: ["Cards", "Payment Card", "Credit Card"],
 	hasHolderName: [true, false],
 	holderNameRequired: [true, false],
 	positionHolderNameOnTop: [true, false]
@@ -36,14 +37,15 @@ function createCheckoutForm(configObj, optionEl, component) {
 	
 	for (let [key, option] of Object.entries(configObj)) {
 
-		const optionElSpan = document.createElement('span');
-		optionElSpan.innerHTML = key;
-		checkoutDropdownWrapper.append(optionElSpan);
+		const optionElDiv = document.createElement('div');
+		optionElDiv.innerHTML = `${key}: `;
+		optionElDiv.hidden = true
+		checkoutDropdownWrapper.append(optionElDiv);
 
 		const selectEl = document.createElement("select");
 		selectEl.id = component+"_"+key;
 		selectEl.className = "checkoutDropdown";
-		checkoutDropdownWrapper.append(selectEl);
+		optionElDiv.append(selectEl);
 
   		for (var i = option.length - 1; i >= 0; i--) {
 	  		var optionEl = document.createElement("option");
@@ -51,8 +53,17 @@ function createCheckoutForm(configObj, optionEl, component) {
 			optionEl.innerHTML = option[i];
 			selectEl.append(optionEl);
   		}
+	  	configObjTitle.addEventListener('click', function(){
+			if (optionElDiv.hidden) {
+				optionElDiv.hidden = false
+			} else {
+				optionElDiv.hidden = true
+			}
+		});
 	}
-	componentParameters.append(configObjEl)
+	componentParameters.append(configObjEl);
+
+
 };
 
 // Create forms below

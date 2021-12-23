@@ -29,7 +29,7 @@ function cardConfiguration() {
 	var component = 'card'
 
 	return {
-		name: "Cards",
+		name: getValueOfConfig(component, 'name'),
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
 		holderNameRequired: getValueOfConfig(component, 'holderNameRequired'),
 		positionHolderNameOnTop: getValueOfConfig(component, 'positionHolderNameOnTop')
