@@ -2,8 +2,7 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0])
 
-// Uses urlParams from versionControl.js to retrieve redirectResult
-const redirectResult = urlParams.get('redirectResult')
+
 
 
 function initiateCheckout() {

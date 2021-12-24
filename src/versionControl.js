@@ -3,6 +3,7 @@ const queryResultString = window.location.search;
 const urlParams = new URLSearchParams(queryResultString);
 var sdkVersionOnLoad = urlParams.get('sdkVersion');
 var apiVersionOnLoad = urlParams.get('apiVersion');
+const redirectResult = urlParams.get('redirectResult')
 
 
 // We retrieve this value as a function, and not natively so that it can be used in multiple pages
@@ -54,23 +55,27 @@ function loadComponentScript() {
 		var dropinScript = document.createElement("script");
 		dropinScript.src = "/dropin/dropin.js"
 		document.body.appendChild(dropinScript);
-}
+};
 
 
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it and calls loadCheckoutScripts() automatically
 
 if (!sdkVersionOnLoad) {
+
 	var loadScripts = document.getElementById("loadScripts");
+
 	loadScripts.addEventListener('click', function(){
+
 		retrieveVersionValue();
 		var apiSdkVersions = retrieveVersionValue();
 		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 	});	
-} else {
 
-	const loadComponentsDiv = document.getElementById('loadComponents');
-	const loadCheckoutButton = document.createElement("button");
+} else if (!redirectResult) {
+
+	var loadComponentsDiv = document.getElementById('loadComponents');
+	var loadCheckoutButton = document.createElement("button");
 	loadCheckoutButton.innerHTML = "Load Checkout";
 	loadCheckoutButton.id = "loadCheckout";
 	loadComponentsDiv.append(loadCheckoutButton);
@@ -86,24 +91,47 @@ if (!sdkVersionOnLoad) {
 	optionCheckoutVersion.disabled = true;
 
 	var selectApiVersion = document.getElementById("selectApiVersion");
-	selectApiVersion.disabled = true
+	selectApiVersion.disabled = true;
 
 	var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
 	optionApiVersion.innerText = apiVersionOnLoad;
-	optionApiVersion.disabled = true
+	optionApiVersion.disabled = true;
+
 	loadInitialCheckoutScripts();
 
 	// If there's sdkVersions then we can present the loadComponent button
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
-		var disableCheckout = document.getElementsByClassName('checkoutDropdown')
+
+		// Disables the forms for checkout once the version configuration has been chosen
+		var disableCheckout = document.getElementsByClassName('checkoutDropdown');
+
 		for (var i = disableCheckout.length - 1; i >= 0; i--) {
+		
 			disableCheckout[i].disabled = true
+		
 		}
 		loadCheckout.disabled = true;
+
+		// Loads the drop-in script
 		loadComponentScript();
 	});	
 
+} else {
+
+	loadInitialCheckoutScripts();
+
+	setTimeout(function(){
+
+		loadComponentScript();
+	
+	}, 500);
+
+	var getParametersForm = document.getElementById('configurationParametersWrapper');
+	getParametersForm.hidden = true;
+	
+
+	
 }
 
 

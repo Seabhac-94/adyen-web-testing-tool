@@ -26,12 +26,29 @@ function getValueOfConfig(component, param) {
 // Payment methods configuration, called in dropin.js
 function cardConfiguration() {
 
-	var component = 'card'
+	var component = 'card';
+
+	// Supports array for brands
+	var brands = getValueOfConfig(component, 'brands');
+	if (brands != "") {
+		var brandsArray = brands.split(", ");
+	} else {
+		var brandsArray = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
+	}
+
+	// Defaults to credit card if no name is selected
+	var name = getValueOfConfig(component, 'name');
+	if (name == '') {
+		var name = 'Credit Card'
+	} else {
+		var name = getValueOfConfig(component, 'name');
+	}
 
 	return {
-		name: getValueOfConfig(component, 'name'),
+
+		name: name,
 		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
-		// brands: getValueOfConfig(component, 'brands'),
+		// brands: brandsArray,
 		showBrandIcon: getValueOfConfig(component, 'showBrandIcon'),
 		enableStoreDetails: getValueOfConfig(component, 'enableStoreDetails'),
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
@@ -42,6 +59,7 @@ function cardConfiguration() {
 		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
 		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
 		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
+	
 	}
 };
 

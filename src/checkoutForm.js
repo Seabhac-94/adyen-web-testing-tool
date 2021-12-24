@@ -5,7 +5,7 @@ const cardConfig = {
 
 	name: ["input"],
 	showStoredPaymentMethods: [false, true],
-	// brands: ["input"],
+	brands: ["input"],
 	showBrandIcon: [false, true],
 	enableStoreDetails: [true, false],
 	hasHolderName: [true, false],
@@ -62,6 +62,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 		}
 		else {
 			var selectEl = document.createElement("select");
+			
 			for (var i = option.length - 1; i >= 0; i--) {
 		  		var optionEl = document.createElement("option");
 				optionEl.className = "checkoutOptionDropdown"
