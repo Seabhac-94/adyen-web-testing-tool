@@ -111,6 +111,11 @@ if (!sdkVersionOnLoad) {
 			disableCheckout[i].disabled = true
 		
 		}
+
+		var hideForms = document.getElementsByClassName('checkoutDropdownWrapper');
+		for (var i = hideForms.length - 1; i >= 0; i--) {
+			hideForms[i].classList.add("hiddenForm");
+		}
 		loadCheckout.disabled = true;
 
 		// Loads the drop-in script

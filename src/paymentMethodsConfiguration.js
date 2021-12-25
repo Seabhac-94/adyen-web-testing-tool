@@ -48,7 +48,7 @@ function cardConfiguration() {
 
 		name: name,
 		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
-		// brands: brandsArray,
+		brands: brandsArray,
 		showBrandIcon: getValueOfConfig(component, 'showBrandIcon'),
 		enableStoreDetails: getValueOfConfig(component, 'enableStoreDetails'),
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),

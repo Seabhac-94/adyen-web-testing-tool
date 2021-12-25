@@ -47,14 +47,13 @@ function createCheckoutForm(configObj, optionEl, component) {
 	configObjEl.append(configObjTitle);
 
 	const checkoutDropdownWrapper = document.createElement('div');
-	checkoutDropdownWrapper.className = "checkoutDropdownWrapper";
+	checkoutDropdownWrapper.className = "checkoutDropdownWrapper hiddenForm";
 	configObjEl.append(checkoutDropdownWrapper);
 	
 	for (let [key, option] of Object.entries(configObj)) {
 
 		const optionElDiv = document.createElement('div');
-		optionElDiv.innerHTML = `${key}: `;
-		optionElDiv.hidden = true
+		optionElDiv.innerHTML = `<span>${key}: </span>`;
 		checkoutDropdownWrapper.append(optionElDiv);
 
 		if (option == "input") {
@@ -73,18 +72,16 @@ function createCheckoutForm(configObj, optionEl, component) {
 		selectEl.id = component+"_"+key;
 		selectEl.className = "checkoutDropdown";
 		optionElDiv.append(selectEl);
+	};
 
+  	configObjTitle.addEventListener('click', function(){
+  	
+  		var childConfig = configObjTitle.nextElementSibling;
+  		childConfig.classList.toggle("hiddenForm");
+	
+	});
 
-	  	configObjTitle.addEventListener('click', function(){
-			if (optionElDiv.hidden) {
-				optionElDiv.hidden = false
-			} else {
-				optionElDiv.hidden = true
-			}
-		});
-	}
 	componentParameters.append(configObjEl);
-
 
 };
 
