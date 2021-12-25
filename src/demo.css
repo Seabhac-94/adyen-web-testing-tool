@@ -50,6 +50,7 @@ h1 {
     display: none;
 }
 
+
 .selectDropdown,
 .checkoutDropdown {
     padding: 2px;
@@ -57,7 +58,8 @@ h1 {
 }
 
 #loadScripts,
-#loadCheckout {
+#loadCheckout,
+.configObjTitle {
     height: 2rem;
     padding: 0px 10px;
     margin-left: 5px;
@@ -71,7 +73,8 @@ h1 {
 
 .selectDropdown,
 #loadScripts,
-#loadCheckout {
+#loadCheckout,
+.configObjTitle {
     border-radius: 5px;
     cursor: pointer;
 }
@@ -90,14 +93,15 @@ input.checkoutDropdown {
 }
 
 .checkoutDropdownWrapper > div {
-    display: inline-block;
-    width: 48%;
+    width: 100%;
     vertical-align: top;
     padding: 8px 4px;
     margin: 4px;
     border:  0.2px solid grey;
     background: #ffffff;
     border-radius: 4px;
+    text-align: left;
+
 }
 
 .checkoutDropdownWrapper > div[hidden] {
@@ -106,7 +110,8 @@ input.checkoutDropdown {
 
 
 #loadScripts:hover,
-#loadCheckout:hover {
+#loadCheckout:hover,
+.configObjTitle:hover {
     color: #000000;
     background: #ffffff;
 }
@@ -124,16 +129,18 @@ input.checkoutDropdown {
     margin: 3.5px;
     padding: 3.5px;
     background: #f7f8f9;
-    /*border: solid 0.2px darkgray;*/
-}
-
-.configWrapper > p {
-    margin: 0.5rem 0;
-    padding: 0 5px;
+    /* border: solid 0.2px darkgray; */
+    width: 45%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
 }
 
 .configObjTitle {
     cursor: pointer;
+    margin: 0.5rem 0;
+    padding: 0 5px;
+    min-width: 8rem;
 }
 
 #loadComponents {

@@ -41,7 +41,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 	const configObjEl = document.createElement('div');
 	configObjEl.className = "configWrapper"
 
-	const configObjTitle = document.createElement('p');
+	const configObjTitle = document.createElement('button');
 	configObjTitle.className = "configObjTitle";
 	configObjTitle.innerHTML = component;
 	configObjEl.append(configObjTitle);
@@ -75,7 +75,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 	};
 
   	configObjTitle.addEventListener('click', function(){
-  	
+  		
   		var childConfig = configObjTitle.nextElementSibling;
   		childConfig.classList.toggle("hiddenForm");
 	

@@ -113,6 +113,7 @@ if (!sdkVersionOnLoad) {
 		}
 
 		var hideForms = document.getElementsByClassName('checkoutDropdownWrapper');
+
 		for (var i = hideForms.length - 1; i >= 0; i--) {
 			hideForms[i].classList.add("hiddenForm");
 		}
