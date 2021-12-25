@@ -1,13 +1,15 @@
 // As the value from HTML gets passed as a string, but Drop-in requires booleans-
 // we use this function to convert either true or false values to Booleans
 function convertToBoolean(v) {
+
 	if (v === "true") {
-		return true
+		return true;
 	} else if (v === "false"){
-		return false
+		return false;
 	} else {
-		return v
+		return v;
 	}
+
 };
 
 
@@ -19,7 +21,8 @@ function getValueOfConfig(component, param) {
 	var b = document.getElementById(a).value;
 	c = convertToBoolean(b);
 
-	return c
+	return c;
+
 };
 
 
@@ -34,7 +37,7 @@ function cardConfiguration() {
 		var brandsArray = brands.split(", ");
 	} else {
 		var brandsArray = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
-	}
+	};
 
 	// Defaults to credit card if no name is selected
 	var name = getValueOfConfig(component, 'name');
@@ -42,10 +45,9 @@ function cardConfiguration() {
 		var name = 'Credit Card'
 	} else {
 		var name = getValueOfConfig(component, 'name');
-	}
+	};
 
 	return {
-
 		name: name,
 		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
 		brands: brandsArray,
@@ -59,14 +61,14 @@ function cardConfiguration() {
 		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
 		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
 		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
-	
 	}
+
 };
 
 
 function paypalConfiguration() {
 
-	var component = 'paypal'
+	var component = 'paypal';
 	
 	return {
 		amount: {
@@ -74,9 +76,32 @@ function paypalConfiguration() {
 			value: value
 		},
 		style: {
+			layout: getValueOfConfig(component, 'layout'),
 	    	shape: getValueOfConfig(component, 'shape'),
-	    	color: getValueOfConfig(component, 'color')
+	    	color: getValueOfConfig(component, 'color'),
+	    	label: getValueOfConfig(component, 'label'),
   		}
+	}
+
+};
+
+function idealConfiguration () {
+	
+	var component = 'ideal';
+
+	var placeholder = getValueOfConfig(component, 'placeholder');
+	if (placeholder == '') {
+		var placeholder = 'Select your bank';
+	} else {
+		var placeholder = getValueOfConfig(component, 'placeholder');
+	};
+
+
+	return {
+		showImage: getValueOfConfig(component, 'showImage'),
+		issuer: getValueOfConfig(component, 'issuer'),
+		highlightedIssuers: getValueOfConfig(component, 'highlightedIssuers'),
+		placeholder: placeholder
 	}
 
 };

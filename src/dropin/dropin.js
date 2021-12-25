@@ -2,9 +2,6 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0])
 
-
-
-
 function initiateCheckout() {
     // 0. Get clientKey
     getClientKey().then(clientKey => {
@@ -17,6 +14,7 @@ function initiateCheckout() {
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
                     card: cardConfiguration(),
+                    ideal: idealConfiguration()
                 },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only

@@ -21,16 +21,20 @@ const cardConfig = {
 
 const paypalConfig = {
 
-	color: ["silver", "blue", "gold" ],
-	shape: ["pill", "rect"]
+	layout: ["horizontal", "vertical"],
+	color: ["white", "black", "silver", "blue", "gold"],
+	shape: ["pill", "rect"],
+	label: ["checkout", "buynow", "pay", "paypal"],
 
 };
 
 
-// const idealConfig = {
-// 	showImage: [false, true],
-// 	issuer: ["1161"]
-// }
+const idealConfig = {
+	showImage: [false, true],
+	issuer: ["input"],
+	highlightedIssuers: ["input"],
+	placeholder: ["input"]
+}
 
 const componentParameters = document.getElementById("componentParameters");
 
@@ -75,7 +79,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 	};
 
   	configObjTitle.addEventListener('click', function(){
-  		
+
   		var childConfig = configObjTitle.nextElementSibling;
   		childConfig.classList.toggle("hiddenForm");
 	
@@ -89,5 +93,5 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
-// createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
+createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
 
