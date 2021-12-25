@@ -14,7 +14,8 @@ function initiateCheckout() {
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
                     card: cardConfiguration(),
-                    ideal: idealConfiguration()
+                    ideal: idealConfiguration(),
+                    paywithgoogle: googlePayConfiguration()
                 },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only

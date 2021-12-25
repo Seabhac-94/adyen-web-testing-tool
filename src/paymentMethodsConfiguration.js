@@ -32,32 +32,30 @@ function cardConfiguration() {
 	var component = 'card';
 
 	// Supports array for brands
-	var brands = getValueOfConfig(component, 'brands');
-	if (brands != "") {
-		var brandsArray = brands.split(", ");
+	var brandsValue = getValueOfConfig(component, 'brands');
+	if (brandsValue != "") {
+		var brands = brandsValue.split(", ");
 	} else {
-		var brandsArray = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
+		var brands = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
 	};
 
 	// Defaults to credit card if no name is selected
 	var name = getValueOfConfig(component, 'name');
 	if (name == '') {
 		var name = 'Credit Card'
-	} else {
-		var name = getValueOfConfig(component, 'name');
 	};
 
 	return {
-		name: name,
+		name,
 		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
-		brands: brandsArray,
+		brands,
 		showBrandIcon: getValueOfConfig(component, 'showBrandIcon'),
 		enableStoreDetails: getValueOfConfig(component, 'enableStoreDetails'),
 		hasHolderName: getValueOfConfig(component, 'hasHolderName'),
 		holderNameRequired: getValueOfConfig(component, 'holderNameRequired'),
 		positionHolderNameOnTop: getValueOfConfig(component, 'positionHolderNameOnTop'),
 		hideCVC: getValueOfConfig(component, 'hideCVC'),
-		socialSecurityNumberMode: "show",
+		socialSecurityNumberMode: getValueOfConfig(component, 'socialSecurityNumberMode'),
 		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
 		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
 		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
@@ -92,16 +90,38 @@ function idealConfiguration () {
 	var placeholder = getValueOfConfig(component, 'placeholder');
 	if (placeholder == '') {
 		var placeholder = 'Select your bank';
-	} else {
-		var placeholder = getValueOfConfig(component, 'placeholder');
-	};
-
+	}
 
 	return {
 		showImage: getValueOfConfig(component, 'showImage'),
 		issuer: getValueOfConfig(component, 'issuer'),
 		highlightedIssuers: getValueOfConfig(component, 'highlightedIssuers'),
-		placeholder: placeholder
+		placeholder
 	}
 
 };
+
+
+function googlePayConfiguration() {
+
+	var component = 'paywithgoogle'
+
+	return {
+
+		environment: "TEST",
+
+		amount: {
+			value: value,
+			currency: currency
+		},
+
+		buttonType: getValueOfConfig(component, 'buttonType'),
+		buttonColor: getValueOfConfig(component, 'buttonColor'),
+		buttonLocale: getValueOfConfig(component, 'buttonLocale'),
+		buttonSizeMode: getValueOfConfig(component, 'buttonSizeMode')
+
+
+	}
+
+}
+

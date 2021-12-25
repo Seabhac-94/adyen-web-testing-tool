@@ -34,7 +34,18 @@ const idealConfig = {
 	issuer: ["input"],
 	highlightedIssuers: ["input"],
 	placeholder: ["input"]
-}
+};
+
+
+const googlePayConfig = {
+
+	buttonType: ["book", "checkout", "donate", "order", "pay", "plain", "subscribe", "buy"],
+	buttonColor: ["black", "white", "default"],
+	buttonLocale: ["ar", "bg", "ca", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "id", "it", "ja", "ko", "ms", "nl", "no", "pl", "pt", "ru", "sk", "sl", "sr", "sv", "th", "tr", "zh", "uk", "en"],
+	buttonSizeMode: ["fill", "static"]
+
+};
+
 
 const componentParameters = document.getElementById("componentParameters");
 
@@ -94,4 +105,5 @@ function createCheckoutForm(configObj, optionEl, component) {
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
 createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
+createCheckoutForm(googlePayConfig, 'googlePayConfiguration', "paywithgoogle")
 
