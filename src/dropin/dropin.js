@@ -44,7 +44,6 @@ function initiateCheckout() {
                                     result.innerHTML = componentSuccess;
                                     console.log('component')
                                 }
-
                             } else {
                                 if (componentFlavour === 'dropin') {
                                     component.setStatus('error', {

@@ -131,5 +131,27 @@ createCheckoutForm(dropinConfig, "dropinConfiguration", "dropin");
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
 createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
-createCheckoutForm(googlePayConfig, 'googlePayConfiguration', "paywithgoogle")
+createCheckoutForm(googlePayConfig, 'googlePayConfiguration', "paywithgoogle");
 
+
+// Minor adjusments for headings on form
+
+var sh = document.createElement("h4");
+sh.innerText = "Component Selection";
+var shParent = document.getElementById("flavourConfiguration").parentNode;
+var shChild = document.getElementById("flavourConfiguration");
+shParent.insertBefore(sh, shChild);
+
+
+var dh = document.createElement("h4");
+dh.innerText = "Dropin Configuration";
+var dhParent = document.getElementById("dropinConfiguration").parentNode;
+var dhChild = document.getElementById("dropinConfiguration");
+dhParent.insertBefore(dh, dhChild);
+
+
+var pmh = document.createElement("h4");
+pmh.innerText = "Payment Method Configuration";
+var pmhParent = document.getElementById("cardConfiguration").parentNode;
+var pmhChild = document.getElementById("cardConfiguration");
+pmhParent.insertBefore(pmh, pmhChild);
