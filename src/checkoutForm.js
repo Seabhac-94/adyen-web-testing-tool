@@ -1,3 +1,4 @@
+// Configuration for dropin
 const dropinConfig = {
 
 	openFirstPaymentMethod: [false, true],
@@ -6,7 +7,8 @@ const dropinConfig = {
 	showRemovePaymentMethodButton: [true, false],
 	showPaymentMethods: [false, true],
 	setStatusAutomatically: [false, true],
-	instantPaymentTypes: ["paywithgoogle", null]
+	instantPaymentTypes: ["paywithgoogle", null],
+	showPayButton: [false, true]
 
 }
 

@@ -59,6 +59,11 @@ function initiateCheckout() {
                     const dropin = checkout
                         .create('dropin', dropinOptionalConfig())
                         .mount('#dropin-container');
+
+                    // Called if custom button is used
+                    document.getElementById('customPayButton').addEventListener('click', function(){
+                        dropin.submit()
+                    })
                 } else {
                     (async function initiateCheckout() {
                         // 1. Create an instance of AdyenCheckout
@@ -68,6 +73,11 @@ function initiateCheckout() {
                         const dropin = checkout
                             .create('dropin', dropinOptionalConfig())
                             .mount('#dropin-container');
+
+                        // Called if custom button is used
+                        document.getElementById('customPayButton').addEventListener('click', function(){
+                        dropin.submit()
+                    })
                     })();
                 }
             })();

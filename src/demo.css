@@ -153,10 +153,22 @@ input.checkoutDropdown {
     display: none;
 }
 
+#customPayButton {
+    height: 3rem;
+    width: 50%;
+    margin: 2rem 0;
+    background: #00112c;
+    color: #fafafa;
+    border: 0.5px solid;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
 
 #loadScripts:hover,
 #loadCheckout:hover,
-.configObjTitle:hover {
+.configObjTitle:hover,
+#customPayButton:hover {
     color: #000000;
     background: #ffffff;
 }

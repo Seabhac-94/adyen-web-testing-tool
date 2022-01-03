@@ -34,10 +34,14 @@ function dropinOptionalConfig() {
 	var instantPaymentTypesValue = getValueOfConfig(component, 'instantPaymentTypes');
 	if (instantPaymentTypesValue != "") {
 		var instantPaymentTypes = instantPaymentTypesValue.split(", ");
-	} else {
-		var instantPaymentTypes = null;
 	}
+	
+	var showPayButton = getValueOfConfig(component, 'showPayButton');
 
+	if (!showPayButton) {
+		const customPay = document.getElementById('customPayButton')
+		customPay.classList.remove("hiddenForm")
+	};
 
 	return {
 
@@ -49,6 +53,7 @@ function dropinOptionalConfig() {
 		showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
 		setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
 		instantPaymentTypes,
+		showPayButton,
 		
 		// Events
         onSelect: activeComponent => {
