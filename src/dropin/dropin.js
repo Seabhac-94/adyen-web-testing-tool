@@ -57,12 +57,7 @@ function initiateCheckout() {
 
                     // 2. Create and mount the Component
                     const dropin = checkout
-                        .create('dropin', {
-                            // Events
-                            onSelect: activeComponent => {
-                                if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-                            }
-                        })
+                        .create('dropin', dropinOptionalConfig())
                         .mount('#dropin-container');
                 } else {
                     (async function initiateCheckout() {
@@ -71,12 +66,7 @@ function initiateCheckout() {
 
                         // 2. Create and mount the Component
                         const dropin = checkout
-                            .create('dropin', {
-                                // Events
-                                onSelect: activeComponent => {
-                                    if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-                                }
-                            })
+                            .create('dropin', dropinOptionalConfig())
                             .mount('#dropin-container');
                     })();
                 }

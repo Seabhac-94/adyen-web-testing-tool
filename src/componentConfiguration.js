@@ -26,6 +26,39 @@ function getValueOfConfig(component, param) {
 };
 
 
+function dropinOptionalConfig() {
+
+	var component = 'dropin';
+
+	// Supports array for instantPaymentTypes
+	var instantPaymentTypesValue = getValueOfConfig(component, 'instantPaymentTypes');
+	if (instantPaymentTypesValue != "") {
+		var instantPaymentTypes = instantPaymentTypesValue.split(", ");
+	} else {
+		var instantPaymentTypes = null;
+	}
+
+
+	return {
+
+		//Configuration
+		openFirstPaymentMethod: getValueOfConfig(component, 'openFirstPaymentMethod'),
+		openFirstStoredPaymentMethod: getValueOfConfig(component, 'openFirstStoredPaymentMethod'),
+		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
+		showRemovePaymentMethodButton: getValueOfConfig(component, 'showRemovePaymentMethodButton'),
+		showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
+		setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
+		instantPaymentTypes,
+		
+		// Events
+        onSelect: activeComponent => {
+        	if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
+        }
+    }
+}
+
+
+
 // Payment methods configuration, called in dropin.js
 function cardConfiguration() {
 

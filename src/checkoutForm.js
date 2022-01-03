@@ -1,3 +1,15 @@
+const dropinConfig = {
+
+	openFirstPaymentMethod: [false, true],
+	openFirstStoredPaymentMethod: [false, true],
+	showStoredPaymentMethods: [false, true],
+	showRemovePaymentMethodButton: [true, false],
+	showPaymentMethods: [false, true],
+	setStatusAutomatically: [false, true],
+	instantPaymentTypes: ["paywithgoogle", null]
+
+}
+
 // Creates the options for the front end based on available options
 // for each component
 
@@ -54,7 +66,8 @@ const componentParameters = document.getElementById("componentParameters");
 function createCheckoutForm(configObj, optionEl, component) {
 	
 	const configObjEl = document.createElement('div');
-	configObjEl.className = "configWrapper"
+	configObjEl.className = "configWrapper";
+	configObjEl.id = optionEl
 
 	const configObjTitle = document.createElement('button');
 	configObjTitle.className = "configObjTitle";
@@ -78,10 +91,10 @@ function createCheckoutForm(configObj, optionEl, component) {
 			var selectEl = document.createElement("select");
 			
 			for (var i = option.length - 1; i >= 0; i--) {
-		  		var optionEl = document.createElement("option");
-				optionEl.className = "checkoutOptionDropdown"
-				optionEl.innerHTML = option[i];
-				selectEl.append(optionEl);
+		  		var optionElement = document.createElement("option");
+				optionElement.className = "checkoutOptionDropdown"
+				optionElement.innerHTML = option[i];
+				selectEl.append(optionElement);
   			}
 		}
 		selectEl.id = component+"_"+key;
@@ -102,6 +115,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 // Create forms below
 
+createCheckoutForm(dropinConfig, "dropinConfiguration", "dropin");
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
 createCheckoutForm(idealConfig, "idealConfiguration", "ideal");

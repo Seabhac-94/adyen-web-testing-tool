@@ -31,7 +31,7 @@ var apiSdkVersions = retrieveVersionValue()
 
 function loadInitialCheckoutScripts(){
 
-	var additionalScripts = ["demo", "utils", "checkoutForm", "paymentMethodsConfiguration"]
+	var additionalScripts = ["demo", "utils", "checkoutForm", "componentConfiguration"]
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
@@ -135,8 +135,6 @@ if (!sdkVersionOnLoad) {
 
 	var getParametersForm = document.getElementById('configurationParametersWrapper');
 	getParametersForm.classList.add("hiddenForm");
-	
-
 	
 }
 
