@@ -34,6 +34,38 @@ h1 {
     line-height: 38px;
 }
 
+.main-title {
+    text-align: center;
+}
+
+.componentSelection {
+    margin-top: 8rem;
+    text-align: center;
+}
+
+.componentButton {
+    height: 6rem;
+    width: 20rem;
+    padding: 2.2rem 2rem;
+    border: 1.5px solid black;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 20px;
+    background: white;
+    color: black;
+    margin: 1rem 2rem;
+    display: inline-block;
+}
+
+.componentButton a:link,
+.componentButton a:visited {
+    color: black;
+}
+
+.componentButton a:link:hover {
+    text-decoration: none;
+}
+
 .parametersForm,
 #componentParameters {
     /*display: flex;*/
@@ -146,6 +178,11 @@ input.checkoutDropdown {
 #loadComponents {
     margin-top: 1rem;
 }
+
+/*button#loadCheckout {
+    width: 94%;
+    height: 2.2rem;
+}*/
 
 .sidebar .header {
     height: 60px;

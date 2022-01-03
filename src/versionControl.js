@@ -131,10 +131,10 @@ if (!sdkVersionOnLoad) {
 
 		loadComponentScript();
 	
-	}, 500);
+	}, 200);
 
 	var getParametersForm = document.getElementById('configurationParametersWrapper');
-	getParametersForm.hidden = true;
+	getParametersForm.classList.add("hiddenForm");
 	
 
 	
