@@ -2,6 +2,10 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0])
 
+var component = getValueOfConfig('flavour', 'flavour');
+
+console.log(component);
+
 function initiateCheckout() {
     // 0. Get clientKey
     getClientKey().then(clientKey => {
@@ -20,29 +24,33 @@ function initiateCheckout() {
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only
                 },
-                onSubmit: (state, dropin) => {
+                onSubmit: (state, component) => {
                     makePayment(state.data)
                         .then(response => {
                             if (response.action) {
-                                dropin.handleAction(response.action)
+                                component.handleAction(response.action)
                             } else if (response.resultCode === "Authorised" || response.resultCode === "Received") {
-                                dropin.setStatus('success')
+                                component.setStatus('success', {
+                                    message: 'Payment successful!'
+                                })
                             } else {
-                                dropin.setStatus('error')
+                                component.setStatus('error', {
+                                    message: 'Something went wrong.'
+                                })
                             }
                         })
                 },
-                onAdditionalDetails: (state, dropin) => {
+                onAdditionalDetails: (state, component) => {
                     updateRequestContainer(state.data);
                     makeDetailsCall(state.data)
                         .then(response => {
                             updateResponseContainer(response)
                             if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
-                                dropin.setStatus('success', {
+                                component.setStatus('success', {
                                     message: 'Payment successful!'
                                 });
                             } else {
-                                dropin.setStatus('error', {
+                                component.setStatus('error', {
                                     message: 'Something went wrong.'
                                 });
                             }
@@ -56,13 +64,13 @@ function initiateCheckout() {
                     const checkout = new AdyenCheckout(configuration);
 
                     // 2. Create and mount the Component
-                    const dropin = checkout
-                        .create('dropin', dropinOptionalConfig())
+                    const selectedComponent = checkout
+                        .create(component, dropinOptionalConfig())
                         .mount('#dropin-container');
 
                     // Called if custom button is used
                     document.getElementById('customPayButton').addEventListener('click', function(){
-                        dropin.submit()
+                        component.submit()
                     })
                 } else {
                     (async function initiateCheckout() {
@@ -70,13 +78,13 @@ function initiateCheckout() {
                         const checkout = await AdyenCheckout(configuration);
 
                         // 2. Create and mount the Component
-                        const dropin = checkout
-                            .create('dropin', dropinOptionalConfig())
+                        const selectedComponent = checkout
+                            .create(component, dropinOptionalConfig())
                             .mount('#dropin-container');
 
                         // Called if custom button is used
                         document.getElementById('customPayButton').addEventListener('click', function(){
-                        dropin.submit()
+                        component.submit()
                     })
                     })();
                 }

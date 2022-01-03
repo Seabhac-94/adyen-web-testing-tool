@@ -1,3 +1,11 @@
+// Select the component to be mounted
+const flavourConfig = {
+	
+	flavour: [ "klarna", "paypal", "paywithgoogle", "ideal", "card", "dropin"],
+
+};
+
+
 // Configuration for dropin
 const dropinConfig = {
 
@@ -10,7 +18,8 @@ const dropinConfig = {
 	instantPaymentTypes: ["paywithgoogle", null],
 	showPayButton: [false, true]
 
-}
+};
+
 
 // Creates the options for the front end based on available options
 // for each component
@@ -117,6 +126,7 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 // Create forms below
 
+createCheckoutForm(flavourConfig, "flavourConfiguration", "flavour");
 createCheckoutForm(dropinConfig, "dropinConfiguration", "dropin");
 createCheckoutForm(cardConfig, "cardConfiguration", "card");
 createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");

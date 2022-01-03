@@ -72,7 +72,8 @@ h1 {
     margin-top: 2rem;
 }
 
-#dropinConfiguration {
+#dropinConfiguration,
+#flavourConfiguration {
     width: 100%;
 }
 

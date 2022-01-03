@@ -22,8 +22,10 @@ getClientKey().then(clientKey => {
                     .then(response => {
                         if (response.action) {
                             dropin.handleAction(response.action)
+                        } else if (response.resultCode === "Authorised" || response.resultCode === "Received") {
+                            dropin.setStatus('success')
                         } else {
-                            alert(response.resultCode)
+                            dropin.setStatus('error')
                         }
                     })
             },
@@ -43,12 +45,13 @@ getClientKey().then(clientKey => {
             const checkout = new AdyenCheckout(configuration);
 
             // 2. Create and mount the Component
-            const dropin = checkout
-                .create('dropin', {
+            const card = checkout
+                .create('card', {
                     // Events
                     onSelect: activeComponent => {
                         if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-                    }
+                    },
+                    showPayButton: true
                 })
                 .mount('#dropin-container');
 
