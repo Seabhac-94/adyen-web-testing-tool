@@ -35,7 +35,7 @@ function dropinOptionalConfig() {
 	if (instantPaymentTypesValue != "") {
 		var instantPaymentTypes = instantPaymentTypesValue.split(", ");
 	}
-	
+
 	var showPayButton = getValueOfConfig(component, 'showPayButton');
 
 	if (!showPayButton) {
@@ -111,6 +111,7 @@ function paypalConfiguration() {
 			currency: currency,
 			value: value
 		},
+		showPayButton: true,
 		style: {
 			layout: getValueOfConfig(component, 'layout'),
 	    	shape: getValueOfConfig(component, 'shape'),

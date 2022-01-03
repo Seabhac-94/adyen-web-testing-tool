@@ -99,6 +99,9 @@ function handleRedirect() {
         environment: 'test'
     };
 
+
+    updateRequestContainer(detailsCall);
+
     (function checkSdkVersionOnRedirect() {
         if (sdkVersion < 5) {
             // Create an instance of AdyenCheckout using the configuration object.
@@ -109,6 +112,7 @@ function handleRedirect() {
             
             makeDetailsCall(detailsCall)
                 .then(response => {
+                    updateResponseContainer(response);
                     if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
                         dropin.setStatus('success', {
                             message: 'Payment successful!'
@@ -131,6 +135,7 @@ function handleRedirect() {
 
             makeDetailsCall(detailsCall)
                 .then(response => {
+                    updateResponseContainer(response);
                     if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
                         dropin.setStatus('success', {
                             message: 'Payment successful!'
