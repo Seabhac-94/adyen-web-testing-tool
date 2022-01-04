@@ -9,6 +9,15 @@ function setReturnUrl() {
     }
 }
 
+function setOrigin() {
+    var origin = window.location.origin
+    var threeDS2Timeout = getValueOfConfig('error', 'threeDS2Timeout')
+    if (threeDS2Timeout) {
+        origin = "https://adyen.com"
+    }
+    console.log(origin);
+    return origin
+}
 
 // This creates a unique reference for the payment and shopper
 function makeReference(length) {
@@ -98,6 +107,7 @@ const paymentsDefaultConfig = {
     shopperEmail: 's.hopper@adyen.com',
     channel: 'Web',
     returnUrl: setReturnUrl(),
+    origin: setOrigin(),
     amount: {
         value: value,
         currency: currency

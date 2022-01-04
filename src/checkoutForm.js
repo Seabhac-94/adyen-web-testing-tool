@@ -84,6 +84,13 @@ const googlePayConfig = {
 };
 
 
+const errorTesting = {
+
+	threeDS2Timeout: [true, false]
+
+};
+
+
 const componentParameters = document.getElementById("componentParameters");
 
 
@@ -150,7 +157,8 @@ function createCheckoutForm(configObj, optionEl, component) {
 		cardConfig: [cardConfig, "cardConfiguration", "card"],
 		paypalConfig: [paypalConfig, "paypalConfiguration", "paypal"],
 		idealConfig: [idealConfig, "idealConfiguration", "ideal"],
-		googlePayConfig: [googlePayConfig, 'googlePayConfiguration', "paywithgoogle"]
+		googlePayConfig: [googlePayConfig, 'googlePayConfiguration', "paywithgoogle"],
+		errorTesting: [errorTesting, 'errorTestingConfiguration', 'error']
 
 	}
 
@@ -169,10 +177,13 @@ function createCheckoutForm(configObj, optionEl, component) {
 (function makeHeadings(b, c, d, e) {
 
 	const headings = {
+
+		parametersConfig: ["h4", "Parameters", "parametersConfiguration", true],
 		componentHeading: ["h4", "Component Selection", "flavourConfiguration", true],
 		dropinConfigHeading: ["h4", "Dropin Configuration", "dropinConfiguration", true],
 		pmConfigHeading: ["h4", "Payment Method Configuration", "cardConfiguration"],
-		parametersConfig: ["h4", "Parameters", "parametersConfiguration", true]
+		errorHeading: ["h4", "Error Recreation (version dependant - select one only)", "errorTestingConfiguration", true]
+	
 	}
 
 

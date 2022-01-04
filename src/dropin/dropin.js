@@ -37,24 +37,20 @@ function initiateCheckout() {
                                     component.setStatus('success', {
                                         message: 'Payment successful!'
                                     });
-                                    console.log('dropin')
                                 } else {
                                     component.unmount();
                                     const result = document.getElementById("dropin-container");
                                     result.innerHTML = componentSuccess;
-                                    console.log('component')
                                 }
                             } else {
                                 if (componentFlavour === 'dropin') {
                                     component.setStatus('error', {
                                         message: 'Something went wrong.'
                                     });
-                                    console.log('dropin');
                                 } else {
                                     component.unmount();
                                     const result = document.getElementById("dropin-container");
                                     result.innerHTML = componentError;
-                                    console.log('component')
                                 }
                             }
                         })
@@ -69,12 +65,10 @@ function initiateCheckout() {
                                     component.setStatus('success', {
                                         message: 'Payment successful!'
                                     });
-                                    console.log('dropin')
                                 } else {
                                     component.unmount();
                                     const result = document.getElementById("dropin-container");
                                     result.innerHTML = componentSuccess;
-                                    console.log('component')
                                 }
 
                             } else {
@@ -82,12 +76,10 @@ function initiateCheckout() {
                                     component.setStatus('error', {
                                         message: 'Something went wrong.'
                                     });
-                                    console.log('dropin');
                                 } else {
                                     component.unmount();
                                     const result = document.getElementById("dropin-container");
                                     result.innerHTML = componentError;
-                                    console.log('component')
                                 }
                             }
                         })
