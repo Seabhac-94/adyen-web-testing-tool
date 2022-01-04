@@ -1,6 +1,6 @@
 // This calls the retrieveVersionValue() function and converts it to a number
 // We will use this to determine which instance of AdyenCheckout to create 
-var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0])
+var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0]);
 
 var componentFlavour = getValueOfConfig('flavour', 'flavour');
 

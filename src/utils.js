@@ -1,14 +1,13 @@
 // This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
 function setReturnUrl() {
-    if(window.location.pathname === '/sessions/') {
-        return window.location.href
-    } else {
-        // var apiSdkVersions = retrieveVersionValue()
-        return window.location.href
-    }
-}
 
+    return window.location.href
+
+};
+
+
+// Sets the origin based on the test case
 function setOrigin() {
     var origin = window.location.origin
     var threeDS2Timeout = getValueOfConfig('error', 'threeDS2Timeout')
@@ -17,7 +16,8 @@ function setOrigin() {
     }
     console.log(origin);
     return origin
-}
+};
+
 
 // This creates a unique reference for the payment and shopper
 function makeReference(length) {
@@ -35,44 +35,60 @@ function paymentsConfigParams() {
 
     var countryCode = getValueOfConfig('parameters', 'countryCode');
     if (countryCode === '') {
+    
         countryCode = 'NL';
+    
     }
 
     var currency = getValueOfConfig('parameters', 'currency');
     if (currency === '') {
+
         currency = 'EUR';
+
     }
 
     var value = getValueOfConfig('parameters', 'value');
 
     if (value === '') {
+
         value = 11800;
+
     } else {
+
         value = parseInt(value);
+
     }
 
     var shopperLocale = getValueOfConfig('parameters', 'shopperLocale');
     if (shopperLocale === '') {
+
         shopperLocale = 'en_GB';
+
     }
 
     var shopperReference = getValueOfConfig('parameters', 'shopperReference');
     if (shopperReference === '') {
+
         shopperReference = 'shopper_' + makeReference(10);
+
     }
 
     var reference = getValueOfConfig('parameters', 'reference');
     if (reference === '') {
+
         reference = 'testPayment_' + shopperReference;
+
     }       
 
     return {
+
         countryCode,
         currency,
         value,
         shopperLocale,
         shopperReference,
         reference,
+    
     }
 
 }
@@ -152,6 +168,7 @@ const getPaymentMethods = () =>
             return response;
         })
         .catch(console.error);
+
 
 // Posts a new payment into the local server
 const makePayment = (paymentMethod, config = {}) => {

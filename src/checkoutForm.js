@@ -1,5 +1,7 @@
-// Parameters fro the paymentMethods/payments call
+// Creates the options for the front end based on available options
+// for each component/error/payment method
 
+// Parameters fro the paymentMethods/payments call
 const parametersConfig = {
 
 	value: ["input"],
@@ -35,9 +37,7 @@ const dropinConfig = {
 };
 
 
-// Creates the options for the front end based on available options
-// for each component
-
+// Payment methods configuration
 const cardConfig = {
 
 	name: ["input"],
@@ -55,6 +55,7 @@ const cardConfig = {
 	minimumExpiryDate: ["input"]
 
 };
+
 
 const paypalConfig = {
 
@@ -84,6 +85,7 @@ const googlePayConfig = {
 };
 
 
+// Specific/common errors
 const errorTesting = {
 
 	threeDS2Timeout: [true, false]
@@ -117,21 +119,28 @@ function createCheckoutForm(configObj, optionEl, component) {
 		checkoutDropdownWrapper.append(optionElDiv);
 
 		if (option == "input") {
+
 			var selectEl = document.createElement("input");
+
 		}
 		else {
+
 			var selectEl = document.createElement("select");
 			
 			for (var i = option.length - 1; i >= 0; i--) {
+
 		  		var optionElement = document.createElement("option");
 				optionElement.className = "checkoutOptionDropdown"
 				optionElement.innerHTML = option[i];
 				selectEl.append(optionElement);
+
   			}
 		}
+
 		selectEl.id = component+"_"+key;
 		selectEl.className = "checkoutDropdown";
 		optionElDiv.append(selectEl);
+
 	};
 
   	configObjTitle.addEventListener('click', function(){
@@ -145,8 +154,8 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 };
 
-// Create forms below
 
+// Create forms below
 (function assignCheckoutForm() {
 
 	const createCheckoutFormParams = {
@@ -167,13 +176,13 @@ function createCheckoutForm(configObj, optionEl, component) {
 		createCheckoutForm(params[0], params[1], params[2]);
 		// Example of what this function is calling:
 		// createCheckoutForm(cardConfig, "cardConfiguration", "card");
+	
 	}
 
 })();
 
 
 // Create headings on form
-
 (function makeHeadings(b, c, d, e) {
 
 	const headings = {
@@ -191,14 +200,19 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 		var a = document.createElement(params[0]);
 		a.innerText = params[1];
+
 		if (params[3]) {
+
 			a.classList.add("inline-header");
+
 		}
+
 		var aParent = document.getElementById(params[2]).parentNode;
 		var aChild = document.getElementById(params[2]);
 		aParent.insertBefore(a, aChild);
 		// Example of what this function is calling:
 		// makeHeadings("h4", "Component Selection", "flavourConfiguration")
+
 	}
 
 })();

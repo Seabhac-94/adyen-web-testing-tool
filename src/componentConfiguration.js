@@ -32,15 +32,20 @@ function dropinOptionalConfig() {
 
 	// Supports array for instantPaymentTypes
 	var instantPaymentTypesValue = getValueOfConfig(component, 'instantPaymentTypes');
+
 	if (instantPaymentTypesValue != "") {
+
 		var instantPaymentTypes = instantPaymentTypesValue.split(", ");
+
 	}
 
 	var showPayButton = getValueOfConfig(component, 'showPayButton');
 
 	if (!showPayButton) {
+
 		const customPay = document.getElementById('customPayButton')
 		customPay.classList.remove("hiddenForm")
+
 	};
 
 	return {
@@ -63,7 +68,6 @@ function dropinOptionalConfig() {
 }
 
 
-
 // Payment methods configuration, called in dropin.js
 function cardConfiguration() {
 
@@ -72,18 +76,25 @@ function cardConfiguration() {
 	// Supports array for brands
 	var brandsValue = getValueOfConfig(component, 'brands');
 	if (brandsValue != "") {
+
 		var brands = brandsValue.split(", ");
+
 	} else {
+
 		var brands = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
+
 	};
 
 	// Defaults to credit card if no name is selected
 	var name = getValueOfConfig(component, 'name');
 	if (name == '') {
+
 		var name = 'Credit Card'
+
 	};
 
 	return {
+
 		name,
 		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
 		brands,
@@ -97,6 +108,7 @@ function cardConfiguration() {
 		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
 		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
 		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
+
 	}
 
 };
@@ -107,6 +119,7 @@ function paypalConfiguration() {
 	var component = 'paypal';
 	
 	return {
+
 		amount: {
 			currency: currency,
 			value: value
@@ -118,9 +131,11 @@ function paypalConfiguration() {
 	    	color: getValueOfConfig(component, 'color'),
 	    	label: getValueOfConfig(component, 'label'),
   		}
+
 	}
 
 };
+
 
 function idealConfiguration () {
 	
@@ -128,14 +143,18 @@ function idealConfiguration () {
 
 	var placeholder = getValueOfConfig(component, 'placeholder');
 	if (placeholder == '') {
+
 		var placeholder = 'Select your bank';
+
 	}
 
 	return {
+
 		showImage: getValueOfConfig(component, 'showImage'),
 		issuer: getValueOfConfig(component, 'issuer'),
 		highlightedIssuers: getValueOfConfig(component, 'highlightedIssuers'),
 		placeholder
+
 	}
 
 };
@@ -159,8 +178,6 @@ function googlePayConfiguration() {
 		buttonLocale: getValueOfConfig(component, 'buttonLocale'),
 		buttonSizeMode: getValueOfConfig(component, 'buttonSizeMode')
 
-
 	}
 
 }
-
