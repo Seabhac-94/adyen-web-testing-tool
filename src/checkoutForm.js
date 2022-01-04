@@ -166,12 +166,13 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 // Create headings on form
 
-(function makeHeadings(b, c, d) {
+(function makeHeadings(b, c, d, e) {
 
 	const headings = {
-		componentHeading: ["h4", "Component Selection", "flavourConfiguration"],
-		dropinConfigHeading: ["h4", "Dropin Configuration", "dropinConfiguration"],
-		pmConfigHeading: ["h4", "Payment Method Configuration", "cardConfiguration"]
+		componentHeading: ["h4", "Component Selection", "flavourConfiguration", true],
+		dropinConfigHeading: ["h4", "Dropin Configuration", "dropinConfiguration", true],
+		pmConfigHeading: ["h4", "Payment Method Configuration", "cardConfiguration"],
+		parametersConfig: ["h4", "Parameters", "parametersConfiguration", true]
 	}
 
 
@@ -179,6 +180,9 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 		var a = document.createElement(params[0]);
 		a.innerText = params[1];
+		if (params[3]) {
+			a.classList.add("inline-header");
+		}
 		var aParent = document.getElementById(params[2]).parentNode;
 		var aChild = document.getElementById(params[2]);
 		aParent.insertBefore(a, aChild);
