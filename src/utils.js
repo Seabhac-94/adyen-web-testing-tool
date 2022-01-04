@@ -22,14 +22,61 @@ function makeReference(length) {
 };
 
 
-// We declare these values here to only need to change them in one place
-const countryCode = getValueOfConfig('parameters', 'countryCode');
-const currency = 'EUR';
-const value = 11800;
-const shopperLocale = 'en_GB';
-const shopperReference = 'shopper_' + makeReference(10);
-const reference = 'testPayment_' + shopperReference;
+function paymentsConfigParams() {
 
+    var countryCode = getValueOfConfig('parameters', 'countryCode');
+    if (countryCode === '') {
+        countryCode = 'NL';
+    }
+
+    var currency = getValueOfConfig('parameters', 'currency');
+    if (currency === '') {
+        currency = 'EUR';
+    }
+
+    var value = getValueOfConfig('parameters', 'value');
+
+    if (value === '') {
+        value = 11800;
+    } else {
+        value = parseInt(value);
+    }
+
+    var shopperLocale = getValueOfConfig('parameters', 'shopperLocale');
+    if (shopperLocale === '') {
+        shopperLocale = 'en_GB';
+    }
+
+    var shopperReference = getValueOfConfig('parameters', 'shopperReference');
+    if (shopperReference === '') {
+        shopperReference = 'shopper_' + makeReference(10);
+    }
+
+    var reference = getValueOfConfig('parameters', 'reference');
+    if (reference === '') {
+        reference = 'testPayment_' + shopperReference;
+    }       
+
+    return {
+        countryCode,
+        currency,
+        value,
+        shopperLocale,
+        shopperReference,
+        reference,
+    }
+
+}
+
+const paymentsParams = paymentsConfigParams();
+
+// We declare these values here to only need to change them in one place
+const countryCode = paymentsParams.countryCode
+const currency = paymentsParams.currency;
+const value = paymentsParams.value;
+const shopperLocale = paymentsParams.shopperLocale;
+const shopperReference = paymentsParams.shopperReference;
+const reference = paymentsParams.reference;
 
 const paymentMethodsConfig = {
     shopperReference: shopperReference,
