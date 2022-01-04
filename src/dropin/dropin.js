@@ -135,7 +135,6 @@ function handleRedirect() {
         environment: 'test'
     };
 
-
     updateRequestContainer(detailsCall);
 
     (function checkSdkVersionOnRedirect() {

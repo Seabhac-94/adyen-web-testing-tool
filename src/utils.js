@@ -14,7 +14,6 @@ function setOrigin() {
     if (threeDS2Timeout) {
         origin = "https://adyen.com"
     }
-    console.log(origin);
     return origin
 };
 

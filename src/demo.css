@@ -75,6 +75,7 @@ h1 {
 #componentParameters h4 {
     margin: 10px 0;
     padding: 3.5px;
+    font-weight: 100;
 }
 
 /*#dropinConfiguration,
@@ -94,12 +95,12 @@ h1 {
 */
 
 .inline-header {
-    margin: 10px 0;
-    padding: 3.5px;
+/*    margin: 10px 0;
+    padding: 3.5px;*/
     width: 50%;
     display: inline-block;
-}
 
+}
 
 .selectDropdown {
     width: 4rem;

@@ -1,6 +1,17 @@
 const stateContainer = document.querySelector('.current-state');
 const requestContainer = document.querySelector('.request-container');
 const responseContainer = document.querySelector('.response-container');
+const componentContainer = document.querySelector('.component-container');
+const implementationContainer = document.querySelector('.implementation-code');
+
+
+function updateImplementationContainer(code) {
+    implementationContainer.innerText = code;
+}
+
+function updateComponentContainer(code) {
+    componentContainer.innerText = JSON.stringify(code, null, 2);
+}
 
 // Demo - Update current component state container
 function updateStateContainer(newState) {
