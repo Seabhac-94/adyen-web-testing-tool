@@ -82,6 +82,16 @@ if (!sdkVersionOnLoad) {
 
 } else if (!redirectResult) {
 
+	const resetButton = document.createElement("button");
+	resetButton.innerHTML = "Reset";
+	resetButton.id = "resetButton";
+	parameters.append(resetButton);
+	const reset = document.getElementById("resetButton");
+
+	reset.addEventListener("click", function() {
+		location.href = "http://localhost:3000/dropin"
+	})
+
 	var loadComponentsDiv = document.getElementById('loadComponents');
 	var loadCheckoutButton = document.createElement("button");
 	loadCheckoutButton.innerHTML = "Load Checkout";
