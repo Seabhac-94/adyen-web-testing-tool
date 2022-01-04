@@ -31,7 +31,7 @@ var apiSdkVersions = retrieveVersionValue()
 
 function loadInitialCheckoutScripts(){
 
-	var additionalScripts = ["demo", "utils", "checkoutForm", "componentConfiguration"]
+	var additionalScripts = ["demo", "checkoutForm", "componentConfiguration"]
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
@@ -51,10 +51,18 @@ function loadInitialCheckoutScripts(){
 
 };
 
-function loadComponentScript() {
-		var dropinScript = document.createElement("script");
-		dropinScript.src = "/dropin/dropin.js"
-		document.body.appendChild(dropinScript);
+async function loadComponentScript() {
+		
+		var utilsScript = await document.createElement("script");
+		utilsScript.src = await "/utils.js"
+		document.body.appendChild(utilsScript);
+		
+		// setTimeout(function() {
+			var dropinScript = await document.createElement("script");
+			dropinScript.src = await "/dropin/dropin.js"
+			document.body.appendChild(dropinScript);
+		// }, 150)
+		
 };
 
 

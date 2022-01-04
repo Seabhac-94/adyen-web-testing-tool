@@ -23,7 +23,7 @@ function makeReference(length) {
 
 
 // We declare these values here to only need to change them in one place
-const countryCode = 'NL';
+const countryCode = getValueOfConfig('parameters', 'countryCode');
 const currency = 'EUR';
 const value = 11800;
 const shopperLocale = 'en_GB';

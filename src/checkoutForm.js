@@ -1,3 +1,17 @@
+// Parameters fro the paymentMethods/payments call
+
+const parametersConfig = {
+
+	value: ["input"],
+	currency: ["input"],
+	shopperReference: ["input"],
+	reference: ["input"],
+	countryCode: ["input"],
+	shopperLocale: ["input"]
+
+};
+
+
 // Select the component to be mounted
 const flavourConfig = {
 	
@@ -126,32 +140,50 @@ function createCheckoutForm(configObj, optionEl, component) {
 
 // Create forms below
 
-createCheckoutForm(flavourConfig, "flavourConfiguration", "flavour");
-createCheckoutForm(dropinConfig, "dropinConfiguration", "dropin");
-createCheckoutForm(cardConfig, "cardConfiguration", "card");
-createCheckoutForm(paypalConfig, "paypalConfiguration", "paypal");
-createCheckoutForm(idealConfig, "idealConfiguration", "ideal");
-createCheckoutForm(googlePayConfig, 'googlePayConfiguration', "paywithgoogle");
+(function assignCheckoutForm() {
+
+	const createCheckoutFormParams = {
+
+		parametersConfig: [parametersConfig, "parametersConfiguration", "parameters"],
+		flavourConfig: [flavourConfig, "flavourConfiguration", "flavour"],
+		dropinConfig: [dropinConfig, "dropinConfiguration", "dropin"],
+		cardConfig: [cardConfig, "cardConfiguration", "card"],
+		paypalConfig: [paypalConfig, "paypalConfiguration", "paypal"],
+		idealConfig: [idealConfig, "idealConfiguration", "ideal"],
+		googlePayConfig: [googlePayConfig, 'googlePayConfiguration', "paywithgoogle"]
+
+	}
+
+	for (let [key, params] of Object.entries(createCheckoutFormParams)) {
+
+		createCheckoutForm(params[0], params[1], params[2]);
+		// Example of what this function is calling:
+		// createCheckoutForm(cardConfig, "cardConfiguration", "card");
+	}
+
+})();
 
 
-// Minor adjusments for headings on form
+// Create headings on form
 
-var sh = document.createElement("h4");
-sh.innerText = "Component Selection";
-var shParent = document.getElementById("flavourConfiguration").parentNode;
-var shChild = document.getElementById("flavourConfiguration");
-shParent.insertBefore(sh, shChild);
+(function makeHeadings(b, c, d) {
 
-
-var dh = document.createElement("h4");
-dh.innerText = "Dropin Configuration";
-var dhParent = document.getElementById("dropinConfiguration").parentNode;
-var dhChild = document.getElementById("dropinConfiguration");
-dhParent.insertBefore(dh, dhChild);
+	const headings = {
+		componentHeading: ["h4", "Component Selection", "flavourConfiguration"],
+		dropinConfigHeading: ["h4", "Dropin Configuration", "dropinConfiguration"],
+		pmConfigHeading: ["h4", "Payment Method Configuration", "cardConfiguration"]
+	}
 
 
-var pmh = document.createElement("h4");
-pmh.innerText = "Payment Method Configuration";
-var pmhParent = document.getElementById("cardConfiguration").parentNode;
-var pmhChild = document.getElementById("cardConfiguration");
-pmhParent.insertBefore(pmh, pmhChild);
+	for (let [key, params] of Object.entries(headings)) {
+
+		var a = document.createElement(params[0]);
+		a.innerText = params[1];
+		var aParent = document.getElementById(params[2]).parentNode;
+		var aChild = document.getElementById(params[2]);
+		aParent.insertBefore(a, aChild);
+		// Example of what this function is calling:
+		// makeHeadings("h4", "Component Selection", "flavourConfiguration")
+	}
+
+})();
