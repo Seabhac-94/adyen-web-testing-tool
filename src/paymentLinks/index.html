@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Adyen Checkout Components sample code</title>
+
+    <link rel="stylesheet" href="../demo.css">
+</head>
+<body>
+    <style type="text/css">
+    
+    .pl-inputs {
+        margin: 10px 0;
+    }
+
+    .pl-inputs input {
+        width: max-content;
+    }
+
+    #createPaymentLink {
+
+        background: #00112c;
+        color: #fafafa;
+        padding: 15px;
+        border: 0.5px solid;
+        border-radius: 10px;
+        cursor: pointer;
+
+    }
+
+    #createPaymentLink:hover {
+
+        background: #fafafa;
+        color: #00112c;
+
+    }
+
+    </style>
+
+
+    <div class="container container--full-width">
+        <div class="main">
+            <div class="checkout-container">
+                <a href="../">Back</a>
+
+                <h1>Payment Links</h1>
+
+                <div class="paymentLinkForm">
+
+                    <div class="pl-inputs">
+                        <label for="reference">Reference</label>
+                        <input type="text" name="reference" id="pl-reference" value="TestPayment">
+                    </div>
+                          
+                    <div class="pl-inputs">
+                        <label for="currency">Currency</label>
+                        <input type="text" name="currency" id="pl-currency" value="EUR"> 
+                    </div>
+
+                    <div class="pl-inputs">
+                        <label for="value">Value</label>
+                        <input type="number" name="value" id="pl-value" value=100> 
+                    </div>
+
+                    <div class="pl-inputs">
+                        <label for="shopperReference">Shopper Reference</label>
+                        <input type="text" name="shopperReference" id="pl-shopperReference" value="TestShopper">                        
+                    </div>
+                    
+
+                    <div class="pl-inputs">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" id="pl-description" value="Description">
+                    </div>
+
+                    
+                    <div class="pl-inputs">
+                        <label for="countryCode">Country Code</label>
+                        <input type="text" name="countryCode" id="pl-countryCode" value="NL">                        
+                    </div>
+
+
+                    <div class="pl-inputs">
+                        <label for="shopperLocale">Shopper Locale</label>
+                        <input type="text" name="shopperLocale" id="pl-shopperLocale" value="en_GB">
+                    </div>
+
+
+                </div>
+
+                <button id="createPaymentLink">Create Payment Link</button>
+
+                <div class="paymentLinkWrapper">
+                    <pre class="paymentLinkData">
+                        
+                    </pre>
+                </div>
+
+            </div>
+
+            <div class="info">
+                <p>
+                    Check the Source Code to see the full implementation.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="sidebar">
+<!--             <div class="header">
+                <h2>Basic Implementation</h2>
+                <button class="copy-sample-code" aria-label="Copy sample code"></button>
+            </div>
+            <pre class="source-code"><code>const checkout = await AdyenCheckout({
+    environment: 'test',
+    clientKey: 'test_...',
+    session: {
+        id: "CS62BB0....",
+        sessionData: "Ab02b4c0!BQABA....""
+    },
+    onPaymentCompleted: (result, component) => {
+        console.info(result, component);
+    },
+    onError: (error, component) => {
+        console.error(error.name, error.message, error.stack, component);
+    }
+});
+                            
+const dropin = checkout
+    .create('dropin')
+    .mount('#dropin-container');</code></pre> -->
+
+            <div class="header">
+                <h2>Current state</h2>
+            </div>
+            <pre class="current-state">{}</pre>
+
+            <div class="request-container">
+                <div class="header">
+                    <h2>Request</h2>
+                </div>
+                <p>The request to the <code>/payments</code> endpoint will be shown here.</p>
+                <pre class="request-code"></pre>
+            </div>
+
+            <div class="response-container">
+                <div class="header">
+                    <h2>Response</h2>
+                </div>
+                <p>The response from the <code>/payments</code> endpoint will be shown here.</p>
+                <pre class="response-code"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="../demo.js"></script> -->
+    <!-- <script src="../utils.js"></script> -->
+    <script src="/paymentLinks/utils.js"></script>
+    <script src="/paymentLinks/paymentLink.js"></script>
+</body>
+</html>
