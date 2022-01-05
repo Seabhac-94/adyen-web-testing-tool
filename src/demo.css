@@ -102,7 +102,8 @@ h1 {
 
 }
 
-.selectDropdown {
+.selectDropdown,
+#selectImpCode {
     width: 4rem;
     height: 2rem;
     border: 0.5px solid grey;
@@ -113,8 +114,14 @@ h1 {
 }
 
 
+#copyConfiguration {
+    margin: 0.5rem 0 1rem;
+}
+
+
 .selectDropdown,
-.checkoutDropdown {
+.checkoutDropdown,
+#selectImpCode {
     padding: 2px;
     margin:  2px 5px;
 }
@@ -122,7 +129,8 @@ h1 {
 #loadScripts,
 #loadCheckout,
 #resetButton,
-.configObjTitle {
+.configObjTitle,
+#showComponent {
     height: 2rem;
     padding: 0px 10px;
     margin-left: 5px;
@@ -145,7 +153,9 @@ h1 {
 #loadScripts,
 #loadCheckout,
 #resetButton,
-.configObjTitle {
+.configObjTitle,
+#selectImpCode,
+#showComponent {
     border-radius: 5px;
     cursor: pointer;
 }
@@ -195,6 +205,7 @@ input.checkoutDropdown {
 #loadCheckout:hover,
 #resetButton:hover,
 .configObjTitle:hover,
+#showComponent:hover,
 #customPayButton:hover {
     color: #000000;
     background: #ffffff;

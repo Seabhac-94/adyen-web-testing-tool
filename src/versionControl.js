@@ -106,11 +106,14 @@ if (!sdkVersionOnLoad) {
 		location.href = "http://localhost:3000/dropin"
 	})
 
+	// If there's sdkVersions then we can present the loadCheckout button
 	var loadComponentsDiv = document.getElementById('loadComponents');
 	var loadCheckoutButton = document.createElement("button");
 	loadCheckoutButton.innerHTML = "Load Checkout";
 	loadCheckoutButton.id = "loadCheckout";
 	loadComponentsDiv.append(loadCheckoutButton);
+
+	// Disables the forms for version selection once the version configuration has been chosen
 
 	var loadScripts = document.getElementById("loadScripts");
 	loadScripts.disabled = true;
@@ -129,30 +132,22 @@ if (!sdkVersionOnLoad) {
 	optionApiVersion.innerText = apiVersionOnLoad;
 	optionApiVersion.disabled = true;
 
+
+	// Inserts the correct scripts
+
 	loadInitialCheckoutScripts();
 
-	// If there's sdkVersions then we can present the loadComponent button
+	
 	var loadCheckout = document.getElementById("loadCheckout");
 	loadCheckout.addEventListener('click', function(){
 
-		// Disables the forms for checkout once the version configuration has been chosen
-		var disableCheckout = document.getElementsByClassName('checkoutDropdown');
+		// Once the "loadCheckout" button is clicked, the form will hide and load the final scripts
 
-		for (var i = disableCheckout.length - 1; i >= 0; i--) {
-		
-			disableCheckout[i].disabled = true;
-		
-		}
+		var hideCheckoutForm = document.getElementById('componentParameters');
 
-		var hideForms = document.getElementsByClassName('checkoutDropdownWrapper');
+		hideCheckoutForm.classList.add('hiddenForm');
 
-		for (var i = hideForms.length - 1; i >= 0; i--) {
-
-			hideForms[i].classList.add("hiddenForm");
-
-		}
-
-		loadCheckout.disabled = true;
+		loadCheckout.classList.add('hiddenForm');
 
 		// Loads the drop-in script
 		loadComponentScript();

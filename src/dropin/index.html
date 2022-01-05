@@ -23,6 +23,11 @@
                    <div id="componentParameters"></div>
                    <div id="loadComponents"></div>
                 </div>
+
+                <div id="copyConfiguration">
+                    <div class="implementation"></div>
+                    <!-- <button id="showComponent">Show Component</button> -->
+                </div>
                 
                 <div class="payment-method">
                     <div id="dropin-container">
@@ -30,17 +35,6 @@
                     </div>
                     <button id="customPayButton" class="hiddenForm" type="submit">Pay</button>
                 </div>
-
-                <div>
-                    <div class="implementation"></div>
-                    <button id="showComponent">Show Component</button>
-                    <pre class="component-container"></pre>
-
-                    <button id="showImplementation">Show Implementation</button>
-                    <pre class="implementation-code"></pre>
-                </div>
-                
-
             </div>
 
             <div class="info">
@@ -61,23 +55,12 @@
 
         <div class="sidebar">
             <div class="header">
-                <h2>Basic Implementation</h2>
+                <h2>Component Configuration</h2>
                 <button class="copy-sample-code" aria-label="Copy sample code"></button>
             </div>
-            <pre class="source-code"><code>const checkout = await AdyenCheckout({
-            environment: 'test',
-            clientKey: 'test_...',
-            paymentMethodsResponse: { ... },
-            onSubmit: (state, dropin) => {
-                    makePayment(state.data);
-                }
-            });
-                        
-const dropin = checkout
-    .create('dropin',{
-        onSelect: (dropin) => {}
-    })
-    .mount('#dropin-container');</code></pre>
+            <pre class="source-code">
+                
+            </pre>
 
             <div class="header">
                 <h2>Current state</h2>

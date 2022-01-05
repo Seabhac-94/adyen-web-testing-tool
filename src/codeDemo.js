@@ -1,5 +1,4 @@
 const implmentationDiv = document.querySelector('.implementation');
-const implmentationButton = document.querySelector('#showComponent');
 
 const configurationObjects = {
 
@@ -14,6 +13,12 @@ selImpCode.id = "selectImpCode"
 
 implmentationDiv.appendChild(selImpCode);
 
+var selImpCodeButton = document.createElement("button");
+selImpCodeButton.id = "showComponent";
+selImpCodeButton.innerText = "Display Code";
+
+implmentationDiv.appendChild(selImpCodeButton);
+
 for (let [key, object] of Object.entries(configurationObjects)) {
 
 	var optImpCode = document.createElement("option");
@@ -26,6 +31,7 @@ for (let [key, object] of Object.entries(configurationObjects)) {
 
 }
 
+const implmentationButton = document.querySelector('#showComponent');
 
 implmentationButton.addEventListener('click', function () {
 
