@@ -170,7 +170,7 @@ input.checkoutDropdown {
 }
 
 .checkoutDropdownWrapper {
-    margin: 0 5px;
+    margin: 0 5px 15px 5px;
 }
 
 .checkoutDropdownWrapper > div {
@@ -227,18 +227,21 @@ input.checkoutDropdown {
     width: 50%;
     display: inline-block;
     vertical-align: top;
-    text-align: center;
+    text-align: left;
+    border-radius: 30px 5px 5px 30px;
 }
 
 .configObjTitle {
     cursor: pointer;
-    margin: 0.5rem 0;
-    padding: 0 5px;
+    margin: 0.5rem 0 0.5rem 1.5rem;
+    /*padding: 0 5px;*/
     /*min-width: 8rem;*/
-    width: 95%;
+    width: 50%;
     text-align: left;
-    border-radius: 20px 4px 20px 4px;
+    /*border-radius: 20px 4px 20px 4px;*/
     padding: 0 0 0 1.5rem;
+    border-radius: 20px 0 0 20px;
+    /*margin-left: 1.5rem;*/
 
 }
 
@@ -488,4 +491,22 @@ pre {
 #result-container {
     background: #f7f8f9;
     padding: 0px 10px;
+}
+
+
+@media (max-width: 525px) {
+
+    .configObjTitle {
+        width: 70%;
+    }
+
+    .configWrapper {
+        width:  90%;
+        display: block;
+    }
+
+    .inline-header {
+        display: block;
+    }
+
 }

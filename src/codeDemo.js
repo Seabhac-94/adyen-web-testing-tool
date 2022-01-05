@@ -4,6 +4,8 @@ const configurationObjects = {
 
 	dropin: dropinOptionalConfig(),
 	card: cardConfiguration(),
+	ideal: idealConfiguration(),
+	paywithgoogle: googlePayConfiguration(),
 	paypal: paypalConfiguration()
 
 }
@@ -24,7 +26,6 @@ for (let [key, object] of Object.entries(configurationObjects)) {
 	var optImpCode = document.createElement("option");
 	optImpCode.innerText = key;
 	optImpCode.id = `${key}_config`;
-	// optImpCode.classList.add('implementationOption')
 	optImpCode.value = JSON.stringify(object, null, 2);
 	selImpCode.appendChild(optImpCode)
 	console.log(optImpCode.value)

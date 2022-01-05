@@ -164,7 +164,10 @@ if (!sdkVersionOnLoad) {
 	
 	}, 200);
 
-	var getParametersForm = document.getElementById('configurationParametersWrapper');
+	const getParametersForm = document.getElementById("configurationParametersWrapper");
 	getParametersForm.classList.add("hiddenForm");
+
+	const copyConfiguration = document.getElementById("copyConfiguration");
+	copyConfiguration.classList.add("hiddenForm")
 	
 }
