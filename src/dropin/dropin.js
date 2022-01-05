@@ -9,6 +9,32 @@ const componentSuccess = `<div class="adyen-checkout__status adyen-checkout__sta
 const componentError = `<div class="adyen-checkout__status adyen-checkout__status--error"><img class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.gif" alt="Something went wrong." height="88"><span class="adyen-checkout__status__text">Something went wrong.</span></div>`;
 
 
+function showFinalResponse(resultCode, component) {
+    if (resultCode === "Authorised" || resultCode === "Received") {
+        // We check to see if there's no flavour so that it can handle redirects as well
+        if (componentFlavour === 'dropin' || !componentFlavour) {
+            component.setStatus('success', {
+                message: 'Payment successful!'
+            });
+        } else {
+            component.unmount();
+            const result = document.getElementById("dropin-container");
+            result.innerHTML = componentSuccess;
+        }
+    } else {
+        if (componentFlavour === 'dropin' || !componentFlavour) {
+            component.setStatus('error', {
+                message: 'Something went wrong.'
+            });
+        } else {
+            component.unmount();
+            const result = document.getElementById("dropin-container");
+            result.innerHTML = componentError;
+        }
+    }
+}
+
+
 function initiateCheckout() {
     // 0. Get clientKey
     getClientKey().then(clientKey => {
@@ -32,26 +58,8 @@ function initiateCheckout() {
                         .then(response => {
                             if (response.action) {
                                 component.handleAction(response.action)
-                            } else if (response.resultCode === "Authorised" || response.resultCode === "Received") {
-                                if (componentFlavour === 'dropin') {
-                                    component.setStatus('success', {
-                                        message: 'Payment successful!'
-                                    });
-                                } else {
-                                    component.unmount();
-                                    const result = document.getElementById("dropin-container");
-                                    result.innerHTML = componentSuccess;
-                                }
                             } else {
-                                if (componentFlavour === 'dropin') {
-                                    component.setStatus('error', {
-                                        message: 'Something went wrong.'
-                                    });
-                                } else {
-                                    component.unmount();
-                                    const result = document.getElementById("dropin-container");
-                                    result.innerHTML = componentError;
-                                }
+                                showFinalResponse(response.resultCode, component)
                             }
                         })
                 },
@@ -59,29 +67,8 @@ function initiateCheckout() {
                     updateRequestContainer(state.data);
                     makeDetailsCall(state.data)
                         .then(response => {
-                            updateResponseContainer(response)
-                            if (response.resultCode === "Authorised" || response.resultCode === "Received") {
-                                if (componentFlavour === 'dropin') {
-                                    component.setStatus('success', {
-                                        message: 'Payment successful!'
-                                    });
-                                } else {
-                                    component.unmount();
-                                    const result = document.getElementById("dropin-container");
-                                    result.innerHTML = componentSuccess;
-                                }
-
-                            } else {
-                                if (componentFlavour === 'dropin') {
-                                    component.setStatus('error', {
-                                        message: 'Something went wrong.'
-                                    });
-                                } else {
-                                    component.unmount();
-                                    const result = document.getElementById("dropin-container");
-                                    result.innerHTML = componentError;
-                                }
-                            }
+                            updateResponseContainer(response);
+                            showFinalResponse(response.resultCode, component);
                         })
                 }
             };
@@ -148,15 +135,7 @@ function handleRedirect() {
             makeDetailsCall(detailsCall)
                 .then(response => {
                     updateResponseContainer(response);
-                    if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
-                        dropin.setStatus('success', {
-                            message: 'Payment successful!'
-                        })
-                    } else {
-                        dropin.setStatus('error', {
-                            message: 'Something went wrong.'
-                        })
-                    }
+                    showFinalResponse(response.resultCode, dropin)
                 })
 
         } else {
@@ -171,15 +150,7 @@ function handleRedirect() {
                 makeDetailsCall(detailsCall)
                     .then(response => {
                         updateResponseContainer(response);
-                        if (response.resultCode === 'Authorised' || response.resultCode === 'Received') {
-                            dropin.setStatus('success', {
-                                message: 'Payment successful!'
-                            })
-                        } else {
-                            dropin.setStatus('error', {
-                                message: 'Something went wrong.'
-                            })
-                        }
+                        showFinalResponse(response.resultCode, dropin)
                     })
 
             })();
