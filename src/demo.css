@@ -253,8 +253,13 @@ input.checkoutDropdown {
     margin-top: 1rem;
 }
 
+.recurringWrapper {
+    margin: 2rem 0;
+}
+
 .shopperDetails {
     display: inline-block;
+    vertical-align: top;
 }
 
 /*button#loadCheckout {
