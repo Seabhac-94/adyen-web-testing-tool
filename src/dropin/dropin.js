@@ -29,11 +29,12 @@ function showFinalResponse(response, component) {
     const result = response['resultCode'];
     const recurringSR = response.additionalData['recurring.shopperReference'];
     const queriedSF = urlParams.get('shopperReference')
+    var recurringShopperReference = '';
 
     if (recurringSR) {
-        const shopperReference = recurringSR
+        recurringShopperReference = recurringSR
     } else {
-        const shopperReference = queriedSF
+        recurringShopperReference = queriedSF
     }
 
     if (result === "Authorised" || result === "Received") {
@@ -48,12 +49,12 @@ function showFinalResponse(response, component) {
             result.innerHTML = componentSuccess;
         }
 
-        if (shopperReference) {
-
-            handleRecurring(shopperReference)
-
+        if (recurringShopperReference) {
+            handleRecurring(recurringShopperReference)
         }
+
     } else {
+
         if (componentFlavour === 'dropin' || !componentFlavour) {
             component.setStatus('error', {
                 message: 'Something went wrong.'
@@ -63,6 +64,7 @@ function showFinalResponse(response, component) {
             const result = document.getElementById("dropin-container");
             result.innerHTML = componentError;
         }
+        
     }
 }
 

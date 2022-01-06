@@ -253,6 +253,10 @@ input.checkoutDropdown {
     margin-top: 1rem;
 }
 
+.shopperDetails {
+    display: inline-block;
+}
+
 /*button#loadCheckout {
     width: 94%;
     height: 2.2rem;
