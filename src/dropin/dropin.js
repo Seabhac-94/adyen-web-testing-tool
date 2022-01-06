@@ -2,15 +2,41 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0]);
 
-var componentFlavour = getValueOfConfig('flavour', 'flavour');
+const componentFlavour = getValueOfConfig('flavour', 'flavour');
 
 // Custom elements for support of components which don't use setStatus()
 const componentSuccess = `<div class="adyen-checkout__status adyen-checkout__status--success"><img height="88" class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif" alt="Payment successful!"><span class="adyen-checkout__status__text">Payment successful!</span></div>`;
 const componentError = `<div class="adyen-checkout__status adyen-checkout__status--error"><img class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.gif" alt="Something went wrong." height="88"><span class="adyen-checkout__status__text">Something went wrong.</span></div>`;
 
 
-function showFinalResponse(resultCode, component) {
-    if (resultCode === "Authorised" || resultCode === "Received") {
+function handleRecurring(ref) {
+
+    const recWrapper = document.querySelector('.response-recurring');
+    recWrapper.classList.remove('hiddenForm');
+
+    const proceedRecurring = document.getElementById('proceedRecurring')
+    proceedRecurring.addEventListener('click', function (argument) {
+
+        window.location.href = `http://localhost:3000/recurring?shopperReference=${ref}`
+
+    })
+
+}
+
+
+function showFinalResponse(response, component) {
+
+    const result = response['resultCode'];
+    const recurringSR = response.additionalData['recurring.shopperReference'];
+    const queriedSF = urlParams.get('shopperReference')
+
+    if (recurringSR) {
+        const shopperReference = recurringSR
+    } else {
+        const shopperReference = queriedSF
+    }
+
+    if (result === "Authorised" || result === "Received") {
         // We check to see if there's no flavour so that it can handle redirects as well
         if (componentFlavour === 'dropin' || !componentFlavour) {
             component.setStatus('success', {
@@ -20,6 +46,12 @@ function showFinalResponse(resultCode, component) {
             component.unmount();
             const result = document.getElementById("dropin-container");
             result.innerHTML = componentSuccess;
+        }
+
+        if (shopperReference) {
+
+            handleRecurring(shopperReference)
+
         }
     } else {
         if (componentFlavour === 'dropin' || !componentFlavour) {
@@ -57,9 +89,9 @@ function initiateCheckout() {
                     makePayment(state.data)
                         .then(response => {
                             if (response.action) {
-                                component.handleAction(response.action)
+                                component.handleAction(response.action);
                             } else {
-                                showFinalResponse(response.resultCode, component)
+                                showFinalResponse(response, component);
                             }
                         })
                 },
@@ -68,7 +100,7 @@ function initiateCheckout() {
                     makeDetailsCall(state.data)
                         .then(response => {
                             updateResponseContainer(response);
-                            showFinalResponse(response.resultCode, component);
+                            showFinalResponse(response, component);
                         })
                 }
             };
@@ -125,6 +157,7 @@ function handleRedirect() {
     updateRequestContainer(detailsCall);
 
     (function checkSdkVersionOnRedirect() {
+
         if (sdkVersion < 5) {
             // Create an instance of AdyenCheckout using the configuration object.
             const checkout = new AdyenCheckout(configuration);
@@ -135,7 +168,7 @@ function handleRedirect() {
             makeDetailsCall(detailsCall)
                 .then(response => {
                     updateResponseContainer(response);
-                    showFinalResponse(response.resultCode, dropin)
+                    showFinalResponse(response, dropin);
                 })
 
         } else {
@@ -150,7 +183,7 @@ function handleRedirect() {
                 makeDetailsCall(detailsCall)
                     .then(response => {
                         updateResponseContainer(response);
-                        showFinalResponse(response.resultCode, dropin)
+                        showFinalResponse(response, dropin);
                     })
 
             })();

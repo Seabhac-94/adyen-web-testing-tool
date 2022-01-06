@@ -65,6 +65,10 @@ async function loadComponentScript() {
 		const utilsScript = await document.createElement("script");
 		utilsScript.src = await "/utils.js";
 		document.body.appendChild(utilsScript);
+
+		const componentParamsScript = await document.createElement("script");
+		componentParamsScript.src = await "dropin/componentParams.js";
+		document.body.appendChild(componentParamsScript);
 		
 		// setTimeout(function() {
 		const dropinScript = await document.createElement("script");

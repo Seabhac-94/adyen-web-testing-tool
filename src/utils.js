@@ -2,7 +2,7 @@
 // else redirect back to sessions where we handle the redirectResult
 function setReturnUrl() {
 
-    return window.location.href
+    return `${window.location.href}&shopperReference=${shopperReference}`
 
 };
 
@@ -92,59 +92,6 @@ function paymentsConfigParams() {
 
 }
 
-const paymentsParams = paymentsConfigParams();
-
-// We declare these values here to only need to change them in one place
-const countryCode = paymentsParams.countryCode
-const currency = paymentsParams.currency;
-const value = paymentsParams.value;
-const shopperLocale = paymentsParams.shopperLocale;
-const shopperReference = paymentsParams.shopperReference;
-const reference = paymentsParams.reference;
-
-const paymentMethodsConfig = {
-    shopperReference: shopperReference,
-    shopperLocale: shopperLocale,
-    reference: reference,
-    countryCode: countryCode,
-    amount: {
-        value: value,
-        currency: currency
-    }
-};
-
-const paymentsDefaultConfig = {
-    shopperReference: shopperReference,
-    reference: reference,
-    countryCode: countryCode,
-    shopperLocale: shopperLocale,
-    shopperName: 'John Doe',
-    shopperEmail: 's.hopper@adyen.com',
-    channel: 'Web',
-    returnUrl: setReturnUrl(),
-    origin: setOrigin(),
-    amount: {
-        value: value,
-        currency: currency
-    },
-    lineItems: [
-        {
-            id: '1',
-            description: 'Test Item 1',
-            amountExcludingTax: 10000,
-            amountIncludingTax: 11800,
-            taxAmount: 1800,
-            taxPercentage: 1800,
-            quantity: 1,
-            taxCategory: 'High'
-        }
-    ],
-    additionalData: {
-        allow3DS2: true,
-        executeTheeD: true
-    }
-};
-
 
 // Generic POST Helper
 const httpPost = (endpoint, data) =>
@@ -189,6 +136,15 @@ const makePayment = (paymentMethod, config = {}) => {
 // Get all available payment methods from the local server
 const makeDetailsCall = (details) =>
     httpPost('paymentsDetails', details)
+        .then(response => {
+            return response;
+        })
+        .catch(console.error);
+
+
+// Get all available payment methods from the local server
+const listRecurringDetails = (data) =>
+    httpPost('listRecurringDetails', data)
         .then(response => {
             return response;
         })

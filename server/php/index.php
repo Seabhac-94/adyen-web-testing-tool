@@ -8,6 +8,7 @@ require('api/paymentMethods.php');
 require('api/payments.php');
 require('api/paymentsDetails.php');
 require('api/paymentLinks.php');
+require('api/listRecurringDetails.php');
 require('api/originKeys.php');
 require('api/clientKeys.php');
 require('api/sessions.php');
@@ -45,6 +46,12 @@ switch($request_uri[0]) {
     case '/paymentLinks':
         header('Content-Type: application/json');
         echo createPaymentLink();
+        break;
+
+    // /paymentsDetails
+    case '/listRecurringDetails':
+        header('Content-Type: application/json');
+        echo listRecurringDetails();
         break;
 
     // /originKeys

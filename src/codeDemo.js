@@ -28,7 +28,6 @@ for (let [key, object] of Object.entries(configurationObjects)) {
 	optImpCode.id = `${key}_config`;
 	optImpCode.value = JSON.stringify(object, null, 2);
 	selImpCode.appendChild(optImpCode)
-	console.log(optImpCode.value)
 
 }
 
