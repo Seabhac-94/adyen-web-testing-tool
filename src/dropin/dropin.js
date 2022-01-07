@@ -17,7 +17,7 @@ function handleRecurring(ref) {
     const proceedRecurring = document.getElementById('proceedRecurring')
     proceedRecurring.addEventListener('click', function (argument) {
 
-        window.location.href = `http://localhost:3000/recurring?shopperReference=${ref}`
+        window.location.href = `http://localhost:3000/recurring?apiVersion=68&shopperReference=${ref}`
 
     })
 

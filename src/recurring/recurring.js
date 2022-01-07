@@ -6,6 +6,17 @@ const refInput = document.getElementById('recurringShopperReference');
 const sendRecurringReq = document.getElementById('sendRecurringReq');
 
 
+// Create a Map
+const pmType = new Map([
+
+  ["ideal", "sepadirectdebit"],
+  ["mc", "scheme"],
+  ["visa", "scheme"]
+
+]);
+
+console.log()
+
 function makeRecurringCall() {
 
 	// shopperReference = refInput.value
@@ -74,7 +85,7 @@ function makeRecurringCall() {
 						      currency: "EUR"
 						   },
 						   paymentMethod:{
-						      type:"sepadirectdebit",
+						      type: pmType.get(y.variant),
 						      storedPaymentMethodId: y.value
 						   },
 						   reference: "YOUR_ORDER_NUMBER",
@@ -106,7 +117,7 @@ if (shopperReference) {
 
 sendRecurringReq.addEventListener('click', function () {
 
-	window.location.href = `http://localhost:3000/recurring?shopperReference=${refInput.value}`
+	window.location.href = `http://localhost:3000/recurring?apiVersion=68&shopperReference=${refInput.value}`
 
 })
 
