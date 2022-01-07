@@ -260,6 +260,12 @@ input.checkoutDropdown {
 .shopperDetails {
     display: inline-block;
     vertical-align: top;
+    margin:  0.5rem;
+}
+
+
+.pmDetailsP {
+    margin-left: 10px;
 }
 
 /*button#loadCheckout {
