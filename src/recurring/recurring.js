@@ -10,17 +10,14 @@ const sendRecurringReq = document.getElementById('sendRecurringReq');
 const pmType = new Map([
 
   ["ideal", "sepadirectdebit"],
-  ["mc", "scheme"],
-  ["visa", "scheme"]
+  [["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"], "scheme"],
+  ["paypal", "paypal"]
 
 ]);
 
-console.log()
 
 function makeRecurringCall() {
 
-	// shopperReference = refInput.value
-	
 	const rData = {
 		shopperReference: shopperReference
 	}
@@ -54,7 +51,7 @@ function makeRecurringCall() {
 									<p class='pmDetailsP'>Country: ${b['bank']['countryCode']}</p>
 									<p class='pmDetailsP'>IBAN: ${b['bank']['iban']}</p>`
 					
-					} else {
+					} else if(b['card']) {
 
 						savedPm = `<strong>Card: </strong>
 									<p class='pmDetailsP'>Holder Name: ${b['card']['holderName']}</p>
@@ -68,7 +65,7 @@ function makeRecurringCall() {
 									<p><strong>Recurring Detail Reference: </strong>${b['recurringDetailReference']}</p>
 									<p><strong>Creation Date: </strong> ${b['creationDate']}</p>
 									${savedPm}
-									<p><button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Make a payment</button> <button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}">Disable</button></p>`
+									<p><button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Make a payment</button> <button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Disable</button></p>`
 				
 				}
 
@@ -88,10 +85,10 @@ function makeRecurringCall() {
 						      type: pmType.get(y.variant),
 						      storedPaymentMethodId: y.value
 						   },
-						   reference: "YOUR_ORDER_NUMBER",
+						   reference: "RECURRING_PAYMENT",
 						   shopperInteraction: "ContAuth",
 						   recurringProcessingModel: "Subscription",
-						   shopperReference:shopperReference
+						   shopperReference: shopperReference
 						}
 
 					makePayment(rPaymentData)
@@ -101,7 +98,28 @@ function makeRecurringCall() {
 				})
 
 			}
+
+			var disableRecPayment = document.getElementsByClassName('diasbleRecRef');
 			
+				for (var i = 0; i < disableRecPayment.length; i++) {
+
+				let x = disableRecPayment[i];
+				x.addEventListener('click', function () {
+					
+					let disableData = {
+						recurringDetailReference: x.value,
+					    shopperReference: shopperReference
+					}
+
+					disable(disableData)
+						.then(res => {
+							console.log(res)
+						})
+				})
+
+			}
+
+
 		})
 
 };

@@ -1,8 +1,6 @@
 const paymentsDefaultConfig = {
-    // shopperReference: shopperReference,
     reference: "reference",
-    countryCode: "countryCode",
-    shopperLocale: "shopperLocale",
+    countryCode: "NL",
     shopperName: 'John Doe',
     shopperEmail: 's.hopper@adyen.com',
     channel: 'Web',

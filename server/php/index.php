@@ -9,6 +9,7 @@ require('api/payments.php');
 require('api/paymentsDetails.php');
 require('api/paymentLinks.php');
 require('api/listRecurringDetails.php');
+require('api/disable.php');
 require('api/originKeys.php');
 require('api/clientKeys.php');
 require('api/sessions.php');
@@ -42,16 +43,22 @@ switch($request_uri[0]) {
         echo makeDetailsCall();
         break;
 
-    // /paymentsDetails
+    // /paymentLinks
     case '/paymentLinks':
         header('Content-Type: application/json');
         echo createPaymentLink();
         break;
 
-    // /paymentsDetails
+    // /listRecurringDetails
     case '/listRecurringDetails':
         header('Content-Type: application/json');
         echo listRecurringDetails();
+        break;
+
+    // /disable
+    case '/disable':
+        header('Content-Type: application/json');
+        echo disable();
         break;
 
     // /originKeys

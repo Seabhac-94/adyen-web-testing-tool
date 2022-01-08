@@ -142,9 +142,18 @@ const makeDetailsCall = (details) =>
         .catch(console.error);
 
 
-// Get all available payment methods from the local server
+// Get all recurring payment methods from the local server
 const listRecurringDetails = (data) =>
     httpPost('listRecurringDetails', data)
+        .then(response => {
+            return response;
+        })
+        .catch(console.error);
+
+
+// Get all recurring payment methods from the local server
+const disable = (data) =>
+    httpPost('disable', data)
         .then(response => {
             return response;
         })
