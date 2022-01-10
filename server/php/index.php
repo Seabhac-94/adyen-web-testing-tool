@@ -5,6 +5,7 @@
  */
 
 require('api/paymentMethods.php');
+require('api/paymentMethodsBalance.php');
 require('api/payments.php');
 require('api/paymentsDetails.php');
 require('api/paymentLinks.php');
@@ -29,6 +30,12 @@ switch($request_uri[0]) {
     case '/paymentMethods':
         header('Content-Type: application/json');
         echo getPaymentMethods();
+        break;
+
+    // /paymentMethods/balance
+    case '/paymentMethodsBalance':
+        header('Content-Type: application/json');
+        echo getBalance();
         break;
 
     // /payments

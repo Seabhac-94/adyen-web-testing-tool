@@ -87,6 +87,17 @@ const getPaymentMethods = () =>
         .catch(console.error);
 
 
+// Get all available payment methods from the local server
+const getBalance = (data) =>
+    httpPost('paymentMethodsBalance', data)
+        .then(response => {
+            if (response.error) throw 'Call failed';
+
+            return response;
+        })
+        .catch(console.error);
+
+
 // Posts a new payment into the local server
 const makePayment = (paymentMethod, config = {}) => {
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };

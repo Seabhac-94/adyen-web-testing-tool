@@ -14,8 +14,20 @@ getClientKey().then(clientKey => {
                     }
                 }
             },
+            amount: {
+                currency: "EUR",
+                amount: paymentMethodsConfig.amount
+            },
             onChange: state => {
                 updateStateContainer(state); // Demo purposes only
+            },
+            onBalanceCheck: function (resolve, reject, data) {
+               // Call /paymentMethods/balance
+               getBalance(data)
+                .then(balanceResponse => {
+                    console.log(balanceResponse)
+                    resolve(balanceResponse);
+                })
             },
             onSubmit: (state, dropin) => {
                 makePayment(state.data)
@@ -45,8 +57,8 @@ getClientKey().then(clientKey => {
             const checkout = new AdyenCheckout(configuration);
 
             // 2. Create and mount the Component
-            const card = checkout
-                .create('card', {
+            const dropin = checkout
+                .create('dropin', {
                     // Events
                     onSelect: activeComponent => {
                         if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
