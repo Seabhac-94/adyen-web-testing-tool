@@ -42,10 +42,6 @@ function makeRecurringCall() {
 					a.classList.add('shopperDetails')
 					recurringDetails.appendChild(a)
 					var b = details[i]['RecurringDetail']
-					
-					// Reference for now
-					console.log(b)
-
 					var savedPm = null
 
 					if (b['bank']) {
