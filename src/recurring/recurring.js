@@ -5,12 +5,20 @@ const recurringDetails = document.querySelector('.recurringWrapper');
 const refInput = document.getElementById('recurringShopperReference');
 const sendRecurringReq = document.getElementById('sendRecurringReq');
 
+//shopper_vnRvGcSlwr
 
 // Create a Map
 const pmType = new Map([
 
   ["ideal", "sepadirectdebit"],
-  [["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"], "scheme"],
+  ["visa", "scheme"],
+  ["mc", "scheme"],
+  ["amex", "scheme"],
+  ["maestro", "scheme"],
+  ["jcb", "scheme"],
+  ["cup", "scheme"],
+  ["discover", "scheme"],
+  ["diners", "scheme"],
   ["paypal", "paypal"]
 
 ]);
@@ -26,9 +34,7 @@ function makeRecurringCall() {
 	listRecurringDetails(rData)
 		.then(res => {
 			updateResponseContainer(res);	
-			// recurringDetails.innerHTML = `<pre>${JSON.stringify(res, null, 1)}</pre>`;
 			const details = res['details']
-			// console.log(details)
 
 				for (var i = 0; i < details.length; i++) {
 					
@@ -59,13 +65,21 @@ function makeRecurringCall() {
 									<p class='pmDetailsP'>Last 4 Digits: ${b['card']['number']}</p>
 									<p class='pmDetailsP'>Expiry Date: ${b['card']['expiryMonth']}/${b['card']['expiryYear']}</p>`
 					
+					} else if(b['variant'] === 'paypal'){
+
+						savedPm = `<strong>Token Details:</strong>
+									<p class='pmDetailsP'>Billing Agreement: ${b['tokenDetails']['tokenData']['BillingAgreementId']}</p>
+									<p class='pmDetailsP'>Email: ${b['tokenDetails']['tokenData']['EmailId']}</p>
+									<p class='pmDetailsP'>PayerId: ${b['tokenDetails']['tokenData']['PayPal.PayerId']}</p>`						
+					
 					}
 
 					a.innerHTML = `<p><strong>Variant: </strong>${b['variant']}</p>
 									<p><strong>Recurring Detail Reference: </strong>${b['recurringDetailReference']}</p>
 									<p><strong>Creation Date: </strong> ${b['creationDate']}</p>
 									${savedPm}
-									<p><button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Make a payment</button> <button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Disable</button></p>`
+									<p><strong>Contract Type: </strong> ${b['contractTypes']}
+									<p class="recActions"><button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['variant']}_${b['recurringDetailReference']}">Make a payment</button> <button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Disable</button></p>`
 				
 				}
 
@@ -82,8 +96,8 @@ function makeRecurringCall() {
 						      currency: "EUR"
 						   },
 						   paymentMethod:{
-						      type: pmType.get(y.variant),
-						      storedPaymentMethodId: y.value
+						      type: pmType.get(y.value.split('_')[0]),
+						      storedPaymentMethodId: y.value.split('_')[1]
 						   },
 						   reference: "RECURRING_PAYMENT",
 						   shopperInteraction: "ContAuth",
@@ -110,15 +124,17 @@ function makeRecurringCall() {
 						recurringDetailReference: x.value,
 					    shopperReference: shopperReference
 					}
-
+					updateRequestContainer(disableData)
 					disable(disableData)
 						.then(res => {
-							console.log(res)
+							updateResponseContainer(res)
+							setTimeout(function () {
+								window.location.href = window.location.href
+							},1000)
+
 						})
 				})
-
 			}
-
 
 		})
 

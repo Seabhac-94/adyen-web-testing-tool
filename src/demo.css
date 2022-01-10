@@ -134,7 +134,10 @@ h1 {
 #loadCheckout,
 #resetButton,
 .configObjTitle,
-#showComponent {
+#showComponent,
+#proceedRecurring,
+#sendRecurringReq,
+.recActions button {
     height: 2rem;
     padding: 0px 10px;
     margin-left: 5px;
@@ -159,7 +162,10 @@ h1 {
 #resetButton,
 .configObjTitle,
 #selectImpCode,
-#showComponent {
+#showComponent,
+#proceedRecurring,
+#sendRecurringReq,
+.recActions button {
     border-radius: 5px;
     cursor: pointer;
 }
@@ -210,7 +216,10 @@ input.checkoutDropdown {
 #resetButton:hover,
 .configObjTitle:hover,
 #showComponent:hover,
-#customPayButton:hover {
+#customPayButton:hover,
+#proceedRecurring:hover,
+#sendRecurringReq:hover,
+.recActions button:hover {
     color: #000000;
     background: #ffffff;
 }
@@ -260,9 +269,18 @@ input.checkoutDropdown {
 .shopperDetails {
     display: inline-block;
     vertical-align: top;
-    margin:  0.5rem;
+    position: relative;
+    min-height: 28rem;
+    margin: 0.5rem;
+    padding: 5px;
+    border: solid 1px gray;
+    border-radius: 5px;
 }
 
+.recActions {
+    position: absolute;
+    bottom: 0;
+}
 
 .pmDetailsP {
     margin-left: 10px;
