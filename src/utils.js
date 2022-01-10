@@ -33,51 +33,22 @@ function makeReference(length) {
 function paymentsConfigParams() {
 
     var countryCode = getValueOfConfig('parameters', 'countryCode');
-    if (countryCode === '') {
-    
-        countryCode = 'NL';
-    
-    }
+    if (countryCode === '') {countryCode = 'NL'}
 
     var currency = getValueOfConfig('parameters', 'currency');
-    if (currency === '') {
-
-        currency = 'EUR';
-
-    }
+    if (currency === '') {currency = 'EUR'}
 
     var value = getValueOfConfig('parameters', 'value');
-
-    if (value === '') {
-
-        value = 11800;
-
-    } else {
-
-        value = parseInt(value);
-
-    }
+    if (value === '') {value = 11800;} else {value = parseInt(value)}
 
     var shopperLocale = getValueOfConfig('parameters', 'shopperLocale');
-    if (shopperLocale === '') {
-
-        shopperLocale = 'en_GB';
-
-    }
+    if (shopperLocale === '') {shopperLocale = 'en_GB'}
 
     var shopperReference = getValueOfConfig('parameters', 'shopperReference');
-    if (shopperReference === '') {
-
-        shopperReference = 'shopper_' + makeReference(10);
-
-    }
+    if (shopperReference === '') {shopperReference = 'shopper_' + makeReference(10)}
 
     var reference = getValueOfConfig('parameters', 'reference');
-    if (reference === '') {
-
-        reference = 'testPayment_' + shopperReference;
-
-    }       
+    if (reference === '') {reference = 'testPayment_' + shopperReference}
 
     return {
 

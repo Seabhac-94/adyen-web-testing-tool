@@ -1,3 +1,5 @@
+// This is where we generate the dropin/component/payment method code for the exmaple container
+
 const implmentationDiv = document.querySelector('.implementation');
 
 const configurationObjects = {

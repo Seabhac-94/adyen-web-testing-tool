@@ -5,8 +5,6 @@ const recurringDetails = document.querySelector('.recurringWrapper');
 const refInput = document.getElementById('recurringShopperReference');
 const sendRecurringReq = document.getElementById('sendRecurringReq');
 
-//shopper_vnRvGcSlwr
-
 // Create a Map
 const pmType = new Map([
 
