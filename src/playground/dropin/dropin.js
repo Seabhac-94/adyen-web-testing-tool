@@ -1,6 +1,9 @@
+let amount = paymentMethodsConfig.amount
+let countryCode = paymentMethodsConfig.countryCode
+
 // 0. Get clientKey
 getClientKey().then(clientKey => {
-    getPaymentMethods(paymentMethodsConfig).then(paymentMethodsResponse => {
+    getPaymentMethods(paymentMethodsConfig).then(async paymentMethodsResponse => {
         const configuration = {
             environment: 'test',
             clientKey: clientKey, // Mandatory. clientKey from Customer Area
@@ -28,7 +31,7 @@ getClientKey().then(clientKey => {
                     resolve(balanceResponse);
                 })
             },
-            onOrderRequest: function (resolve, reject, data) {
+            onOrderRequest: function (resolve, reject) {
                // Call /orders
                const orderData = {
                     amount: {
@@ -52,24 +55,28 @@ getClientKey().then(clientKey => {
                         if (response.action) {
                             dropin.handleAction(response.action)
                         } else if (response.order && response.order.remainingAmount.value > 0) {
-                            console.log("order")
+                            // console.log("order")
                             
                             const order = {
-                                order: {
-                                    orderData: response.order.orderData,
-                                    pspReference: response.order.pspReference 
-                                },
-                                countryCode: paymentMethodsConfig.countryCode
+                                orderData: response.order.orderData,
+                                pspReference: response.order.pspReference 
                             }
 
-                            const gcPm = await getPaymentMethods(order)
+                            console.log(order)
+                            const gcPm = await getPaymentMethods({order, amount, countryCode})
 
-                            checkout.update({paymentMethodsResponse: gcPm, amount: response.order.remainingAmount})
+                            console.log(gcPm)
+
+                            checkout.update({paymentMethodsResponse: gcPm, order, amount: response.order.remainingAmount})
 
                         } else if (response.resultCode === "Authorised" || response.resultCode === "Received") {
+                            
                             dropin.setStatus('success')
+
                         } else {
+
                             dropin.setStatus('error')
+                        
                         }
                     })
             },

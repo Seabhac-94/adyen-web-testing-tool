@@ -3,7 +3,7 @@ const paymentMethodsConfig = {
     reference: 'Checkout Components sample code test',
     countryCode: 'NL',
     amount: {
-        value: 100000,
+        value: 1000000,
         currency: 'EUR'
     }
 };
@@ -15,7 +15,7 @@ const paymentsDefaultConfig = {
     channel: 'Web',
     returnUrl:"http://localhost:3000/playground/dropin?apiVersion=67",
     amount: {
-        value: 100000,
+        value: 1000000,
         currency: 'EUR'
     },
     lineItems: [
