@@ -77,8 +77,8 @@ const httpPost = (endpoint, data) =>
 
 
 // Get all available payment methods from the local server
-const getPaymentMethods = () =>
-    httpPost('paymentMethods', paymentMethodsConfig)
+const getPaymentMethods = (params) =>
+    httpPost('paymentMethods', params)
         .then(response => {
             if (response.error) throw 'No paymentMethods available';
 
@@ -90,6 +90,17 @@ const getPaymentMethods = () =>
 // Get all available payment methods from the local server
 const getBalance = (data) =>
     httpPost('paymentMethodsBalance', data)
+        .then(response => {
+            if (response.error) throw 'Call failed';
+
+            return response;
+        })
+        .catch(console.error);
+
+
+// Get all available payment methods from the local server
+const makeOrder = (data) =>
+    httpPost('orders', data)
         .then(response => {
             if (response.error) throw 'Call failed';
 

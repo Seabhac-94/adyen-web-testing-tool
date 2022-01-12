@@ -72,7 +72,7 @@ function showFinalResponse(response, component) {
 function initiateCheckout() {
     // 0. Get clientKey
     getClientKey().then(clientKey => {
-        getPaymentMethods().then(paymentMethodsResponse => {
+        getPaymentMethods(paymentMethodsConfig).then(paymentMethodsResponse => {
             const configuration = {
                 environment: 'test',
                 clientKey: clientKey, // Mandatory. clientKey from Customer Area

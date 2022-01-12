@@ -21,7 +21,7 @@ function getBalance() {
 
     $apikey = getenv('CHECKOUT_APIKEY');
     $merchantAccount = getenv('MERCHANT_ACCOUNT');
-    $url = "https://checkout-test.adyen.com/v67/paymentMethods/balance";
+    $url = "https://checkout-test.adyen.com/v68/paymentMethods/balance";
 
     $data = [
         'merchantAccount' => $merchantAccount,

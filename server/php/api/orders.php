@@ -6,10 +6,9 @@
  */
 
 /**
- * Retrieves payment methods
- * from your merchant account
+ * Sends balance call
  */
-function getPaymentMethods() {
+function makeOrder() {
     if (file_get_contents('php://input') != '') {
         $request = json_decode(file_get_contents('php://input'), true);
     } else {
@@ -22,10 +21,15 @@ function getPaymentMethods() {
 
     $apikey = getenv('CHECKOUT_APIKEY');
     $merchantAccount = getenv('MERCHANT_ACCOUNT');
-    $url = "https://checkout-test.adyen.com/v".$version."/paymentMethods";
+    $url = "https://checkout-test.adyen.com/v68/orders";
 
     $data = [
-        'merchantAccount' => $merchantAccount
+        'merchantAccount' => $merchantAccount,
+        'amount' => [
+            'currency' => 'EUR',
+            'value' => '2500'
+        ],
+        'reference' => "YOUR_ORDER_REFERENCE"
     ];
 
     // Convert data to JSON
