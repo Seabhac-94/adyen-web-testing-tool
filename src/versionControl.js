@@ -60,25 +60,17 @@ function loadInitialCheckoutScripts(){
 };
 
 
-async function loadComponentScript() {
+function loadComponentScript() {
 		
-		const utilsScript = await document.createElement("script");
-		utilsScript.src = await "/utils.js";
-		document.body.appendChild(utilsScript);
+	var componentScripts = ["/utils.js", "dropin/componentParams.js", "/dropin/dropin.js", "/codeDemo.js"]
 
-		const componentParamsScript = await document.createElement("script");
-		componentParamsScript.src = await "dropin/componentParams.js";
-		document.body.appendChild(componentParamsScript);
-		
-		// setTimeout(function() {
-		const dropinScript = await document.createElement("script");
-		dropinScript.src = await "/dropin/dropin.js";
-		document.body.appendChild(dropinScript);
-		// }, 150)
-		
-		const codeDemoScript = await document.createElement("script");
-		codeDemoScript.src = await "/codeDemo.js";
-		document.body.appendChild(codeDemoScript);
+	for (var i = 0; i < componentScripts.length; i++) {
+
+		var scriptToAdd =  document.createElement("script");
+		scriptToAdd.src = `${componentScripts[i]}`;
+		document.body.appendChild(scriptToAdd);
+
+	}
 
 };
 

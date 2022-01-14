@@ -85,6 +85,9 @@ function initiateCheckout() {
                     ideal: idealConfiguration(),
                     paywithgoogle: googlePayConfiguration()
                 },
+                onReady: component => {
+                    console.info("Dropin ready")
+                },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only
                 },
@@ -98,7 +101,7 @@ function initiateCheckout() {
                             if (response.action) {
 
                                 component.handleAction(response.action);
-                                
+
                             } else if (response.order && response.order.remainingAmount.value > 0) {
 
                                 const order = {

@@ -75,23 +75,12 @@ function cardConfiguration() {
 
 	// Supports array for brands
 	var brandsValue = getValueOfConfig(component, 'brands');
-	if (brandsValue != "") {
+	if (brandsValue != "") { var brands = brandsValue.split(", ") };
 
-		var brands = brandsValue.split(", ");
-
-	} else {
-
-		var brands = ["visa", "mc", "amex", "maestro", "jcb", "cup", "discover", "diners"]
-
-	};
 
 	// Defaults to credit card if no name is selected
 	var name = getValueOfConfig(component, 'name');
-	if (name == '') {
-
-		var name = 'Credit Card'
-
-	};
+	if (name == '') { name = 'Credit Card' };
 
 	return {
 
@@ -127,6 +116,17 @@ function paypalConfiguration() {
 	    	shape: getValueOfConfig(component, 'shape'),
 	    	color: getValueOfConfig(component, 'color'),
 	    	label: getValueOfConfig(component, 'label'),
+  		},
+  		onError: (error, component) => {
+  			console.info("Error thrown at: " + timeAndDate.toUTCString());
+            console.error(error);
+            component.closeActivePaymentMethod()
+  		},
+  		  onShippingChange: function(data, actions) {
+      		// Listen to shipping changes.
+      		console.log("New shipping address: ")
+      		console.log(data.shipping_address)
+      		actions.resolve(data)
   		}
 
 	}
@@ -139,11 +139,7 @@ function idealConfiguration () {
 	var component = 'ideal';
 
 	var placeholder = getValueOfConfig(component, 'placeholder');
-	if (placeholder == '') {
-
-		var placeholder = 'Select your bank';
-
-	}
+	if (placeholder == '') { var placeholder = 'Select your bank' };
 
 	return {
 
@@ -164,7 +160,6 @@ function googlePayConfiguration() {
 	return {
 
 		environment: "TEST",
-
 		amount,
 		buttonType: getValueOfConfig(component, 'buttonType'),
 		buttonColor: getValueOfConfig(component, 'buttonColor'),
