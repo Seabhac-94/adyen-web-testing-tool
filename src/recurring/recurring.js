@@ -17,6 +17,7 @@ const pmType = new Map([
   ["cup", "scheme"],
   ["discover", "scheme"],
   ["diners", "scheme"],
+  ["bcmc", "sepadirectdebit"],
   ["paypal", "paypal"]
 
 ]);

@@ -126,11 +126,14 @@ const makePayment = (paymentMethod, config = {}) => {
     const paymentRequest = { ...paymentsConfig, ...paymentMethod };
     
     // Updating amounts for Giftcard
-    if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
-        paymentRequest.amount = gcAmount
-    } else if (gcAmount && orderAmount) {
-        amount.value = orderAmount.value - gcAmount.value
+    if (window.location.pathname === "/dropin") {
+        if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
+            paymentRequest.amount = gcAmount
+        } else if (gcAmount && orderAmount) {
+            amount.value = orderAmount.value - gcAmount.value
+        }        
     }
+
     
     updateRequestContainer(paymentRequest);
 

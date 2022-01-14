@@ -13,23 +13,24 @@ const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;
 
 const paymentMethodsConfig = {
-    shopperReference: shopperReference,
-    shopperLocale: shopperLocale,
-    reference: reference,
-    countryCode: countryCode,
+    shopperReference,
+    shopperLocale,
+    reference,
+    countryCode,
     amount
 };
 
 const paymentsDefaultConfig = {
-    shopperReference: shopperReference,
-    reference: reference,
-    countryCode: countryCode,
-    shopperLocale: shopperLocale,
+    shopperReference,
+    reference,
+    countryCode,
+    shopperLocale,
     shopperName: 'John Doe',
     shopperEmail: 's.hopper@adyen.com',
     channel: 'Web',
     returnUrl: setReturnUrl(),
     origin: setOrigin(),
+    storePaymentMethod: true,
     amount,
     lineItems: [
         {
