@@ -72,12 +72,13 @@ function showFinalResponse(response, component) {
 function initiateCheckout() {
     // 0. Get clientKey
     getClientKey().then(clientKey => {
-        getPaymentMethods(paymentMethodsConfig).then(paymentMethodsResponse => {
+        getPaymentMethods(paymentMethodsConfig).then(async paymentMethodsResponse => {
             const configuration = {
                 environment: 'test',
                 clientKey: clientKey, // Mandatory. clientKey from Customer Area
                 paymentMethodsResponse,
                 removePaymentMethods: ['paysafecard', 'c_cash'],
+                amount,
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
                     card: cardConfiguration(),
@@ -89,13 +90,49 @@ function initiateCheckout() {
                 },
                 onSubmit: (state, component) => {
                     makePayment(state.data)
-                        .then(response => {
+                        .then(async response => {
                             if (response.action) {
                                 component.handleAction(response.action);
+                            } else if (response.order && response.order.remainingAmount.value > 0) {
+
+                                const order = {
+                                    orderData: response.order.orderData,
+                                    pspReference: response.order.pspReference
+                                }
+
+                                const gcPm = await getPaymentMethods({ order, amount, countryCode })
+                                var remainingAmount = response.order.remainingAmount
+                                console.log(remainingAmount)
+                                // amount = remainingAmount
+                                checkout.update({ paymentMethodsResponse: gcPm, order, amount: remainingAmount})
+
                             } else {
+                            
                                 showFinalResponse(response, component);
+                            
                             }
                         })
+                },
+                onBalanceCheck: async function (resolve, reject, data) {
+                    // Call /paymentMethods/balance
+                    getBalance(data)
+                        .then(balanceResponse => {
+                            resolve(balanceResponse)
+                            gcAmount = balanceResponse.balance
+                            return gcAmount
+                        })
+                },
+                onOrderRequest: async function (resolve, reject, data) {
+                    // Call /orders
+                    makeOrder({amount})
+                        .then(response => {
+                            resolve(response)
+                            orderAmount = response.amount
+                            return orderAmount
+                        })
+                },
+                onOrderCancel: async function (order) {
+                    // body...
                 },
                 onAdditionalDetails: (state, component) => {
                     updateRequestContainer(state.data);
@@ -107,37 +144,23 @@ function initiateCheckout() {
                 }
             };
 
-            (function checkCheckoutVersion() {
-                if (sdkVersion < 5) {
-                    // 1. Create an instance of AdyenCheckou
-                    const checkout = new AdyenCheckout(configuration);
+            var checkout = null
 
-                    // 2. Create and mount the Component
-                    const selectedComponent = checkout
-                        .create(componentFlavour, dropinOptionalConfig())
-                        .mount('#dropin-container');
+            if (sdkVersion < 5) {
+                checkout = new AdyenCheckout(configuration);
+            } else {
+                checkout = await AdyenCheckout(configuration);
+            }
+            // 2. Create and mount the Component
+            const selectedComponent = checkout
+                .create(componentFlavour, dropinOptionalConfig())
+                .mount('#dropin-container');
 
-                    // Called if custom button is used
-                    document.getElementById('customPayButton').addEventListener('click', function() {
-                        selectedComponent.submit()
-                    })
-                } else {
-                    (async function initiateCheckout() {
-                        // 1. Create an instance of AdyenCheckout
-                        const checkout = await AdyenCheckout(configuration);
+            // Called if custom button is used
+            document.getElementById('customPayButton').addEventListener('click', function() {
+                selectedComponent.submit()
+            })
 
-                        // 2. Create and mount the Component
-                        const selectedComponent = checkout
-                            .create(componentFlavour, dropinOptionalConfig())
-                            .mount('#dropin-container');
-
-                        // Called if custom button is used
-                        document.getElementById('customPayButton').addEventListener('click', function() {
-                            selectedComponent.submit()
-                        })
-                    })();
-                }
-            })();
 
         });
     });

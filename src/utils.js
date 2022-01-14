@@ -113,7 +113,16 @@ const makeOrder = (data) =>
 const makePayment = (paymentMethod, config = {}) => {
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };
     const paymentRequest = { ...paymentsConfig, ...paymentMethod };
-
+    
+    // Updating amounts for Giftcard
+    if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
+            console.log("gift card: " + gcAmount.value)
+            console.log("order: " + orderAmount.value)
+            paymentRequest.amount = gcAmount
+            // paymentRequest.amount = gcAmount
+        } else if (gcAmount && orderAmount) {
+            amount.value = orderAmount.value - gcAmount.value
+        }
     updateRequestContainer(paymentRequest);
 
     return httpPost('payments', paymentRequest)

@@ -2,8 +2,12 @@ const paymentsParams = paymentsConfigParams();
 
 // We declare these values here to only need to change them in one place
 const countryCode = paymentsParams.countryCode
-const currency = paymentsParams.currency;
-const value = paymentsParams.value;
+var gcAmount = null
+var orderAmount = null
+var amount = {
+            currency: paymentsParams.currency,
+            value: paymentsParams.value
+        }
 const shopperLocale = paymentsParams.shopperLocale;
 const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;
@@ -13,10 +17,7 @@ const paymentMethodsConfig = {
     shopperLocale: shopperLocale,
     reference: reference,
     countryCode: countryCode,
-    amount: {
-        value: value,
-        currency: currency
-    }
+    amount
 };
 
 const paymentsDefaultConfig = {
@@ -29,10 +30,7 @@ const paymentsDefaultConfig = {
     channel: 'Web',
     returnUrl: setReturnUrl(),
     origin: setOrigin(),
-    amount: {
-        value: value,
-        currency: currency
-    },
+    amount,
     lineItems: [
         {
             id: '1',

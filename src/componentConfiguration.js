@@ -120,10 +120,7 @@ function paypalConfiguration() {
 	
 	return {
 
-		amount: {
-			currency: currency,
-			value: value
-		},
+		amount,
 		showPayButton: true,
 		style: {
 			layout: getValueOfConfig(component, 'layout'),
@@ -168,11 +165,7 @@ function googlePayConfiguration() {
 
 		environment: "TEST",
 
-		amount: {
-			value: value,
-			currency: currency
-		},
-
+		amount,
 		buttonType: getValueOfConfig(component, 'buttonType'),
 		buttonColor: getValueOfConfig(component, 'buttonColor'),
 		buttonLocale: getValueOfConfig(component, 'buttonLocale'),
