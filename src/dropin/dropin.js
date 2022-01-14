@@ -15,7 +15,7 @@ function handleRecurring(ref) {
     recWrapper.classList.remove('hiddenForm');
 
     const proceedRecurring = document.getElementById('proceedRecurring')
-    proceedRecurring.addEventListener('click', function (argument) {
+    proceedRecurring.addEventListener('click', function(argument) {
 
         window.location.href = `http://localhost:3000/recurring?apiVersion=68&shopperReference=${ref}`
 
@@ -64,7 +64,7 @@ function showFinalResponse(response, component) {
             const result = document.getElementById("dropin-container");
             result.innerHTML = componentError;
         }
-        
+
     }
 }
 
@@ -100,20 +100,28 @@ function initiateCheckout() {
                                     pspReference: response.order.pspReference
                                 }
 
-                                const gcPm = await getPaymentMethods({ order, amount, countryCode })
+                                const gcPm = await getPaymentMethods({
+                                    order,
+                                    amount,
+                                    countryCode
+                                })
                                 var remainingAmount = response.order.remainingAmount
                                 console.log(remainingAmount)
                                 // amount = remainingAmount
-                                checkout.update({ paymentMethodsResponse: gcPm, order, amount: remainingAmount})
+                                checkout.update({
+                                    paymentMethodsResponse: gcPm,
+                                    order,
+                                    amount: remainingAmount
+                                })
 
                             } else {
-                            
+
                                 showFinalResponse(response, component);
-                            
+
                             }
                         })
                 },
-                onBalanceCheck: async function (resolve, reject, data) {
+                onBalanceCheck: async function(resolve, reject, data) {
                     // Call /paymentMethods/balance
                     getBalance(data)
                         .then(balanceResponse => {
@@ -122,16 +130,18 @@ function initiateCheckout() {
                             return gcAmount
                         })
                 },
-                onOrderRequest: async function (resolve, reject, data) {
+                onOrderRequest: async function(resolve, reject, data) {
                     // Call /orders
-                    makeOrder({amount})
+                    makeOrder({
+                            amount
+                        })
                         .then(response => {
                             resolve(response)
                             orderAmount = response.amount
                             return orderAmount
                         })
                 },
-                onOrderCancel: async function (order) {
+                onOrderCancel: async function(order) {
                     cancelOrder(order)
                         .then(response => {
                             if (response.resultCode) {
@@ -139,7 +149,11 @@ function initiateCheckout() {
                                 orderAmount = null;
                                 getPaymentMethods(paymentMethodsConfig)
                                     .then(paymentMethodsResponse => {
-                                        checkout.update({paymentMethodsResponse, order: null, amount})
+                                        checkout.update({
+                                            paymentMethodsResponse,
+                                            order: null,
+                                            amount
+                                        })
                                     })
                             }
                         })
@@ -177,7 +191,9 @@ function initiateCheckout() {
 };
 
 
-function handleRedirect() {
+async function handleRedirect() {
+
+    var checkout = null
 
     const detailsCall = {
         'details': {
@@ -191,40 +207,22 @@ function handleRedirect() {
 
     updateRequestContainer(detailsCall);
 
-    (function checkSdkVersionOnRedirect() {
+    if (sdkVersion < 5) {
+        checkout = new AdyenCheckout(configuration);
+    } else {
+        checkout = await AdyenCheckout(configuration);
+    }
 
-        if (sdkVersion < 5) {
-            // Create an instance of AdyenCheckout using the configuration object.
-            const checkout = new AdyenCheckout(configuration);
+    const dropin = checkout.create('dropin').mount('#dropin-container');
 
-            // Create an instance of Drop-in and mount it to the container you created.
-            const dropin = checkout.create('dropin').mount('#dropin-container');
+    makeDetailsCall(detailsCall)
+        .then(response => {
+            updateResponseContainer(response);
+            showFinalResponse(response, dropin);
+        })
 
-            makeDetailsCall(detailsCall)
-                .then(response => {
-                    updateResponseContainer(response);
-                    showFinalResponse(response, dropin);
-                })
-
-        } else {
-            (async function setDropinStatus() {
-
-                // Create an instance of AdyenCheckout using the configuration object.
-                const checkout = await AdyenCheckout(configuration);
-
-                // Create an instance of Drop-in and mount it to the container you created.
-                const dropin = checkout.create('dropin').mount('#dropin-container');
-
-                makeDetailsCall(detailsCall)
-                    .then(response => {
-                        updateResponseContainer(response);
-                        showFinalResponse(response, dropin);
-                    })
-
-            })();
-        }
-    })();
 };
+
 
 // Selects which flow based on result of urlParams
 if (!redirectResult) {
