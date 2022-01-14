@@ -98,9 +98,20 @@ const getBalance = (data) =>
         .catch(console.error);
 
 
-// Get all available payment methods from the local server
+// Create an order
 const makeOrder = (data) =>
     httpPost('orders', data)
+        .then(response => {
+            if (response.error) throw 'Call failed';
+
+            return response;
+        })
+        .catch(console.error);
+
+
+// Create an order
+const cancelOrder = (data) =>
+    httpPost('orders/cancel', data)
         .then(response => {
             if (response.error) throw 'Call failed';
 
@@ -116,13 +127,11 @@ const makePayment = (paymentMethod, config = {}) => {
     
     // Updating amounts for Giftcard
     if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
-            console.log("gift card: " + gcAmount.value)
-            console.log("order: " + orderAmount.value)
-            paymentRequest.amount = gcAmount
-            // paymentRequest.amount = gcAmount
-        } else if (gcAmount && orderAmount) {
-            amount.value = orderAmount.value - gcAmount.value
-        }
+        paymentRequest.amount = gcAmount
+    } else if (gcAmount && orderAmount) {
+        amount.value = orderAmount.value - gcAmount.value
+    }
+    
     updateRequestContainer(paymentRequest);
 
     return httpPost('payments', paymentRequest)

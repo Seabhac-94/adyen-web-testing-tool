@@ -7,6 +7,7 @@
 require('api/paymentMethods.php');
 require('api/paymentMethodsBalance.php');
 require('api/orders.php');
+require('api/orderCancel.php');
 require('api/payments.php');
 require('api/paymentsDetails.php');
 require('api/paymentLinks.php');
@@ -43,6 +44,12 @@ switch($request_uri[0]) {
     case '/orders':
         header('Content-Type: application/json');
         echo makeOrder();
+        break;
+
+    // /orders
+    case '/orders/cancel':
+        header('Content-Type: application/json');
+        echo cancelOrder();
         break;
 
     // /payments

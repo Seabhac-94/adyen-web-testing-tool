@@ -132,7 +132,17 @@ function initiateCheckout() {
                         })
                 },
                 onOrderCancel: async function (order) {
-                    // body...
+                    cancelOrder(order)
+                        .then(response => {
+                            if (response.resultCode) {
+                                gcAmount = null;
+                                orderAmount = null;
+                                getPaymentMethods(paymentMethodsConfig)
+                                    .then(paymentMethodsResponse => {
+                                        checkout.update({paymentMethodsResponse, order: null, amount})
+                                    })
+                            }
+                        })
                 },
                 onAdditionalDetails: (state, component) => {
                     updateRequestContainer(state.data);
