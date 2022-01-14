@@ -88,11 +88,17 @@ function initiateCheckout() {
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only
                 },
+                onError: (error, component) => {
+                    console.info("Error thrown at: " + timeAndDate.toUTCString());
+                    console.error(error);
+                },
                 onSubmit: (state, component) => {
                     makePayment(state.data)
                         .then(async response => {
                             if (response.action) {
+
                                 component.handleAction(response.action);
+                                
                             } else if (response.order && response.order.remainingAmount.value > 0) {
 
                                 const order = {
@@ -105,9 +111,9 @@ function initiateCheckout() {
                                     amount,
                                     countryCode
                                 })
+
                                 var remainingAmount = response.order.remainingAmount
-                                console.log(remainingAmount)
-                                // amount = remainingAmount
+                                
                                 checkout.update({
                                     paymentMethodsResponse: gcPm,
                                     order,
@@ -132,9 +138,7 @@ function initiateCheckout() {
                 },
                 onOrderRequest: async function(resolve, reject, data) {
                     // Call /orders
-                    makeOrder({
-                            amount
-                        })
+                    makeOrder({ amount })
                         .then(response => {
                             resolve(response)
                             orderAmount = response.amount
@@ -160,8 +164,10 @@ function initiateCheckout() {
                 },
                 onAdditionalDetails: (state, component) => {
                     updateRequestContainer(state.data);
+                    console.info("payment/details call made at: " + timeAndDate.toUTCString());
                     makeDetailsCall(state.data)
                         .then(response => {
+                            console.info("payment/details response at: " + timeAndDate.toUTCString());
                             updateResponseContainer(response);
                             showFinalResponse(response, component);
                         })
@@ -205,19 +211,26 @@ async function handleRedirect() {
         environment: 'test'
     };
 
+    async function sdkVersionRedirect(a) {
+        if (a < 5) {
+            checkout = new AdyenCheckout(configuration);
+        } else {
+            checkout = await AdyenCheckout(configuration);
+        }
+        return checkout
+    }
+
     updateRequestContainer(detailsCall);
 
-    if (sdkVersion < 5) {
-        checkout = new AdyenCheckout(configuration);
-    } else {
-        checkout = await AdyenCheckout(configuration);
-    }
+    checkout = await sdkVersionRedirect(sdkVersion)
 
     const dropin = checkout.create('dropin').mount('#dropin-container');
 
+    console.info("payment/details call made at: " + timeAndDate.toUTCString());
     makeDetailsCall(detailsCall)
         .then(response => {
             updateResponseContainer(response);
+            console.info("payment/details response at: " + timeAndDate.toUTCString());
             showFinalResponse(response, dropin);
         })
 

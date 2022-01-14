@@ -1,3 +1,5 @@
+var timeAndDate = new Date();
+
 // This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
 function setReturnUrl() {
