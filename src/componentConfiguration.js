@@ -1,34 +1,6 @@
-// As the value from HTML gets passed as a string, but Drop-in requires booleans-
-// we use this function to convert either true or false values to Booleans
-function convertToBoolean(v) {
-
-	if (v === "true") {
-		return true;
-	} else if (v === "false"){
-		return false;
-	} else {
-		return v;
-	}
-
-};
-
-
-// Short hand function which will target the id and get the HTML value,
-// uses convertToBoolean() so the value can be passed directly to the config function
-function getValueOfConfig(component, param) {
-	
-	a = `${component}_${param}`;
-	var b = document.getElementById(a).value;
-	c = convertToBoolean(b);
-
-	return c;
-
-};
-
-
 function dropinOptionalConfig() {
 
-	var component = 'dropin';
+	const component = 'dropin';
 
 	// Supports array for instantPaymentTypes
 	var instantPaymentTypesValue = getValueOfConfig(component, 'instantPaymentTypes');
@@ -50,28 +22,34 @@ function dropinOptionalConfig() {
 
 	return {
 
-		//Configuration
-		openFirstPaymentMethod: getValueOfConfig(component, 'openFirstPaymentMethod'),
-		openFirstStoredPaymentMethod: getValueOfConfig(component, 'openFirstStoredPaymentMethod'),
-		showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
-		showRemovePaymentMethodButton: getValueOfConfig(component, 'showRemovePaymentMethodButton'),
-		showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
-		setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
-		instantPaymentTypes,
-		showPayButton,
-		
-		// Events
-        onSelect: activeComponent => {
-        	if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-        }
-    }
+	    //Configuration
+	    openFirstPaymentMethod: getValueOfConfig(component, 'openFirstPaymentMethod'),
+	    openFirstStoredPaymentMethod: getValueOfConfig(component, 'openFirstStoredPaymentMethod'),
+	    showStoredPaymentMethods: getValueOfConfig(component, 'showStoredPaymentMethods'),
+	    showRemovePaymentMethodButton: getValueOfConfig(component, 'showRemovePaymentMethodButton'),
+	    showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
+	    setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
+	    instantPaymentTypes,
+	    showPayButton,
+	    // Events
+	    onSelect: activeComponent => {
+	        if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
+	    },
+	    onReady: component => {
+	        console.info("Dropin ready")
+	    },
+	    onError: (error, component) => {
+	        console.info("Error thrown at: " + timeAndDate.toUTCString());
+	        console.error(error);
+	    },
+	}
 }
 
 
 // Payment methods configuration, called in dropin.js
 function cardConfiguration() {
 
-	var component = 'card';
+	const component = 'card';
 
 	// Supports array for brands
 	var brandsValue = getValueOfConfig(component, 'brands');
@@ -105,7 +83,7 @@ function cardConfiguration() {
 
 function paypalConfiguration() {
 
-	var component = 'paypal';
+	const component = 'paypal';
 	
 	return {
 
@@ -136,7 +114,7 @@ function paypalConfiguration() {
 
 function idealConfiguration () {
 	
-	var component = 'ideal';
+	const component = 'ideal';
 
 	var placeholder = getValueOfConfig(component, 'placeholder');
 	if (placeholder == '') { var placeholder = 'Select your bank' };
@@ -155,7 +133,7 @@ function idealConfiguration () {
 
 function googlePayConfiguration() {
 
-	var component = 'paywithgoogle'
+	const component = 'paywithgoogle'
 
 	return {
 

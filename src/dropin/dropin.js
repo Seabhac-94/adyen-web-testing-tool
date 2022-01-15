@@ -85,15 +85,8 @@ function initiateCheckout() {
                     ideal: idealConfiguration(),
                     paywithgoogle: googlePayConfiguration()
                 },
-                onReady: component => {
-                    console.info("Dropin ready")
-                },
                 onChange: state => {
                     updateStateContainer(state); // Demo purposes only
-                },
-                onError: (error, component) => {
-                    console.info("Error thrown at: " + timeAndDate.toUTCString());
-                    console.error(error);
                 },
                 onSubmit: (state, component) => {
                     makePayment(state.data)

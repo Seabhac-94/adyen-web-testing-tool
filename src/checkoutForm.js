@@ -97,60 +97,60 @@ const componentParameters = document.getElementById("componentParameters");
 
 
 // Creates the dropdown options and the wrappers for the checkout form
-function createCheckoutForm(configObj, optionEl, component) {
+function createCheckoutForm(x, y, z) {
 	
-	const configObjEl = document.createElement('div');
-	configObjEl.className = "configWrapper";
-	configObjEl.id = optionEl
+	const a = document.createElement('div');
+	a.className = "configWrapper";
+	a.id = y
 
-	const configObjTitle = document.createElement('button');
-	configObjTitle.className = "configObjTitle";
-	configObjTitle.innerHTML = component;
-	configObjEl.append(configObjTitle);
+	const b = document.createElement('button');
+	b.className = "configObjTitle";
+	b.innerHTML = z;
+	a.append(b);
 
-	const checkoutDropdownWrapper = document.createElement('div');
-	checkoutDropdownWrapper.className = "checkoutDropdownWrapper hiddenForm";
-	configObjEl.append(checkoutDropdownWrapper);
+	const c = document.createElement('div');
+	c.className = "checkoutDropdownWrapper hiddenForm";
+	a.append(c);
 	
-	for (let [key, option] of Object.entries(configObj)) {
+	for (let [key, option] of Object.entries(x)) {
 
-		const optionElDiv = document.createElement('div');
-		optionElDiv.innerHTML = `<span>${key}: </span>`;
-		checkoutDropdownWrapper.append(optionElDiv);
+		const d = document.createElement('div');
+		d.innerHTML = `<span>${key}: </span>`;
+		c.append(d);
 
 		if (option == "input") {
 
-			var selectEl = document.createElement("input");
+			var e = document.createElement("input");
 
 		}
 		else {
 
-			var selectEl = document.createElement("select");
+			var e = document.createElement("select");
 			
 			for (var i = option.length - 1; i >= 0; i--) {
 
-		  		var optionElement = document.createElement("option");
-				optionElement.className = "checkoutOptionDropdown"
-				optionElement.innerHTML = option[i];
-				selectEl.append(optionElement);
+		  		var f = document.createElement("option");
+				f.className = "checkoutOptionDropdown"
+				f.innerHTML = option[i];
+				e.append(f);
 
   			}
 		}
 
-		selectEl.id = component+"_"+key;
-		selectEl.className = "checkoutDropdown";
-		optionElDiv.append(selectEl);
+		e.id = z+"_"+key;
+		e.className = "checkoutDropdown";
+		d.append(e);
 
 	};
 
-  	configObjTitle.addEventListener('click', function(){
+  	b.addEventListener('click', function(){
 
-  		var childConfig = configObjTitle.nextElementSibling;
-  		childConfig.classList.toggle("hiddenForm");
+  		const g = b.nextElementSibling;
+  		g.classList.toggle("hiddenForm");
 	
 	});
 
-	componentParameters.append(configObjEl);
+	componentParameters.append(a);
 
 };
 

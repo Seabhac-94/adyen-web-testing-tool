@@ -9,6 +9,34 @@ function setReturnUrl() {
 };
 
 
+// As the value from HTML gets passed as a string, but Drop-in requires booleans-
+// we use this function to convert either true or false values to Booleans
+function convertToBoolean(v) {
+
+    if (v === "true") {
+        return true;
+    } else if (v === "false"){
+        return false;
+    } else {
+        return v;
+    }
+
+};
+
+
+// Short hand function which will target the id and get the HTML value,
+// uses convertToBoolean() so the value can be passed directly to the config function
+function getValueOfConfig(component, param) {
+    
+    a = `${component}_${param}`;
+    var b = document.getElementById(a).value;
+    c = convertToBoolean(b);
+
+    return c;
+
+};
+
+
 // Sets the origin based on the test case
 function setOrigin() {
     var origin = window.location.origin

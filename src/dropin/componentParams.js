@@ -1,13 +1,13 @@
 const paymentsParams = paymentsConfigParams();
 
 // We declare these values here to only need to change them in one place
-const countryCode = paymentsParams.countryCode
-var gcAmount = null
-var orderAmount = null
+const countryCode = paymentsParams.countryCode;
+var gcAmount = null;
+var orderAmount = null;
 var amount = {
             currency: paymentsParams.currency,
             value: paymentsParams.value
-        }
+        };
 const shopperLocale = paymentsParams.shopperLocale;
 const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;

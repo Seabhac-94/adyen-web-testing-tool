@@ -21,19 +21,19 @@ const parameters = document.getElementById("parameters");
 
 
 // Creates the dropdown options for the form
-function createForm(selectElement, elId, options, optionEl) {
+function createForm(x, y, z) {
 
-	const selectEl = document.createElement("select");
-	selectEl.id = elId;
-	selectEl.className = "selectDropdown";
-	parameters.append(selectEl);
+	const a = document.createElement("select");
+	a.id = x;
+	a.className = "selectDropdown";
+	parameters.append(a);
 
-	for (var i = 0; i < options.length; i++) {
+	for (var i = 0; i < y.length; i++) {
 
-		var optionEl = document.createElement("option");
-		optionEl.className = "optionDropdown";
-		optionEl.innerHTML = options[i];
-		selectEl.append(optionEl);
+		var z = document.createElement("option");
+		z.className = "optionDropdown";
+		z.innerHTML = y[i];
+		a.append(z);
 		
 	}
 
@@ -41,10 +41,10 @@ function createForm(selectElement, elId, options, optionEl) {
 
 
 // Create the SDK dropdown
-createForm("selectSdkVersionEl", "selectSdkVersion", sdkVersionOption, "sdkOption");
+createForm( "selectSdkVersion", sdkVersionOption, "sdkOption");
 
 // Create the API dropdown
-createForm("selectApiVersionEl", "selectApiVersion", apiVersionOption, "apiOption");
+createForm( "selectApiVersion", apiVersionOption, "apiOption");
 
 
 const loadScriptsButton = document.createElement("button");
