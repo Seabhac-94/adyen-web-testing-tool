@@ -88,6 +88,7 @@ const googlePayConfig = {
 // Specific/common errors
 const errorTesting = {
 
+	lineItemsMissing: [true, false],
 	threeDS2Timeout: [true, false],
 	submit3DS2FingerprintFailed: [true, false],
 	languageFieldMissing: [true, false]

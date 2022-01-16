@@ -27,18 +27,22 @@ function handleRecurring(ref) {
 function showFinalResponse(response, component) {
 
     const result = response['resultCode'];
-    const recurringSR = response.additionalData['recurring.shopperReference'];
-    const queriedSF = urlParams.get('shopperReference')
-    var recurringShopperReference = '';
-
-    // Supports the handleRecurring function for native and redirect
-    if (recurringSR) {
-        recurringShopperReference = recurringSR
-    } else {
-        recurringShopperReference = queriedSF
-    }
 
     if (result === "Authorised" || result === "Received") {
+
+        // We should only check for the shopper reference for recurring
+        // if the result is positive
+        const recurringSR = response.additionalData['recurring.shopperReference'];
+        const queriedSF = urlParams.get('shopperReference')
+        var recurringShopperReference = '';
+
+        // Supports the handleRecurring function for native and redirect
+        if (recurringSR) {
+            recurringShopperReference = recurringSR
+        } else {
+            recurringShopperReference = queriedSF
+        }
+        
         // We check to see if there's no flavour so that it can handle redirects as well
         if (componentFlavour === 'dropin' || !componentFlavour) {
             component.setStatus('success', {
@@ -49,6 +53,7 @@ function showFinalResponse(response, component) {
             const result = document.getElementById("dropin-container");
             result.innerHTML = componentSuccess;
         }
+
 
         if (recurringShopperReference) {
             handleRecurring(recurringShopperReference)
