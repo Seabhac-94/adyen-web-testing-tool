@@ -1,4 +1,4 @@
-var timeAndDate = new Date();
+const timeAndDate = new Date();
 
 // This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
@@ -35,6 +35,21 @@ function getValueOfConfig(component, param) {
     return c;
 
 };
+
+
+// Deletes the browserInfo to simulate merchant not sending
+function browserInfoError(data) {
+
+    const threeDS2Fingerprint = getValueOfConfig('error', 'submit3DS2FingerprintFailed');
+    if (threeDS2Fingerprint) {
+        delete data.browserInfo
+    }
+    const browserInfoLanguage = getValueOfConfig('error', 'languageFieldMissing');
+    if (browserInfoLanguage) {
+        data.browserInfo.language = "incorrectL4ngu4ge"
+    }
+
+}
 
 
 // Sets the origin based on the test case

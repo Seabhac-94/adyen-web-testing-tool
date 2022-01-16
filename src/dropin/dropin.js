@@ -31,6 +31,7 @@ function showFinalResponse(response, component) {
     const queriedSF = urlParams.get('shopperReference')
     var recurringShopperReference = '';
 
+    // Supports the handleRecurring function for native and redirect
     if (recurringSR) {
         recurringShopperReference = recurringSR
     } else {
@@ -89,6 +90,7 @@ function initiateCheckout() {
                     updateStateContainer(state); // Demo purposes only
                 },
                 onSubmit: (state, component) => {
+                    browserInfoError(state.data)
                     makePayment(state.data)
                         .then(async response => {
                             if (response.action) {
