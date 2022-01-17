@@ -28,8 +28,7 @@ function lineItems() {
 
     const noLines = getValueOfConfig('error', 'noInvoiceLines')
     if (noLines) {
-        console.log("delete line")
-        var lineItems = []
+        lineItems = []
     }
     return lineItems
 }

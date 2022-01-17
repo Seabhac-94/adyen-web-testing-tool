@@ -23,9 +23,28 @@
                         Before you begin <i id="infoIcon" class="icon fas fa-angle-double-right"></i>
                     </h3>
 
-                    <p id="infoPara" class="hiddenForm">
-                        Info about errors will go here
-                    </p>
+                    <div id="infoPara" class="hiddenForm">
+                        <p>
+                            The Adyen Tech Support Integrations tool is designed to allow you to test the full capacity of the Drop-in and Components, without having to make changes to code. It also allows you to test certain error scenarios. 
+                        </p>
+                        <p>
+                            <strong>Error recreation: </strong>Below is a description of errors you can recreate and the required parameters for them.
+                        </p>
+                        <p>
+                            <strong>noInvoiceLines: </strong>a common error seen in PM's such as Klarna or Oney. Each PM has required data in a /payments request, and certain PM's require <code>lineItems</code>. If these aren't supplied, the error will be thrown. Test this on any version.
+                        </p>
+                        <p>
+                            <strong>threeDS2Timeout: </strong>A main reason for this is due to the incorrect <code>origin</code> being sent in the /payments request. The payment will eventually go through, but once the SCA has been completed, it can take up to 10 minutes for <code>onAdditionalDetails</code> to be called by the component. To test this use a version v4.9.0 or lower and API v67. The issue is no longer present on v5.
+                        </p>
+                        <p>
+                            <strong>noBrowserInfoProvided: </strong><code>browserInfo</code> is a required parameter in the /payments request for 3DS2 transactions. If you open the console before starting the transaction, once you hit pay, you will see something like <strong><code>POST https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key 500</code></strong> followed by <strong><code>Service at https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key is not available</code></strong>. This is the internal details call failing. Looking in the logs you will see an error similar to <strong><code>No Browser info provided</code></strong>. Test on any version using a 3DS2 test card.
+                        </p>
+                        <p>
+                            <strong>invalidLanguageTag: </strong>the <code>browserInfo</code> requires certain parameters, and if any are missed or incorrectly sent, this can cause an issue. If you run this test and look in the "Request" container on the right, you will see that <code>browserInfo.language: "incorrectL4ngu4ge"</code> to simulate the incorrect format. Looking in the logs you will see a 422 error specifying the format it should follow.
+                        </p>
+
+                    </div>
+                    
 
                 </div>
                 <div id="configurationParametersWrapper" class="parametersForm">

@@ -41,11 +41,11 @@ function getValueOfConfig(component, param) {
 function browserInfoError(data) {
 
     const noBrowserInfoProvided = getValueOfConfig('error', 'noBrowserInfoProvided');
-    if (noBrowserInfoProvided) {
+    if (data. browserInfo && noBrowserInfoProvided) {
         delete data.browserInfo
     }
     const invalidLanguageTag = getValueOfConfig('error', 'invalidLanguageTag');
-    if (invalidLanguageTag) {
+    if (data. browserInfo && invalidLanguageTag) {
         data.browserInfo.language = "incorrectL4ngu4ge"
     }
 
