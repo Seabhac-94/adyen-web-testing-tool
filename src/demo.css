@@ -38,6 +38,11 @@ h1 {
     text-align: center;
 }
 
+.icon {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 .componentSelection {
     margin-top: 6rem;
     text-align: center;
