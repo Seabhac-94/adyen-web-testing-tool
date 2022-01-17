@@ -17,7 +17,7 @@ const parametersConfig = {
 // Select the component to be mounted
 const flavourConfig = {
 	
-	flavour: [ "klarna", "paypal", "paywithgoogle", "ideal", "card", "dropin"],
+	flavour: ["boletobancario", "directdebit_GB", "bcmc_mobile", "sepadirectdebit", "trustly", "ach", "klarna_account", "klarna_paynow", "klarna", "paypal", "paywithgoogle", "ideal", "card", "dropin"],
 
 };
 
@@ -88,10 +88,10 @@ const googlePayConfig = {
 // Specific/common errors
 const errorTesting = {
 
-	lineItemsMissing: [true, false],
+	noInvoiceLines: [true, false],
 	threeDS2Timeout: [true, false],
-	submit3DS2FingerprintFailed: [true, false],
-	languageFieldMissing: [true, false]
+	noBrowserInfoProvided: [true, false],
+	invalidLanguageTag: [true, false]
 
 };
 

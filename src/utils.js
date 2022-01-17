@@ -40,12 +40,12 @@ function getValueOfConfig(component, param) {
 // Deletes the browserInfo to simulate merchant not sending
 function browserInfoError(data) {
 
-    const threeDS2Fingerprint = getValueOfConfig('error', 'submit3DS2FingerprintFailed');
-    if (threeDS2Fingerprint) {
+    const noBrowserInfoProvided = getValueOfConfig('error', 'noBrowserInfoProvided');
+    if (noBrowserInfoProvided) {
         delete data.browserInfo
     }
-    const browserInfoLanguage = getValueOfConfig('error', 'languageFieldMissing');
-    if (browserInfoLanguage) {
+    const invalidLanguageTag = getValueOfConfig('error', 'invalidLanguageTag');
+    if (invalidLanguageTag) {
         data.browserInfo.language = "incorrectL4ngu4ge"
     }
 
