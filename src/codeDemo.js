@@ -29,7 +29,8 @@ setTimeout(function(){
 		var optImpCode = document.createElement("option");
 		optImpCode.innerText = key;
 		optImpCode.id = `${key}_config`;
-		optImpCode.value = JSON.stringify(object, null, 2);
+		// optImpCode.value = JSON.stringify(object, null, 2);
+		optImpCode.value = key
 		selImpCode.appendChild(optImpCode)
 
 	}
@@ -39,7 +40,10 @@ setTimeout(function(){
 	implmentationButton.addEventListener('click', function () {
 
 		var impConfig = document.getElementById('selectImpCode').value;
-		updateImplementationContainer(impConfig);
+
+		var impConfigCode = configurationObjects[`${impConfig}`]
+		
+		updateImplementationContainer(JSON.stringify(impConfigCode,null, 2));
 
 	});
 },100)

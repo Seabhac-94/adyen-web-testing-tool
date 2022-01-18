@@ -144,6 +144,9 @@ if (!sdkVersionOnLoad) {
 		hideCheckoutForm.classList.add('hiddenForm');
 
 		loadCheckout.classList.add('hiddenForm');
+		infoPara.classList.add('hiddenForm')
+		icon.classList.remove('fa-angle-double-down')
+		icon.classList.add('fa-angle-double-right')
 
 		// Loads the drop-in script
 		loadComponentScript();

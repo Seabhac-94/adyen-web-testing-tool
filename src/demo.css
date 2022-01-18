@@ -38,6 +38,18 @@ h1 {
     text-align: center;
 }
 
+#infoPara > p {
+    color: #2f4f4f;
+}
+
+#infoPara > p > strong {
+    color: black;
+}
+
+.info-pre {
+    margin: 0;
+}
+
 .icon {
     vertical-align: middle;
     cursor: pointer;
