@@ -21,7 +21,22 @@ const parametersConfig = {
 // Select the component to be mounted
 const flavourConfig = {
 	
-	flavour: ["boletobancario", "directdebit_GB", "bcmc_mobile", "sepadirectdebit", "trustly", "ach", "klarna_account", "klarna_paynow", "klarna", "paypal", "paywithgoogle", "ideal", "card", "dropin"],
+	flavour: [
+		"boletobancario",
+		"directdebit_GB",
+		"bcmc_mobile",
+		"sepadirectdebit",
+		"trustly",
+		"ach",
+		"klarna_account",
+		"klarna_paynow",
+		"klarna",
+		"paypal",
+		"paywithgoogle",
+		"ideal",
+		"card",
+		"dropin"
+	],
 
 };
 
@@ -72,10 +87,12 @@ const paypalConfig = {
 
 
 const idealConfig = {
+
 	showImage: [false, true],
 	issuer: ["input"],
 	highlightedIssuers: ["input"],
 	placeholder: ["input"]
+
 };
 
 

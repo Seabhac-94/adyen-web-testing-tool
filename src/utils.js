@@ -101,8 +101,6 @@ function paymentsConfigParams() {
 
     var recurringProcessingModel = getValueOfConfig('parameters', 'recurringProcessingModel');
 
-
-
     return {
 
         countryCode,
@@ -232,8 +230,8 @@ const disable = (data) =>
 
 // Posts a new payment into the local server
 const sessions = (paymentMethod, config = {}) => {
-    const paymentsConfig = { ...paymentsDefaultConfig, ...config };
-    const sessionRequest = { ...paymentsConfig, ...paymentMethod };
+    const sessionsConfig = { ...sessionDefaultConfig, ...config };
+    const sessionRequest = { ...sessionsConfig, ...paymentMethod };
 
     return httpPost('sessions', sessionRequest)
         .then(response => {

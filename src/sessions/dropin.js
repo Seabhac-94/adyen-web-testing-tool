@@ -8,13 +8,13 @@ getClientKey().then(clientKey => {
 
     function initiateSession() {
         sessions()
-            .then(response => {
+            .then(async session => {
                 const configuration = {
                     environment: 'test', // Change to 'live' for the live environment.
                     clientKey: clientKey, // Public key used for client-side authentication: https://docs.adyen.com/development-resources/client-side-authentication
                     session: {
-                        id: response.id, // Unique identifier for the payment session.
-                        sessionData: response.sessionData // The payment session data.
+                        id: session.id, // Unique identifier for the payment session.
+                        sessionData: session.sessionData // The payment session data.
                     },
                     onPaymentCompleted: (result, component) => {
                         console.info(result, component);
@@ -40,18 +40,16 @@ getClientKey().then(clientKey => {
                         }
                     }
                 };
-                async function initiateCheckout() {
-                    // Create an instance of AdyenCheckout using the configuration object.
-                    const checkout = await AdyenCheckout(configuration);
+                // Create an instance of AdyenCheckout using the configuration object.
+                const checkout = await AdyenCheckout(configuration);
 
-                    // Create an instance of Drop-in and mount it to the container you created.
-                    const dropinComponent = checkout.create('dropin', {
-                        onSelect: activeComponent => {
-                            if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
-                        }
-                    }).mount('#dropin-container');
-                }
-                initiateCheckout()
+                // Create an instance of Drop-in and mount it to the container you created.
+                const dropinComponent = checkout.create('dropin', {
+                    onSelect: activeComponent => {
+                        if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
+                    }
+                }).mount('#dropin-container');
+
             })
     }
 
