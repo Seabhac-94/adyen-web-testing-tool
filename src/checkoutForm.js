@@ -9,7 +9,11 @@ const parametersConfig = {
 	shopperReference: ["input"],
 	reference: ["input"],
 	countryCode: ["input"],
-	shopperLocale: ["input"]
+	shopperLocale: ["input"],
+	storePaymentMethod: [false, true, ""],
+	shopperInteraction: ["ContAuth", "Ecommerce", ""],
+	recurringProcessingModel: [ "Subscription", "UnscheduledCardOnFile", "CardOnFile", ""]
+
 
 };
 

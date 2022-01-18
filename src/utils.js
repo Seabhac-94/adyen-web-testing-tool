@@ -95,6 +95,14 @@ function paymentsConfigParams() {
     var reference = getValueOfConfig('parameters', 'reference');
     if (reference === '') {reference = 'testPayment_' + shopperReference}
 
+    var storePaymentMethod = getValueOfConfig('parameters', 'storePaymentMethod');
+
+    var shopperInteraction = getValueOfConfig('parameters', 'shopperInteraction');
+
+    var recurringProcessingModel = getValueOfConfig('parameters', 'recurringProcessingModel');
+
+
+
     return {
 
         countryCode,
@@ -103,7 +111,10 @@ function paymentsConfigParams() {
         shopperLocale,
         shopperReference,
         reference,
-    
+        storePaymentMethod,
+        shopperInteraction,
+        recurringProcessingModel
+
     }
 
 }

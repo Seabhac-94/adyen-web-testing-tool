@@ -11,6 +11,9 @@ var amount = {
 const shopperLocale = paymentsParams.shopperLocale;
 const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;
+const storePaymentMethod = paymentsParams.storePaymentMethod
+const shopperInteraction = paymentsParams.shopperInteraction
+const recurringProcessingModel = paymentsParams.recurringProcessingModel
 
 function lineItems() {
     var lineItems = [
@@ -44,6 +47,7 @@ const paymentMethodsConfig = {
 };
 
 const paymentsDefaultConfig = {
+    amount,
     shopperReference,
     reference,
     countryCode,
@@ -53,8 +57,9 @@ const paymentsDefaultConfig = {
     channel: 'Web',
     returnUrl: setReturnUrl(),
     origin: setOrigin(),
-    storePaymentMethod: true,
-    amount,
+    storePaymentMethod,
+    shopperInteraction,
+    recurringProcessingModel,
     lineItems: lineItems(),
     additionalData: {
         allow3DS2: true,

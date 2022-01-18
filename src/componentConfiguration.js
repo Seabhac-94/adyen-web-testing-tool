@@ -42,6 +42,20 @@ function dropinOptionalConfig() {
 	        console.info("Error thrown at: " + timeAndDate.toUTCString());
 	        console.error(error);
 	    },
+	    onDisableStoredPaymentMethod: (storedPaymentMethodId, resolve, reject) => {
+
+            let disableData = {
+					recurringDetailReference: storedPaymentMethodId,
+					shopperReference
+				}
+
+       		disable(disableData)
+       			.then(res => {
+       				if(res.response) {
+       					resolve()
+       				}
+       			})   
+        }
 	}
 }
 
