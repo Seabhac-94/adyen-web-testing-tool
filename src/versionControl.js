@@ -168,5 +168,8 @@ if (!sdkVersionOnLoad) {
 
 	const copyConfiguration = document.getElementById("copyConfiguration");
 	copyConfiguration.classList.add("hiddenForm")
+
+	const info = document.querySelector(".component-info")
+	info.classList.add("hiddenForm")
 	
 }

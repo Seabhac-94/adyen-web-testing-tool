@@ -8,7 +8,7 @@ const componentFlavour = getValueOfConfig('flavour', 'flavour');
 const componentSuccess = `<div class="adyen-checkout__status adyen-checkout__status--success"><img height="88" class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif" alt="Payment successful!"><span class="adyen-checkout__status__text">Payment successful!</span></div>`;
 const componentError = `<div class="adyen-checkout__status adyen-checkout__status--error"><img class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.gif" alt="Something went wrong." height="88"><span class="adyen-checkout__status__text">Something went wrong.</span></div>`;
 
-const paymentMethodsResponse = getPaymentMethods(paymentMethodsConfig)
+var paymentMethodsResponse = null
 
 function handleRecurring(ref) {
 
@@ -240,6 +240,7 @@ async function handleRedirect() {
 
 // Selects which flow based on result of urlParams
 if (!redirectResult) {
+    paymentMethodsResponse = getPaymentMethods(paymentMethodsConfig)
     initiateCheckout()
 } else {
     handleRedirect()

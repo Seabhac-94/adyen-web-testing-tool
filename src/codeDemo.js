@@ -39,11 +39,16 @@ setTimeout(async function(){
 	implmentationButton.addEventListener('click', function () {
 
 		var impConfig = document.getElementById('selectImpCode').value;
+		var impConfigCode = ''
 
-		var impConfigCode = configurationObjects[`${impConfig}`]
-		
-		updateImplementationContainer(JSON.stringify(impConfigCode,null, 2));
-
+		if (impConfig === 'dropin') {
+			impConfigCode = `.create('dropin', ${JSON.stringify(configurationObjects[`${impConfig}`],null,2)})`
+		} else {
+			impConfigCode = `"paymentMethodsConfiguration": {
+  ${JSON.stringify(impConfig,null,2)}:${JSON.stringify(configurationObjects[`${impConfig}`],null,3)}
+}`
+		}
+		updateImplementationContainer(impConfigCode);
 	});
 },100)
 
