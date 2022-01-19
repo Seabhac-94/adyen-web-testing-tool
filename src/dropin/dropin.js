@@ -8,6 +8,7 @@ const componentFlavour = getValueOfConfig('flavour', 'flavour');
 const componentSuccess = `<div class="adyen-checkout__status adyen-checkout__status--success"><img height="88" class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif" alt="Payment successful!"><span class="adyen-checkout__status__text">Payment successful!</span></div>`;
 const componentError = `<div class="adyen-checkout__status adyen-checkout__status--error"><img class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.gif" alt="Something went wrong." height="88"><span class="adyen-checkout__status__text">Something went wrong.</span></div>`;
 
+const paymentMethodsResponse = getPaymentMethods(paymentMethodsConfig)
 
 function handleRecurring(ref) {
 
@@ -77,17 +78,17 @@ function showFinalResponse(response, component) {
 
 function initiateCheckout() {
     // 0. Get clientKey
-    getClientKey().then(clientKey => {
-        getPaymentMethods(paymentMethodsConfig).then(async paymentMethodsResponse => {
+    getClientKey().then(async clientKey => {
+            const pm = await paymentMethodsResponse
             const configuration = {
                 environment: 'test',
                 clientKey: clientKey, // Mandatory. clientKey from Customer Area
-                paymentMethodsResponse,
+                paymentMethodsResponse: pm,
                 removePaymentMethods: ['paysafecard', 'c_cash'],
                 amount,
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
-                    card: cardConfiguration(),
+                    card: cardConfiguration(pm),
                     ideal: idealConfiguration(),
                     paywithgoogle: googlePayConfiguration()
                 },
@@ -193,9 +194,6 @@ function initiateCheckout() {
             document.getElementById('customPayButton').addEventListener('click', function() {
                 selectedComponent.submit()
             })
-
-
-        });
     });
 };
 

@@ -1,12 +1,12 @@
 // This is where we generate the dropin/component/payment method code for the exmaple container
 
-setTimeout(function(){
+setTimeout(async function(){
 	const implmentationDiv = document.querySelector('.implementation');
-
+	const pm = await paymentMethodsResponse
 	const configurationObjects = {
 
 		dropin: dropinOptionalConfig(),
-		card: cardConfiguration(),
+		card: cardConfiguration(pm),
 		ideal: idealConfiguration(),
 		paywithgoogle: googlePayConfiguration(),
 		paypal: paypalConfiguration()
@@ -29,7 +29,6 @@ setTimeout(function(){
 		var optImpCode = document.createElement("option");
 		optImpCode.innerText = key;
 		optImpCode.id = `${key}_config`;
-		// optImpCode.value = JSON.stringify(object, null, 2);
 		optImpCode.value = key
 		selImpCode.appendChild(optImpCode)
 

@@ -61,13 +61,22 @@ function dropinOptionalConfig() {
 
 
 // Payment methods configuration, called in dropin.js
-function cardConfiguration() {
+function cardConfiguration(paymentMethodsResponse) {
 
 	const component = 'card';
 
-	// Supports array for brands
+	// Defaults to brands in paymentMethods response if none provided
+	for (let [key, value] of Object.entries(paymentMethodsResponse)) {
+		for (var i = 0; i < value.length; i++) {
+			let pm = value[i]
+			if (pm['type'] === "scheme") {
+				// console.log(pm['brands'])
+				var brands = pm['brands']
+			}
+		}
+	}
 	var brandsValue = getValueOfConfig(component, 'brands');
-	if (brandsValue != "") { var brands = brandsValue.split(", ") };
+	if (brandsValue != "") { brands = brandsValue.split(", ") };
 
 
 	// Defaults to credit card if no name is selected
