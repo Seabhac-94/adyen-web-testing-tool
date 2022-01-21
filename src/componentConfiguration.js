@@ -20,6 +20,11 @@ function dropinOptionalConfig() {
 
 	};
 
+	var locale = getValueOfConfig(component, 'locale');
+	if (!locale) {
+		locale = "en_GB"
+	}
+
 	return {
 
 	    //Configuration
@@ -30,6 +35,7 @@ function dropinOptionalConfig() {
 	    showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
 	    setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
 	    instantPaymentTypes,
+	    locale,
 	    showPayButton,
 	    // Events
 	    onSelect: activeComponent => {

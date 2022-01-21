@@ -10,10 +10,10 @@ const parametersConfig = {
 	reference: ["input"],
 	countryCode: ["input"],
 	shopperLocale: ["input"],
+	blockedPaymentMethods: ["input"],
 	storePaymentMethod: [false, true, ""],
 	shopperInteraction: ["ContAuth", "Ecommerce", ""],
 	recurringProcessingModel: [ "Subscription", "UnscheduledCardOnFile", "CardOnFile", ""]
-
 
 };
 
@@ -45,6 +45,7 @@ const flavourConfig = {
 const dropinConfig = {
 
 	openFirstPaymentMethod: [false, true],
+	locale: ["input"],
 	openFirstStoredPaymentMethod: [false, true],
 	showStoredPaymentMethods: [false, true],
 	showRemovePaymentMethodButton: [true, false],

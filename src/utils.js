@@ -9,29 +9,16 @@ function setReturnUrl() {
 };
 
 
-// As the value from HTML gets passed as a string, but Drop-in requires booleans-
-// we use this function to convert either true or false values to Booleans
-function convertToBoolean(v) {
-
-    if (v === "true") {
-        return true;
-    } else if (v === "false"){
-        return false;
-    } else {
-        return v;
-    }
-
-};
-
-
 // Short hand function which will target the id and get the HTML value,
 // uses convertToBoolean() so the value can be passed directly to the config function
 function getValueOfConfig(component, param) {
     
     a = `${component}_${param}`;
     var b = document.getElementById(a).value;
-    c = convertToBoolean(b);
-
+    c = b
+    if (b === "true" || b === "false") {
+       c = JSON.parse(b); 
+    }
     return c;
 
 };
@@ -95,6 +82,12 @@ function paymentsConfigParams() {
     var reference = getValueOfConfig('parameters', 'reference');
     if (reference === '') {reference = 'testPayment_' + shopperReference}
 
+    var blockedPaymentMethods = ["applepay"]
+    var addedBlockedPM = getValueOfConfig('parameters', 'blockedPaymentMethods').split(", ")
+    if (addedBlockedPM) {
+        blockedPaymentMethods = blockedPaymentMethods.concat(addedBlockedPM)
+    }
+
     var storePaymentMethod = getValueOfConfig('parameters', 'storePaymentMethod');
 
     var shopperInteraction = getValueOfConfig('parameters', 'shopperInteraction');
@@ -109,6 +102,7 @@ function paymentsConfigParams() {
         shopperLocale,
         shopperReference,
         reference,
+        blockedPaymentMethods,
         storePaymentMethod,
         shopperInteraction,
         recurringProcessingModel

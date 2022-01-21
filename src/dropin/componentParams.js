@@ -11,9 +11,10 @@ var amount = {
 const shopperLocale = paymentsParams.shopperLocale;
 const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;
-const storePaymentMethod = paymentsParams.storePaymentMethod
-const shopperInteraction = paymentsParams.shopperInteraction
-const recurringProcessingModel = paymentsParams.recurringProcessingModel
+const blockedPaymentMethods = paymentsParams.blockedPaymentMethods
+const storePaymentMethod = paymentsParams.storePaymentMethod;
+const shopperInteraction = paymentsParams.shopperInteraction;
+const recurringProcessingModel = paymentsParams.recurringProcessingModel;
 
 function lineItems() {
     var lineItems = [
@@ -43,7 +44,8 @@ const paymentMethodsConfig = {
     shopperLocale,
     reference,
     countryCode,
-    amount
+    amount,
+    blockedPaymentMethods
 };
 
 const paymentsDefaultConfig = {
