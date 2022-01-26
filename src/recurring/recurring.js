@@ -24,6 +24,81 @@ const pmType = new Map([
 ]);
 
 
+function recurringPayment(type, storedPaymentMethodId) {
+
+    const container = document.getElementById('recurringContainer')
+    const modal = document.createElement('div')
+    modal.classList.add('modal')
+    container.appendChild(modal)
+
+    modal.innerHTML = `
+    							<div class="modal-content">
+										<div class="recForm">
+											<label for="recInteraction">Shopper Interaction</label>
+											<input id="recInteraction" name="recInteraction" type="text" value="ContAuth"/>
+										</div>
+										<div class="recForm">
+											<label for="recProcessModel">Recurring Processing Model</label>
+											<input id="recProcessModel" name="recProcessModel" type="text" value="Subscription"/>
+										</div>
+										<div class="recForm">
+											<label for="recValue">Value</label>
+											<input id="${storedPaymentMethodId}_recValue" name="recValue" type="number" value="1000"/>
+										</div>
+										<div class="recForm">
+											<label for="recCurrency">Currency</label>
+											<input id="${storedPaymentMethodId}_recCurrency" name="recCurrency" type="text" value="EUR"/>
+										</div>
+										<div class="recButton">
+											<button id="closeModal" class="makeRecPayment">Close</button>
+											<button id="${storedPaymentMethodId}_payment" class="makeRecPayment">Submit Payment</button>
+    								</div>
+    							</div>
+									`
+
+		const payButton = document.getElementById(`${storedPaymentMethodId}_payment`)
+
+		const closeModal = document.getElementById('closeModal')
+
+		closeModal.addEventListener('click', function () {
+			modal.remove()
+		})
+
+		payButton.addEventListener('click', function(){
+
+			const value = document.getElementById(`${storedPaymentMethodId}_recValue`).value
+			const currency = document.getElementById(`${storedPaymentMethodId}_recCurrency`).value
+			const shopperInteraction = document.getElementById('recInteraction').value
+			const recurringProcessingModel = document.getElementById('recProcessModel').value
+
+	    let rPaymentData = {
+	        amount: {
+	            value: parseInt(value),
+	            currency: currency
+	        },
+	        paymentMethod: {
+	            type,
+	            storedPaymentMethodId,
+	        },
+	        reference: "RECURRING_PAYMENT_" + shopperReference,
+	        shopperInteraction,
+	        recurringProcessingModel,
+	        shopperReference
+	    };
+
+	    makePayment(rPaymentData)
+	    	.then(res => {
+		    	if (res.resultCode) {
+		    	modal.remove()
+	    	}	
+	    })
+
+
+		})
+
+}
+
+
 function makeRecurringCall() {
 
 	const rData = {
@@ -36,11 +111,15 @@ function makeRecurringCall() {
 			updateResponseContainer(res);	
 			const details = res['details']
 
+			const recContent = document.createElement('div')
+			recContent.classList.add('recContent')
+			recurringDetails.appendChild(recContent)
+
 				for (var i = 0; i < details.length; i++) {
 					
 					const a = document.createElement('div')
 					a.classList.add('shopperDetails')
-					recurringDetails.appendChild(a)
+					recContent.appendChild(a)
 					var b = details[i]['RecurringDetail']
 					var savedPm = null
 
@@ -75,7 +154,9 @@ function makeRecurringCall() {
 									<p><strong>Creation Date: </strong> ${b['creationDate']}</p>
 									${savedPm}
 									<p><strong>Contract Type: </strong> ${b['contractTypes']}
-									<p class="recActions"><button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['variant']}_${b['recurringDetailReference']}">Make a payment</button> <button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Disable</button></p>`
+									<p class="recActions">
+									<button class="makeRecPayment" id="pay_${b['recurringDetailReference']}" value="${b['variant']}_${b['recurringDetailReference']}">Make a payment</button>
+									<button class="diasbleRecRef" id="disable_${b['recurringDetailReference']}" value="${b['recurringDetailReference']}">Disable</button></p>`
 				
 				}
 
@@ -85,26 +166,12 @@ function makeRecurringCall() {
 
 				let y = makeRecPayment[i];
 				y.addEventListener('click', function () {
-					
-					let rPaymentData = {
-						   amount:{
-						      value: 2000,
-						      currency: "EUR"
-						   },
-						   paymentMethod:{
-						      type: pmType.get(y.value.split('_')[0]),
-						      storedPaymentMethodId: y.value.split('_')[1]
-						   },
-						   reference: "RECURRING_PAYMENT",
-						   shopperInteraction: "ContAuth",
-						   recurringProcessingModel: "Subscription",
-						   shopperReference: shopperReference
-						}
 
-					makePayment(rPaymentData)
-						.then(res => {
-							console.log(res)
-						})
+					var type = pmType.get(y.value.split('_')[0])
+					var storedPaymentMethodId = y.value.split('_')[1]
+
+					const startRecPayment = recurringPayment(type, storedPaymentMethodId)
+
 				})
 
 			}

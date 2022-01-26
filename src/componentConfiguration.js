@@ -67,8 +67,7 @@ function cardConfiguration(paymentMethodsResponse) {
 	for (let [key, value] of Object.entries(paymentMethodsResponse)) {
 		for (var i = 0; i < value.length; i++) {
 			let pm = value[i]
-			if (pm['type'] === "scheme") {
-				// console.log(pm['brands'])
+			if (pm['type'] === "scheme" && !pm['id']) {
 				var brands = pm['brands']
 			}
 		}
