@@ -11,10 +11,12 @@ var amount = {
 const shopperLocale = paymentsParams.shopperLocale;
 const shopperReference = paymentsParams.shopperReference;
 const reference = paymentsParams.reference;
-const blockedPaymentMethods = paymentsParams.blockedPaymentMethods
+const blockedPaymentMethods = paymentsParams.blockedPaymentMethods;
 const storePaymentMethod = paymentsParams.storePaymentMethod;
 const shopperInteraction = paymentsParams.shopperInteraction;
 const recurringProcessingModel = paymentsParams.recurringProcessingModel;
+const executeThreeD = paymentsParams.executeThreeD;
+const allow3DS2 = paymentsParams.allow3DS2;
 
 function lineItems() {
     var lineItems = [
@@ -64,7 +66,7 @@ const paymentsDefaultConfig = {
     recurringProcessingModel,
     lineItems: lineItems(),
     additionalData: {
-        allow3DS2: true,
-        executeTheeD: true
+        allow3DS2,
+        executeThreeD
     }
 };

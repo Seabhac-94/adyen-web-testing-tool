@@ -131,6 +131,10 @@ function initiateCheckout() {
                             }
                         })
                 },
+                onError: (error, component) => {
+                    console.info("Error thrown at: " + timeAndDate.toUTCString());
+                    console.error(error);
+                },
                 onBalanceCheck: async function(resolve, reject, data) {
                     // Call /paymentMethods/balance
                     getBalance(data)

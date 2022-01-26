@@ -13,7 +13,9 @@ const parametersConfig = {
 	blockedPaymentMethods: ["input"],
 	storePaymentMethod: [false, true, ""],
 	shopperInteraction: ["ContAuth", "Ecommerce", ""],
-	recurringProcessingModel: [ "Subscription", "UnscheduledCardOnFile", "CardOnFile", ""]
+	recurringProcessingModel: [ "Subscription", "UnscheduledCardOnFile", "CardOnFile", ""],
+	allow3DS2: [false, true],
+	executeThreeD: [false, true]
 
 };
 

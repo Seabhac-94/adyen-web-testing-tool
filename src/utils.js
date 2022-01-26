@@ -83,7 +83,7 @@ function paymentsConfigParams() {
     if (reference === '') {reference = 'testPayment_' + shopperReference}
 
     var blockedPaymentMethods = ["applepay"]
-    var addedBlockedPM = getValueOfConfig('parameters', 'blockedPaymentMethods').split(", ")
+    var addedBlockedPM = getValueOfConfig('parameters', 'blockedPaymentMethods').split(/,| |, | ,/) 
     if (addedBlockedPM) {
         blockedPaymentMethods = blockedPaymentMethods.concat(addedBlockedPM)
     }
@@ -93,6 +93,10 @@ function paymentsConfigParams() {
     var shopperInteraction = getValueOfConfig('parameters', 'shopperInteraction');
 
     var recurringProcessingModel = getValueOfConfig('parameters', 'recurringProcessingModel');
+
+    var executeThreeD = getValueOfConfig('parameters', 'executeThreeD');
+
+    var allow3DS2 = getValueOfConfig('parameters', 'allow3DS2');
 
     return {
 
@@ -105,7 +109,9 @@ function paymentsConfigParams() {
         blockedPaymentMethods,
         storePaymentMethod,
         shopperInteraction,
-        recurringProcessingModel
+        recurringProcessingModel,
+        executeThreeD,
+        allow3DS2
 
     }
 

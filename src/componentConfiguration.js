@@ -5,25 +5,17 @@ function dropinOptionalConfig() {
 	// Supports array for instantPaymentTypes
 	var instantPaymentTypesValue = getValueOfConfig(component, 'instantPaymentTypes');
 
-	if (instantPaymentTypesValue != "") {
-
-		var instantPaymentTypes = instantPaymentTypesValue.split(", ");
-
-	}
+	if (instantPaymentTypesValue != "") {var instantPaymentTypes = instantPaymentTypesValue.split(", ")};
 
 	var showPayButton = getValueOfConfig(component, 'showPayButton');
 
 	if (!showPayButton) {
-
 		const customPay = document.getElementById('customPayButton')
 		customPay.classList.remove("hiddenForm")
-
 	};
 
 	var locale = getValueOfConfig(component, 'locale');
-	if (!locale) {
-		locale = "en_GB"
-	}
+	if (!locale) {locale = "en_GB"};
 
 	return {
 
@@ -63,7 +55,7 @@ function dropinOptionalConfig() {
        			})   
         }
 	}
-}
+};
 
 
 // Payment methods configuration, called in dropin.js
@@ -124,8 +116,15 @@ function paypalConfiguration() {
 	    	color: getValueOfConfig(component, 'color'),
 	    	label: getValueOfConfig(component, 'label'),
   		},
+  		// Support for v5.0.0 onwards
   		onError: (error, component) => {
   			console.info("Error thrown at: " + timeAndDate.toUTCString());
+            console.error(error);
+            component.closeActivePaymentMethod()
+  		},
+  		// Support for v4
+  		onCancel: (error, component) => {
+  			console.info("Cancel thrown at: " + timeAndDate.toUTCString());
             console.error(error);
             component.closeActivePaymentMethod()
   		},
