@@ -2,9 +2,9 @@ const timeAndDate = new Date();
 
 // This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
 // else redirect back to sessions where we handle the redirectResult
-function setReturnUrl() {
+function setReturnUrl(a) {
 
-    return `${window.location.href}&shopperReference=${shopperReference}`
+    return `${window.location.href}&shopperReference=${a}`
 
 };
 
@@ -175,7 +175,10 @@ const cancelOrder = (data) =>
 
 
 // Posts a new payment into the local server
-const makePayment = (paymentMethod, config = {}) => {
+const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
+    // params = setParams()
+    // paymentsDefaultConfig = params.paymentsDefaultConfig
+    
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };
     const paymentRequest = { ...paymentsConfig, ...paymentMethod };
     

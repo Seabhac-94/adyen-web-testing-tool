@@ -1,6 +1,7 @@
 // This is where we generate the dropin/component/payment method code for the exmaple container
 
-setTimeout(async function(){
+async function showCodeDemo() {
+
 	const implmentationDiv = document.querySelector('.implementation');
 	const pm = await paymentMethodsResponse
 	const configurationObjects = {
@@ -50,5 +51,5 @@ setTimeout(async function(){
 		}
 		updateImplementationContainer(impConfigCode);
 	});
-},100)
 
+}

@@ -2,13 +2,12 @@
 // We will use this to determine which instance of AdyenCheckout to create 
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0]);
 
-const componentFlavour = getValueOfConfig('flavour', 'flavour');
-
 // Custom elements for support of components which don't use setStatus()
 const componentSuccess = `<div class="adyen-checkout__status adyen-checkout__status--success"><img height="88" class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif" alt="Payment successful!"><span class="adyen-checkout__status__text">Payment successful!</span></div>`;
 const componentError = `<div class="adyen-checkout__status adyen-checkout__status--error"><img class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/error.gif" alt="Something went wrong." height="88"><span class="adyen-checkout__status__text">Something went wrong.</span></div>`;
 
 var paymentMethodsResponse = null
+var amount = null
 
 function handleRecurring(ref) {
 
@@ -25,7 +24,7 @@ function handleRecurring(ref) {
 }
 
 
-function showFinalResponse(response, component) {
+function showFinalResponse(response, component, componentFlavour) {
 
     const result = response['resultCode'];
 
@@ -76,9 +75,10 @@ function showFinalResponse(response, component) {
 }
 
 
-function initiateCheckout() {
+function initiateCheckout(paymentsDefaultConfig) {
     // 0. Get clientKey
     getClientKey().then(async clientKey => {
+            const componentFlavour = await getValueOfConfig('flavour', 'flavour');
             const pm = await paymentMethodsResponse
             const configuration = {
                 environment: 'test',
@@ -97,7 +97,7 @@ function initiateCheckout() {
                 },
                 onSubmit: (state, component) => {
                     browserInfoError(state.data)
-                    makePayment(state.data)
+                    makePayment(paymentsDefaultConfig, state.data)
                         .then(async response => {
                             if (response.action) {
 
@@ -126,7 +126,7 @@ function initiateCheckout() {
 
                             } else {
 
-                                showFinalResponse(response, component);
+                                showFinalResponse(response, component, componentFlavour);
 
                             }
                         })
@@ -244,8 +244,32 @@ async function handleRedirect() {
 
 // Selects which flow based on result of urlParams
 if (!redirectResult) {
-    paymentMethodsResponse = getPaymentMethods(paymentMethodsConfig)
-    initiateCheckout()
+
+    var loadCheckout = document.getElementById("loadCheckout");
+    loadCheckout.addEventListener('click', async function(){
+
+        var hideCheckoutForm = document.getElementById('componentParameters');
+
+        hideCheckoutForm.classList.add('hiddenForm');
+
+        loadCheckout.classList.add('hiddenForm');
+        infoPara.classList.add('hiddenForm')
+        icon.classList.remove('fa-angle-double-down')
+        icon.classList.add('fa-angle-double-right')
+
+        const params = await setParams();
+        var paymentMethodsConfig = await params.paymentMethodsConfig;
+        var paymentsDefaultConfig = await params.paymentsDefaultConfig;
+        amount = paymentMethodsConfig.amount;
+        gcAmount = setParams.gcAmount;
+        orderAmount = setParams.orderAmount;
+        countryCode = paymentsDefaultConfig.countryCode;
+        paymentMethodsResponse = await getPaymentMethods(paymentMethodsConfig);
+        const initiate = await initiateCheckout(paymentsDefaultConfig);
+        const demo = showCodeDemo()
+
+    })
+
 } else {
     handleRedirect()
 }

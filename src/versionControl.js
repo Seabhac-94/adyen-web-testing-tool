@@ -35,9 +35,17 @@ function retrieveVersionValue() {
 var apiSdkVersions = retrieveVersionValue()
 
 
-function loadInitialCheckoutScripts(){
+function loadCheckoutScripts(){
 
-	var additionalScripts = ["demo", "checkoutForm", "componentConfiguration"]
+	var additionalScripts = [
+		"demo",
+		"checkoutForm", 
+		"componentConfiguration",
+		"utils", 
+		"dropin/componentParams", 
+		"dropin/dropin", 
+		"codeDemo"
+	]
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
@@ -53,21 +61,6 @@ function loadInitialCheckoutScripts(){
 
 		var scriptToAdd = document.createElement("script");
 		scriptToAdd.src = `../${additionalScripts[i]}.js`;
-		document.body.appendChild(scriptToAdd);
-
-	}
-
-};
-
-
-function loadComponentScript() {
-		
-	var componentScripts = ["/utils.js", "dropin/componentParams.js", "/dropin/dropin.js", "/codeDemo.js"]
-
-	for (var i = 0; i < componentScripts.length; i++) {
-
-		var scriptToAdd =  document.createElement("script");
-		scriptToAdd.src = `${componentScripts[i]}`;
 		document.body.appendChild(scriptToAdd);
 
 	}
@@ -129,39 +122,13 @@ if (!sdkVersionOnLoad) {
 	optionApiVersion.disabled = true;
 
 
-	// Inserts the correct scripts
+	// Inserts the correct scripts in order
+	loadCheckoutScripts();
 
-	loadInitialCheckoutScripts();
-
-	
-	var loadCheckout = document.getElementById("loadCheckout");
-	loadCheckout.addEventListener('click', function(){
-
-		// Once the "loadCheckout" button is clicked, the form will hide and load the final scripts
-
-		var hideCheckoutForm = document.getElementById('componentParameters');
-
-		hideCheckoutForm.classList.add('hiddenForm');
-
-		loadCheckout.classList.add('hiddenForm');
-		infoPara.classList.add('hiddenForm')
-		icon.classList.remove('fa-angle-double-down')
-		icon.classList.add('fa-angle-double-right')
-
-		// Loads the drop-in script
-		loadComponentScript();
-
-	});	
 
 } else {
 
-	loadInitialCheckoutScripts();
-
-	setTimeout(function(){
-
-		loadComponentScript();
-	
-	}, 200);
+	loadCheckoutScripts();
 
 	const getParametersForm = document.getElementById("configurationParametersWrapper");
 	getParametersForm.classList.add("hiddenForm");
