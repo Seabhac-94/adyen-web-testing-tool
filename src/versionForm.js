@@ -15,13 +15,10 @@ const sdkVersionOption = [
 						"4.2.0",
 						"4.1.0", 
 						"4.0.0"
-						]
+					]
 
 
-const apiVersionOption = [
-						68,
-						67
-						]
+const apiVersionOption = [68, 67]
 
 
 const parameters = document.getElementById("parameters");

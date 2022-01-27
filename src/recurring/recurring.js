@@ -88,9 +88,7 @@ function recurringPayment(type, storedPaymentMethodId) {
 
 	    makePayment(rPaymentData)
 	    	.then(res => {
-		    	if (res.resultCode) {
 		    	modal.remove()
-	    	}	
 	    })
 
 
