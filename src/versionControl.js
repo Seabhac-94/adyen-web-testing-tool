@@ -38,14 +38,14 @@ var apiSdkVersions = retrieveVersionValue()
 function loadCheckoutScripts(){
 
 	var additionalScripts = [
-							"demo",
-							"checkoutForm", 
-							"componentConfiguration",
-							"utils", 
-							"dropin/componentParams", 
-							"dropin/dropin", 
-							"codeDemo"
-						]
+		"demo",
+		"checkoutForm", 
+		"componentConfiguration",
+		"utils", 
+		"dropin/componentParams", 
+		"dropin/dropin", 
+		"codeDemo"
+	]
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
