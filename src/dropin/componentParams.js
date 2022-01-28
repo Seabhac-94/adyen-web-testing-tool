@@ -4,6 +4,7 @@ function setParams() {
 
     // We declare these values here to only need to change them in one place
     const countryCode = paymentsParams.countryCode;
+    var remainingAmount = null
     var gcAmount = null;
     var orderAmount = null;
     var amount = {
@@ -76,6 +77,7 @@ function setParams() {
     return {
         gcAmount,
         orderAmount,
+        remainingAmount,
         paymentMethodsConfig,
         paymentsDefaultConfig
     }

@@ -263,6 +263,7 @@ if (!redirectResult) {
         amount = paymentMethodsConfig.amount;
         gcAmount = setParams.gcAmount;
         orderAmount = setParams.orderAmount;
+        remainingAmount = setParams.remainingAmount
         countryCode = paymentsDefaultConfig.countryCode;
         paymentMethodsResponse = await getPaymentMethods(paymentMethodsConfig);
         const initiate = await initiateCheckout(paymentsDefaultConfig);

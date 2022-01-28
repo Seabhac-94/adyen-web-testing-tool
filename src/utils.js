@@ -83,7 +83,7 @@ function paymentsConfigParams() {
     if (reference === '') {reference = 'testPayment_' + shopperReference}
 
     var blockedPaymentMethods = ["applepay"]
-    var addedBlockedPM = getValueOfConfig('parameters', 'blockedPaymentMethods').split(/,| |, | ,/) 
+    var addedBlockedPM = getValueOfConfig('parameters', 'blockedPaymentMethods').split(/,| |, | ,/);
     if (addedBlockedPM) {
         blockedPaymentMethods = blockedPaymentMethods.concat(addedBlockedPM)
     }
@@ -176,8 +176,6 @@ const cancelOrder = (data) =>
 
 // Posts a new payment into the local server
 const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
-    // params = setParams()
-    // paymentsDefaultConfig = params.paymentsDefaultConfig
     
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };
     const paymentRequest = { ...paymentsConfig, ...paymentMethod };
@@ -187,7 +185,7 @@ const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
         if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
             paymentRequest.amount = gcAmount
         } else if (gcAmount && orderAmount) {
-            amount.value = orderAmount.value - gcAmount.value
+            amount.value = remainingAmount
         }        
     }
 
@@ -198,6 +196,10 @@ const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
         .then(response => {
             if (response.error) throw 'Payment initiation failed';
             updateResponseContainer(response);
+            if (response.order) {
+                const order = response.order
+                remainingAmount = order.remainingAmount.value
+            }
             return response;
         })
         .catch(console.error);
