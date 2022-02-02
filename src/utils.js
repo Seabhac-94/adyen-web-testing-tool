@@ -224,7 +224,7 @@ const listRecurringDetails = (data) =>
         .catch(console.error);
 
 
-// Get all recurring payment methods from the local server
+// Remove recurring payment methods from the local server
 const disable = (data) =>
     httpPost('disable', data)
         .then(response => {

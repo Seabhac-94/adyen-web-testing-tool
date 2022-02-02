@@ -111,6 +111,11 @@ h1 {
 }
 */
 
+#card-wrapper {
+    margin: 1rem 0;
+    text-align: center;
+}
+
 .inline-header {
 /*    margin: 10px 0;
     padding: 3.5px;*/
@@ -579,7 +584,9 @@ pre {
     width: 350px;
 }
 
-#dropin-container {
+#dropin-container,
+#card-wrapper,
+#stored-card {
     width: 544px;
 }
 

@@ -33,6 +33,7 @@ const flavourConfig = {
 		"klarna_account",
 		"klarna_paynow",
 		"klarna",
+		"bcmc",
 		"paypal",
 		"paywithgoogle",
 		"ideal",

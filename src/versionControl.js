@@ -77,7 +77,6 @@ if (!sdkVersionOnLoad) {
 
 	loadScripts.addEventListener('click', function(){
 
-		retrieveVersionValue();
 		var apiSdkVersions = retrieveVersionValue();
 		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 

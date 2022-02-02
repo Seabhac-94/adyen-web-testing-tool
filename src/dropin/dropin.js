@@ -272,5 +272,8 @@ if (!redirectResult) {
     })
 
 } else {
-    handleRedirect()
+    setTimeout(function(){
+        handleRedirect()
+    },250)
+    
 }

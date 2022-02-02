@@ -1,10 +1,37 @@
 # Integrations Testing Tool
 
-**Built on the back of Adyen Web sample code**
+**Built on the back of ![Adyen Web sample code](https://github.com/Adyen/adyen-components-js-sample-code)**
 
-![Adyen Web Sample Code](screenshot.png)
 
 > ⚠️ **This repository is for demo and tetsing purposes only**
+
+
+### Additional files and folders
+The following files and folders are new and additional files written and added:
+
+- versionControl.js
+- versionForm.js
+- info.js
+- checkoutForm.js
+- componentConfiguration.js
+- codeDemo.js
+- dropin/componentParams.js
+- sessions/sessionParams.js
+- /recurring
+- /paymentLinks
+
+### Modified files
+The following files and folders are existing files that were modified or rewritten:
+
+- index.html
+- utils.js
+- dropin/dropin.js
+- dropin/index.html
+- sessions/dropin.js
+
+### Playground
+The playground folder is "nonfuctional", all files and folders in here are only used as a reference when initially building the tool.
+
 
 ## Requirements
 
@@ -36,28 +63,37 @@ $ ./start.sh
 
 A PHP server will start on `http://localhost:3000`.
 
-## Adding a new payment method
+## Usage
 
-If you want to add a new payment method (with configurable options) follow the steps:
+### Dropin / Components
 
-1. Add the configuration options in `checkoutForm.js`, follow the same format as cardConfig:
+1. Navigate to Dropin / Components
+2. Select the version you wish to test on, once selected, you will see the following form:
 
-```
-const brandConfig = {
-	parameter: ["option1", "option2"],
-	parameter2: [true, false]
-}
-```
+![](form.png)
 
-2. In checkoutForm.js, call `createCheckoutForm(configObj, optionEl, component)` with these parameters:
+3. Select the parameters, configuration, component or errors you wish to recreate/mount. If no parameters are selected, it will default to predefined values.
 
-- `configObj`: the brandObj you just created.
-- `optionEl`: 'brandConfiguration'
-- `component`: 'brand'
+![](dropin.js)
 
-3. Go to `paymentMethodsConfiguration` and add a new function following `function brandConfiguration()`, follow the same format as  `cardConfiguration()` function.
+4. Continue testing
 
-4. In `dropin.js`, in `paymentMethodsConfiguration` add: `brand: brandConfiguration()`
+#### Recurring
+After a successful payment, you have the option to proceed to recurring.
+
+1. In recurring you can view the stored payment methods, disable or make a recurring payment:
+
+![](recurring.png)
+
+
+### Payment Links
+
+**Currently under construction**
+
+### Sessions Dropin
+
+**Currently under construction**
+
 
 ## Documentation
 

@@ -45,14 +45,14 @@ function dropinOptionalConfig() {
             let disableData = {
 					recurringDetailReference: storedPaymentMethodId,
 					shopperReference
-				}
+				};
 
        		disable(disableData)
        			.then(res => {
        				if(res.response) {
        					resolve()
        				}
-       			})   
+       			});
         }
 	}
 };

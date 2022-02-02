@@ -61,6 +61,7 @@ function setParams() {
         shopperLocale,
         shopperName: 'John Doe',
         shopperEmail: 's.hopper@adyen.com',
+        telephoneNumber: "+31 20 779 1846",
         channel: 'Web',
         returnUrl: setReturnUrl(shopperReference),
         origin: setOrigin(),
