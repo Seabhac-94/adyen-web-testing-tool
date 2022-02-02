@@ -1,6 +1,6 @@
 # Integrations Testing Tool
 
-**Built on the back of ![Adyen Web sample code](https://github.com/Adyen/adyen-components-js-sample-code)**
+**Built on the back of Adyen Web sample code - https://github.com/Adyen/adyen-components-js-sample-code**
 
 
 > ⚠️ **This repository is for demo and tetsing purposes only**
@@ -9,6 +9,13 @@
 ### Additional files and folders
 The following files and folders are new and additional files written and added:
 
+- disable.php
+- listRecurringDetails.php
+- orderCancel.php
+- orders.php
+- paymentLinks.php
+- paymentMethodsBalance.php
+- paymentsDetails.php
 - versionControl.js
 - versionForm.js
 - info.js
