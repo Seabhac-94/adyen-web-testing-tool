@@ -265,6 +265,7 @@ if (!redirectResult) {
         orderAmount = setParams.orderAmount;
         remainingAmount = setParams.remainingAmount
         countryCode = paymentsDefaultConfig.countryCode;
+        shopperReference = paymentsDefaultConfig.shopperReference;
         paymentMethodsResponse = await getPaymentMethods(paymentMethodsConfig);
         const initiate = await initiateCheckout(paymentsDefaultConfig);
         const demo = showCodeDemo()

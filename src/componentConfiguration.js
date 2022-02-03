@@ -40,19 +40,19 @@ function dropinOptionalConfig() {
 	        console.info("Error thrown at: " + timeAndDate.toUTCString());
 	        console.error(error);
 	    },
-	    onDisableStoredPaymentMethod: (storedPaymentMethodId, resolve, reject) => {
+	    onDisableStoredPaymentMethod: async function(storedPaymentMethodId, resolve, reject) {
 
-            let disableData = {
+				let disableData = {
 					recurringDetailReference: storedPaymentMethodId,
 					shopperReference
 				};
+				const disableRec = await disable(disableData)
 
-       		disable(disableData)
-       			.then(res => {
-       				if(res.response) {
-       					resolve()
-       				}
-       			});
+				if (disableRec.response === "[detail-successfully-disabled]") {
+					resolve()
+				} else {
+					reject()
+				}
         }
 	}
 };
