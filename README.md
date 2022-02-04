@@ -56,7 +56,7 @@ If the forms don't seem to load, please check if you have:
 
 1. Used the correct `clientKey`
 2. Configured the `origin` on the Customer Area as an allowed origin
-3. In Developers >> Addiitonal data, toggle all fields ON.
+3. In Developers >> Addiitonal data, toggle Recurring details ON to be able to use Recurring feature with Dropin / Components
 
 ## Installation
 

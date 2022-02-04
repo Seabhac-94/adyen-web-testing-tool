@@ -30,35 +30,38 @@ function showFinalResponse(response, component, componentFlavour) {
 
     if (result === "Authorised" || result === "Received") {
 
-        // We should only check for the shopper reference for recurring
-        // if the result is positive
-        const recurringSR = response.additionalData['recurring.shopperReference'];
-        const queriedSF = urlParams.get('shopperReference')
-        var recurringShopperReference = '';
+        try {
+            // We should only check for the shopper reference for recurring
+            // if the result is positive
+            const recurringSR = response.additionalData['recurring.shopperReference'];
+            const queriedSF = urlParams.get('shopperReference')
+            var recurringShopperReference = '';
 
-        // Supports the handleRecurring function for native and redirect
-        if (recurringSR) {
-            recurringShopperReference = recurringSR
-        } else {
-            recurringShopperReference = queriedSF
+            // Supports the handleRecurring function for native and redirect
+            if (recurringSR) {
+                recurringShopperReference = recurringSR
+            } else {
+                recurringShopperReference = queriedSF
+            }
+        } catch (err) {
+            console.error(err)
+        } finally {
+            // We check to see if there's no flavour so that it can handle redirects as well
+            if (componentFlavour === 'dropin' || !componentFlavour) {
+                component.setStatus('success', {
+                    message: 'Payment successful!'
+                });
+            } else {
+                component.unmount();
+                const result = document.getElementById("dropin-container");
+                result.innerHTML = componentSuccess;
+            }
+
+
+            if (recurringShopperReference) {
+                handleRecurring(recurringShopperReference)
+            }
         }
-        
-        // We check to see if there's no flavour so that it can handle redirects as well
-        if (componentFlavour === 'dropin' || !componentFlavour) {
-            component.setStatus('success', {
-                message: 'Payment successful!'
-            });
-        } else {
-            component.unmount();
-            const result = document.getElementById("dropin-container");
-            result.innerHTML = componentSuccess;
-        }
-
-
-        if (recurringShopperReference) {
-            handleRecurring(recurringShopperReference)
-        }
-
     } else {
 
         if (componentFlavour === 'dropin' || !componentFlavour) {
