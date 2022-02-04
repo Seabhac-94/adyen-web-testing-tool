@@ -1,3 +1,10 @@
+function collectFormData(plId) {
+
+    var formData = document.getElementById(plId);
+    return formData.value;
+    
+}
+
 
 const createLink = document.getElementById('createPaymentLink');
 
