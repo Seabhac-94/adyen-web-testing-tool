@@ -105,7 +105,10 @@ const googlePayConfig = {
 	buttonType: ["book", "checkout", "donate", "order", "pay", "plain", "subscribe", "buy"],
 	buttonColor: ["black", "white", "default"],
 	buttonLocale: ["ar", "bg", "ca", "cs", "da", "de", "el", "es", "et", "fi", "fr", "hr", "id", "it", "ja", "ko", "ms", "nl", "no", "pl", "pt", "ru", "sk", "sl", "sr", "sv", "th", "tr", "zh", "uk", "en"],
-	buttonSizeMode: ["static", "fill"]
+	buttonSizeMode: ["static", "fill"],
+	emailRequired: [true, false],
+	shippingAddressRequired: [true, false],
+	billingAddressRequired: [true, false]
 
 };
 

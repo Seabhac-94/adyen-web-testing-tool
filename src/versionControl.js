@@ -35,6 +35,7 @@ function retrieveVersionValue() {
 var apiSdkVersions = retrieveVersionValue()
 
 
+// Loads the scripts in order to the dropin after the version is selected
 function loadCheckoutScripts(){
 
 	var additionalScripts = [

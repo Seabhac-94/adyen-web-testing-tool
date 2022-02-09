@@ -55,17 +55,17 @@ These variables can be found in Adyen Customer Area. For more information, visit
 If the forms don't seem to load, please check if you have:
 
 1. Used the correct `clientKey`
-2. Configured the `origin` on the Customer Area as an allowed origin
+2. Configured the `origin` on the Customer Area as an allowed origin (e.g `http://localhost:3000`)
 3. In Developers >> Addiitonal data, toggle Recurring details ON to be able to use Recurring feature with Dropin / Components
 
-## Installation
+## Installation (currently only available on PHP)
 
 ### Running the PHP Server
 
 Navigate to the root of the project and run the `start.sh` script:
 
 ```
-$ cd tech-support-repository
+$ cd integrations-testing-tool
 $ ./start.sh
 ```
 

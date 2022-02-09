@@ -1,3 +1,4 @@
+// Sets time and date for logging of calls
 const timeAndDate = new Date();
 
 // This sets the returnUrl, for standard Drop-in and Components, return to standard redirect page,
@@ -62,6 +63,7 @@ function makeReference(length) {
 };
 
 
+// /payments call parameters based on form
 function paymentsConfigParams() {
 
     var countryCode = getValueOfConfig('parameters', 'countryCode');
@@ -141,7 +143,7 @@ const getPaymentMethods = (params) =>
         .catch(console.error);
 
 
-// Get all available payment methods from the local server
+// Get balance of gift card
 const getBalance = (data) =>
     httpPost('paymentMethodsBalance', data)
         .then(response => {
@@ -152,7 +154,7 @@ const getBalance = (data) =>
         .catch(console.error);
 
 
-// Create an order
+// Create an order for split payments
 const makeOrder = (data) =>
     httpPost('orders', data)
         .then(response => {
@@ -163,7 +165,7 @@ const makeOrder = (data) =>
         .catch(console.error);
 
 
-// Create an order
+// Cancel an order
 const cancelOrder = (data) =>
     httpPost('orders/cancel', data)
         .then(response => {
@@ -206,7 +208,7 @@ const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
 };
 
 
-// Get all available payment methods from the local server
+// Makes a payments/details call
 const makeDetailsCall = (details) =>
     httpPost('paymentsDetails', details)
         .then(response => {
@@ -233,7 +235,7 @@ const disable = (data) =>
         .catch(console.error);
 
 
-// Posts a new payment into the local server
+// Posts a new session call into the local server
 const sessions = (paymentMethod, config = {}) => {
     const sessionsConfig = { ...sessionDefaultConfig, ...config };
     const sessionRequest = { ...sessionsConfig, ...paymentMethod };
@@ -257,9 +259,9 @@ const createPaymentLink = (data) =>
 
 
 // Function in progress that will save the saved details for the next running of server
-const saveCase = () => 
-    httpPost('saveCase')
-        .catch(console.error);
+// const saveCase = () => 
+//     httpPost('saveCase')
+//         .catch(console.error);
 
 // // Calls saveCase - commenting out temporarily
 // document.getElementById('saveCase').addEventListener('click', function(){
@@ -283,7 +285,7 @@ const getOriginKey = () =>
         .catch(console.error);
 
 
-// Fetches a clientKey from the 
+// Fetches a clientKey from .env
 const getClientKey = () =>
     httpPost('clientKeys')
         .then(response => {

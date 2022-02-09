@@ -169,8 +169,17 @@ function googlePayConfiguration() {
 		buttonType: getValueOfConfig(component, 'buttonType'),
 		buttonColor: getValueOfConfig(component, 'buttonColor'),
 		buttonLocale: getValueOfConfig(component, 'buttonLocale'),
-		buttonSizeMode: getValueOfConfig(component, 'buttonSizeMode')
-
+		buttonSizeMode: getValueOfConfig(component, 'buttonSizeMode'),
+		emailRequired: getValueOfConfig(component, 'emailRequired'),
+		shippingAddressRequired: getValueOfConfig(component, 'shippingAddressRequired'),
+		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
+		billingAddressParameters: {
+			format: "MIN"
+		},
+		onAuthorized: function(event) {
+			console.log(event) // Demo purposes only
+		}
+		
 	}
 
 }

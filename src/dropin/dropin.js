@@ -9,6 +9,7 @@ const componentError = `<div class="adyen-checkout__status adyen-checkout__statu
 var paymentMethodsResponse = null
 var amount = null
 
+// Presents the recurring element when applicable
 function handleRecurring(ref) {
 
     const recWrapper = document.querySelector('.response-recurring');
@@ -23,7 +24,7 @@ function handleRecurring(ref) {
 
 }
 
-
+// Handles the final response and lets user proceed to recurring if applicable
 function showFinalResponse(response, component, componentFlavour) {
 
     const result = response['resultCode'];
@@ -57,7 +58,6 @@ function showFinalResponse(response, component, componentFlavour) {
                 result.innerHTML = componentSuccess;
             }
 
-
             if (recurringShopperReference) {
                 handleRecurring(recurringShopperReference)
             }
@@ -77,7 +77,6 @@ function showFinalResponse(response, component, componentFlavour) {
     }
 }
 
-
 function initiateCheckout(paymentsDefaultConfig) {
     // 0. Get clientKey
     getClientKey().then(async clientKey => {
@@ -85,7 +84,7 @@ function initiateCheckout(paymentsDefaultConfig) {
             const pm = await paymentMethodsResponse
             const configuration = {
                 environment: 'test',
-                clientKey: clientKey, // Mandatory. clientKey from Customer Area
+                clientKey: clientKey,
                 paymentMethodsResponse: pm,
                 removePaymentMethods: ['paysafecard', 'c_cash'],
                 amount,
@@ -107,7 +106,7 @@ function initiateCheckout(paymentsDefaultConfig) {
                                 component.handleAction(response.action);
 
                             } else if (response.order && response.order.remainingAmount.value > 0) {
-
+                                // This handles the flow when there is an order in place for split payments
                                 const order = {
                                     orderData: response.order.orderData,
                                     pspReference: response.order.pspReference
@@ -204,7 +203,6 @@ function initiateCheckout(paymentsDefaultConfig) {
     });
 };
 
-
 async function handleRedirect() {
 
     var checkout = null
@@ -244,7 +242,6 @@ async function handleRedirect() {
 
 };
 
-
 // Selects which flow based on result of urlParams
 if (!redirectResult) {
 
@@ -273,11 +270,8 @@ if (!redirectResult) {
         const initiate = await initiateCheckout(paymentsDefaultConfig);
         const demo = showCodeDemo()
 
-    })
+    });
 
 } else {
-    setTimeout(function(){
-        handleRedirect()
-    },250)
-    
+    setTimeout(() => { handleRedirect() },250)    
 }

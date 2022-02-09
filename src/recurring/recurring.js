@@ -5,7 +5,7 @@ const recurringDetails = document.querySelector('.recurringWrapper');
 const refInput = document.getElementById('recurringShopperReference');
 const sendRecurringReq = document.getElementById('sendRecurringReq');
 
-// Create a Map
+// Creates a map for paymentMethod.type in /payment request
 const pmType = new Map([
 
   ["ideal", "sepadirectdebit"],

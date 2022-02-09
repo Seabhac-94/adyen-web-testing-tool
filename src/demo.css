@@ -60,6 +60,11 @@ h1 {
     text-align: center;
 }
 
+.under-dev {
+    padding: 5px;
+    border: solid red 2px;
+}
+
 .componentButton {
     height: 6rem;
     width: 20rem;
