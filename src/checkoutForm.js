@@ -86,6 +86,8 @@ const paypalConfig = {
 	color: ["white", "black", "silver", "blue", "gold"],
 	shape: ["pill", "rect"],
 	label: ["checkout", "buynow", "pay", "paypal"],
+	blockPayPalCreditButton: [true, false],
+  	blockPayPalPayLaterButton: [true, false]
 
 };
 

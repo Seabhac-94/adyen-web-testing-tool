@@ -178,8 +178,13 @@ function initiateCheckout(paymentsDefaultConfig) {
                     makeDetailsCall(state.data)
                         .then(response => {
                             console.info("payment/details response at: " + timeAndDate.toUTCString());
-                            updateResponseContainer(response);
-                            showFinalResponse(response, component);
+                            updateResponseContainer(response)
+                            if (response.action) {
+                                component.handleAction(response.action)
+                            } else {
+                                showFinalResponse(response, component);
+                            }
+                            
                         })
                 }
             };

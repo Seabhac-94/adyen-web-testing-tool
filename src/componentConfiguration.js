@@ -115,6 +115,9 @@ function paypalConfiguration() {
 	    	color: getValueOfConfig(component, 'color'),
 	    	label: getValueOfConfig(component, 'label'),
   		},
+  		vault: true,
+  		blockPayPalCreditButton: getValueOfConfig(component, 'blockPayPalCreditButton'),
+  		blockPayPalPayLaterButton: getValueOfConfig(component, 'blockPayPalPayLaterButton'),
   		// Support for v5.0.0 onwards
   		onError: (error, component) => {
   			console.info("Error thrown at: " + timeAndDate.toUTCString());
@@ -127,11 +130,18 @@ function paypalConfiguration() {
             console.error(error);
             component.closeActivePaymentMethod()
   		},
-  		  onShippingChange: function(data, actions) {
+  		onShippingChange: function(data, actions) {
       		// Listen to shipping changes.
       		console.log("New shipping address: ")
       		console.log(data.shipping_address)
       		actions.resolve(data)
+  		},
+  		onInit: (data, actions) => {
+  			console.log(data)
+  			actions.resolve(data)
+  		},
+  		onClick: () => {
+  			console.log("PayPal Initiated")
   		}
 
 	}
