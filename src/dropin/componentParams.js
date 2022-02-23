@@ -1,5 +1,5 @@
 function setParams() {
-    
+
     const paymentsParams = paymentsConfigParams();
 
     // We declare these values here to only need to change them in one place
@@ -87,4 +87,3 @@ function setParams() {
     }
 
 }
-

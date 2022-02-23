@@ -1,3 +1,6 @@
+// Same here. maybe moving this to an async function ?
+// I see some async functions inside this function.
+
 getClientKey().then(clientKey => {
 
     // Check URL for redirectResult and sessionId

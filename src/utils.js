@@ -13,12 +13,12 @@ function setReturnUrl(a) {
 // Short hand function which will target the id and get the HTML value,
 // uses convertToBoolean() so the value can be passed directly to the config function
 function getValueOfConfig(component, param) {
-    
+
     a = `${component}_${param}`;
     var b = document.getElementById(a).value;
     c = b
     if (b === "true" || b === "false") {
-       c = JSON.parse(b); 
+       c = JSON.parse(b);
     }
     return c;
 
@@ -178,20 +178,20 @@ const cancelOrder = (data) =>
 
 // Posts a new payment into the local server
 const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
-    
+
     const paymentsConfig = { ...paymentsDefaultConfig, ...config };
     const paymentRequest = { ...paymentsConfig, ...paymentMethod };
-    
+
     // Updating amounts for Giftcard
     if (window.location.pathname === "/dropin") {
         if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
             paymentRequest.amount = gcAmount
         } else if (gcAmount && orderAmount) {
             amount.value = remainingAmount
-        }        
+        }
     }
 
-    
+
     updateRequestContainer(paymentRequest);
 
     return httpPost('payments', paymentRequest)
@@ -259,7 +259,7 @@ const createPaymentLink = (data) =>
 
 
 // Function in progress that will save the saved details for the next running of server
-// const saveCase = () => 
+// const saveCase = () =>
 //     httpPost('saveCase')
 //         .catch(console.error);
 
