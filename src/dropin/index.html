@@ -11,88 +11,63 @@
 </head>
 
 <body>
+    <!-- Adjusting the HTML indentation a little bit to make it easier to navigate -->
     <div class="container container--full-width">
         <div class="main">
             <div class="checkout-container">
-
                 <a href="../">Back</a>
                 <h1>Drop-in / Components</h1>
-
                 <div class="component-info">
-                    <h2 class="info-header">
-                        Before you begin <i id="infoIcon" class="icon fas fa-angle-double-right"></i>
-                    </h2>
-
+                    <h2 class="info-header">Before you begin <i id="infoIcon" class="icon fas fa-angle-double-right"></i></h2>
                     <div id="infoPara" class="hiddenForm">
-                        <p>
-                            The Adyen Tech Support Integrations tool is designed to allow you to test the full capacity of the Drop-in and Components, without having to make changes to code. It also allows you to test certain error scenarios. 
-                        </p>
-                        <p>
-                            <strong>Initial Parameters: </strong> The parameters are available to be selected, however if you do not fill them in, the following default values are sent:
-                        </p>
+                        <p>The Adyen Tech Support Integrations tool is designed to allow you to test the full capacity of the Drop-in and Components, without having to make changes to code. It also allows you to test certain error scenarios.</p>
+                        <p><strong>Initial Parameters: </strong> The parameters are available to be selected, however if you do not fill them in, the following default values are sent:</p>
                         <pre>
-{
-    "shopperReference": RANDOM_GENERATED_REFERENCE,
-    "shopperLocale": "en_GB",
-    "reference": "testPayment_"+shopperReference,
-    "countryCode": "NL",
-    "amount": {
-        "currency": "EUR",
-        "value": 11800
-    },
-    "lineItems": [
-        {
-            id: '1',
-            description: 'Test Item 1',
-            amountExcludingTax: 10000,
-            amountIncludingTax: 11800,
-            taxAmount: 1800,
-            taxPercentage: 1800,
-            quantity: 1,
-            taxCategory: 'High'
-        }
-    ],
-    "storePaymentMethod": "",
-    "shopperInteraction": "",
-    "recurringProcessingModel: ""
-}
+                            {
+                                "shopperReference": RANDOM_GENERATED_REFERENCE,
+                                "shopperLocale": "en_GB",
+                                "reference": "testPayment_"+shopperReference,
+                                "countryCode": "NL",
+                                "amount": {
+                                    "currency": "EUR",
+                                    "value": 11800
+                                },
+                                "lineItems": [
+                                    {
+                                        id: '1',
+                                        description: 'Test Item 1',
+                                        amountExcludingTax: 10000,
+                                        amountIncludingTax: 11800,
+                                        taxAmount: 1800,
+                                        taxPercentage: 1800,
+                                        quantity: 1,
+                                        taxCategory: 'High'
+                                    }
+                                ],
+                                "storePaymentMethod": "",
+                                "shopperInteraction": "",
+                                "recurringProcessingModel: ""
+                            }
                         </pre>
                         <div>
-                            <h3>
-                                <strong>Error recreation</strong>
-                            </h3>    
-
-                            <p>
-                                Below is a description of errors you can recreate and the required parameters for them 
-                            </p>
-
+                            <h3><strong>Error recreation</strong></h3>
+                            <p>Below is a description of errors you can recreate and the required parameters for them</p>
                         </div>
-                        
-                        <p>
-                            <strong>noInvoiceLines: </strong>a common error seen in PM's such as Klarna or Oney. Each PM has required data in a /payments request, and certain PM's require <code>lineItems</code>. If these aren't supplied, the error will be thrown. Test this on any version.
-                        </p>
-                        <p>
-                            <strong>threeDS2Timeout: </strong>A main reason for this is due to the incorrect <code>origin</code> being sent in the /payments request. The payment will eventually go through, but once the SCA has been completed, it can take up to 10 minutes for <code>onAdditionalDetails</code> to be called by the component. To test this use a version v4.9.0 or lower and API v67 and open the console. The issue is no longer present on v5.
-                        </p>
+                        <p><strong>noInvoiceLines: </strong>a common error seen in PM's such as Klarna or Oney. Each PM has required data in a /payments request, and certain PM's require <code>lineItems</code>.
+                            If these aren't supplied, the error will be thrown. Test this on any version.</p>
+                        <p><strong>threeDS2Timeout: </strong>A main reason for this is due to the incorrect <code>origin</code> being sent in the /payments request. The payment will eventually go through, but once the SCA has been completed, it can take up to 10 minutes for <code>onAdditionalDetails</code> to be called by the component. To test this use a version v4.9.0 or lower and API v67 and open the console. The issue is no longer present on v5.</p>
                         <p>
                             <strong>noBrowserInfoProvided: </strong><code>browserInfo</code> is a required parameter in the /payments request for 3DS2 transactions. Open the console before starting the transaction, once you hit pay, you will see something like:
-                            <pre class="info-pre">
-<strong>POST https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key 500</strong>
-                            </pre>
+                            <pre class="info-pre"><strong>POST https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key 500</strong></pre>
                             followed by
-                            <pre class="info-pre">                                
-<strong>Service at https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key is not available</strong>
-                            </pre>
-
-                            This is an internal details call failing. Looking in the logs you will see an error similar to <strong><code>No Browser info provided</code></strong>. Test on any version using a 3DS2 test card.
+                            <pre class="info-pre"><strong>Service at https://checkoutshopper-test.adyen.com/checkoutshopper/v1/submitThreeDS2Fingerprint?token=client_key is not available</strong></pre>
                         </p>
+                        <p>This is an internal details call failing. Looking in the logs you will see an error similar to <strong><code>No Browser info provided</code></strong>. Test on any version using a 3DS2 test card.</p>
                         <p>
-                            <strong>invalidLanguageTag: </strong>the <code>browserInfo</code> requires certain parameters, and if any are missed or incorrectly sent, this can cause an issue. If you run this test and look in the "Request" container on the right, you will see that <code>browserInfo.language: "incorrectL4ngu4ge"</code> to simulate the incorrect format. Looking in the logs you will see a 422 error specifying the format it should follow.
+                            <strong>invalidLanguageTag: </strong>the <code>browserInfo</code> requires certain parameters, and if any are missed or incorrectly sent, this can cause an issue. If you run this test and look in the "Request"
+                            container on the right, you will see that <code>browserInfo.language: "incorrectL4ngu4ge"</code> to simulate the incorrect format. Looking in the logs you will see a 422 error specifying the format it should follow.
                         </p>
-
                     </div>
-                    
-
                 </div>
                 <div id="configurationParametersWrapper" class="parametersForm">
                    <div id="parameters"></div>
@@ -103,13 +78,13 @@
                 <div id="copyConfiguration">
                     <div class="implementation"></div>
                 </div>
-                
+
                 <div class="payment-method">
 
 <!--                     <div id="card-wrapper" class="hiddenForm">
                         <p>Pay with your saved card:</p>
                         <div id="stored-card" >
-                        
+
                         </div>
                         <p>Or a new one:</p>
                     </div> -->
@@ -129,18 +104,12 @@
             </div>
 
             <div class="info">
-                <p>
-                    Check the Source Code to see the full implementation.
-                </p>
-                <p>
-                    To make a payment, use our <a
+                <p>Check the Source Code to see the full implementation.</p>
+                <p>To make a payment, use our <a
                         href="https://docs.adyen.com/developers/development-resources/test-cards/test-card-numbers"
                         target="_blank">test card numbers</a>.
                 </p>
-                <p>
-                    For more information, please refer to the <a href="https://docs.adyen.com/checkout/drop-in-web/"
-                        target="_blank">Drop-in documentation</a>.
-                </p>
+                <p>For more information, please refer to the <a href="https://docs.adyen.com/checkout/drop-in-web/" target="_blank">Drop-in documentation</a>.</p>
             </div>
         </div>
 
@@ -150,14 +119,11 @@
                 <button class="copy-sample-code" aria-label="Copy sample code"></button>
             </div>
             <pre class="source-code">
-                
             </pre>
-
             <div class="header">
                 <h2>Current state</h2>
             </div>
             <pre class="current-state">{}</pre>
-
             <div class="request-container">
                 <div class="header">
                     <h2>Request</h2>
@@ -165,7 +131,6 @@
                 <p>The request to the <code>/payments</code> endpoint will be shown here.</p>
                 <pre class="request-code"></pre>
             </div>
-
             <div class="response-container">
                 <div class="header">
                     <h2>Response</h2>
