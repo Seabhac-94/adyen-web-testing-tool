@@ -59,7 +59,10 @@ function setParams() {
         reference,
         countryCode,
         shopperLocale,
-        shopperName: 'John Doe',
+        shopperName: {
+            firstName: "John",
+            lastName: "Doe"
+        },
         shopperEmail: 's.hopper@adyen.com',
         telephoneNumber: "+31 20 779 1846",
         channel: 'Web',

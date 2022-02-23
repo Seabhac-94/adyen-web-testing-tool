@@ -25,6 +25,8 @@ const flavourConfig = {
 	
 	flavour: [
 		"boletobancario",
+		"alipay",
+		"clearpay",
 		"directdebit_GB",
 		"bcmc_mobile",
 		"sepadirectdebit",

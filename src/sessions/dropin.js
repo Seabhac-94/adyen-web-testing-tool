@@ -17,8 +17,7 @@ getClientKey().then(clientKey => {
                         sessionData: session.sessionData // The payment session data.
                     },
                     onPaymentCompleted: (result, component) => {
-                        console.info(result, component);
-                        updateResponseContainer(result);
+                        console.log(result)
                     },
                     onError: (error, component) => {
                         console.error(error.name, error.message, error.stack, component);

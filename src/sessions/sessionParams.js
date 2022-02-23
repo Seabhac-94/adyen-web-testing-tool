@@ -8,6 +8,15 @@ const sessionDefaultConfig = {
         value: 1000,
         currency: 'EUR'
     },
+    storePaymentMethod: true,
+    billingAddress: {
+        street: "Main Street",
+        houseNumberOrName: "1",
+        postalCode: "1234AB",
+        city: "Amsterdam",
+        stateOrProvince: "North Holland",
+        country: "NL"
+    },
     lineItems: [
         {
             id: '1',
