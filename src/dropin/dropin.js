@@ -1,5 +1,5 @@
 // This calls the retrieveVersionValue() function and converts it to a number
-// We will use this to determine which instance of AdyenCheckout to create 
+// We will use this to determine which instance of AdyenCheckout to create
 var sdkVersion = parseInt(apiSdkVersions.sdkVersion[0]);
 
 // Custom elements for support of components which don't use setStatus()
@@ -78,6 +78,14 @@ function showFinalResponse(response, component, componentFlavour) {
 }
 
 function initiateCheckout(paymentsDefaultConfig) {
+    // i see u mixing a little bit the async/await and Promise syntax here.
+    // maybe would be a good starting point, to use async/await for everything.
+    // can make the initiateCheckout fn to be async then make getClientKey async tooo.
+    // then use try catch to get errors if any
+
+    // also I noticed u finshi the  lines sometimes with ; and sometimes not
+
+
     // 0. Get clientKey
     getClientKey().then(async clientKey => {
             const componentFlavour = await getValueOfConfig('flavour', 'flavour');
@@ -119,7 +127,7 @@ function initiateCheckout(paymentsDefaultConfig) {
                                 })
 
                                 var remainingAmount = response.order.remainingAmount
-                                
+
                                 checkout.update({
                                     paymentMethodsResponse: gcPm,
                                     order,
@@ -184,7 +192,7 @@ function initiateCheckout(paymentsDefaultConfig) {
                             } else {
                                 showFinalResponse(response, component);
                             }
-                            
+
                         })
                 }
             };
@@ -212,6 +220,7 @@ async function handleRedirect() {
 
     var checkout = null
 
+    // Where is this redirectResult coming from?
     const detailsCall = {
         'details': {
             'redirectResult': redirectResult
@@ -238,6 +247,8 @@ async function handleRedirect() {
     const dropin = checkout.create('dropin').mount('#dropin-container');
 
     console.info("payment/details call made at: " + timeAndDate.toUTCString());
+
+    // Would be interesting to move this to async/await
     makeDetailsCall(detailsCall)
         .then(response => {
             updateResponseContainer(response);
@@ -249,7 +260,6 @@ async function handleRedirect() {
 
 // Selects which flow based on result of urlParams
 if (!redirectResult) {
-
     var loadCheckout = document.getElementById("loadCheckout");
     loadCheckout.addEventListener('click', async function(){
 
@@ -278,5 +288,7 @@ if (!redirectResult) {
     });
 
 } else {
-    setTimeout(() => { handleRedirect() },250)    
+    // curious about this functionality,
+    // why the 250ms ?
+    setTimeout(() => { handleRedirect() },250)
 }
