@@ -1,3 +1,11 @@
+function collectFormData(plId) {
+
+	var formData = document.getElementById(plId);
+    return formData.value;
+    
+}
+
+
 const pblFormParams = {
 
 	currency: ["EUR"],
@@ -8,11 +16,11 @@ const pblFormParams = {
 	description: ["Adyen Payment Link"],
 	shopperLocale: ["en_GB"]
 
-}
+};
+
+const paymentLinkForm = document.getElementById('paymentLinkForm')
 
 function createPblForm() {
-
-	const paymentLinkForm = document.getElementById('paymentLinkForm')
 
 	for (let [key, value] of Object.entries(pblFormParams)) {
 		
@@ -31,22 +39,65 @@ function createPblForm() {
 
 	}
 
+};
+
+createPblForm.call()
+
+var additionalData = {}
+
+var extraFieldId = 0
+
+function addDataToRequest() {
+	
+	let a = document.createElement('div')
+	a.classList.add('pl-inputs')
+
+	let buttonId = `extraField_${extraFieldId}`
+	let paramKey = `paramKey_${extraFieldId}`
+	let valuKey = `valueKey_${extraFieldId}`
+	extraFieldId += 1
+
+	a.innerHTML = `<input id=${paramKey} type="text"> <input id=${valuKey} type="text"> <button id=${buttonId} class="addField">Add field</button>`
+	paymentLinkForm.append(a)
+
+	var addFieldButton = document.getElementsByClassName('addField')
+
+	for (var i = 0; i < addFieldButton.length; i++) {
+		let y = addFieldButton[i]
+
+		y.addEventListener('click', () => {
+			let x = y.id.split('_')
+
+			let addedParam = collectFormData(`paramKey_${x[1]}`)
+			let addedValue = collectFormData(`valueKey_${x[1]}`)
+
+			// console.log(y.id, `valueKey_${x[1]}`, `paramKey_${x[1]}`)
+			a.innerHTML = `<label>${addedParam}</label> <span>${addedValue}</span>`
+
+			let z = `{'${addedParam}': '${addedValue}'}`
+
+			console.log(z)
+			additionalData[`${addedParam}`] = addedValue
+		})
+	}
+
 }
 
-createPblForm()
 
-function collectFormData(plId) {
+const addDataButton = document.getElementById('addDataButton')
 
-    var formData = document.getElementById(plId);
-    return formData.value;
-    
-}
+addDataButton.addEventListener('click', () => {
+
+	addDataToRequest.call()
+
+})
+
 
 const createLink = document.getElementById('createPaymentLink');
 
 createLink.addEventListener('click', function() {
 
-	var paymentLinkRequest = {
+	var standardData = {
 
 	  reference: collectFormData("pl-reference"),
 	  amount: {
@@ -59,19 +110,20 @@ createLink.addEventListener('click', function() {
 	  countryCode: collectFormData("pl-countryCode"),
 	  shopperLocale: collectFormData("pl-shopperLocale")
 
-}
+	}
 
+	var paymentLinkRequest = {...standardData, ...additionalData}
 
-const a = document.querySelector('.paymentLinkData')
+	const a = document.querySelector('.paymentLinkData')
 
-	createPaymentLink(paymentLinkRequest)
-		.then(response => {
-			a.innerText = JSON.stringify(response, null, 2)
-			console.log(response)
+		createPaymentLink(paymentLinkRequest)
+			.then(response => {
+				a.innerText = JSON.stringify(response, null, 2)
+				console.log(response)
 
-			// setTimeout(function (argument) {
-			// 	window.location.href = response.url
-			// }, 2000)
-		})
+				// setTimeout(function (argument) {
+				// 	window.location.href = response.url
+				// }, 2000)
+			})
 
 })

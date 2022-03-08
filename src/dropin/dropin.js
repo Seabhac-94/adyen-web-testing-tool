@@ -77,19 +77,12 @@ function showFinalResponse(response, component, componentFlavour) {
     }
 }
 
-function initiateCheckout(paymentsDefaultConfig) {
-    // i see u mixing a little bit the async/await and Promise syntax here.
-    // maybe would be a good starting point, to use async/await for everything.
-    // can make the initiateCheckout fn to be async then make getClientKey async tooo.
-    // then use try catch to get errors if any
-
-    // also I noticed u finshi the  lines sometimes with ; and sometimes not
-
+async function initiateCheckout(paymentsDefaultConfig) {
 
     // 0. Get clientKey
     getClientKey().then(async clientKey => {
             const componentFlavour = await getValueOfConfig('flavour', 'flavour');
-            const pm = await paymentMethodsResponse
+            const pm = await paymentMethodsResponse;
             const configuration = {
                 environment: 'test',
                 clientKey: clientKey,
@@ -197,7 +190,7 @@ function initiateCheckout(paymentsDefaultConfig) {
                 }
             };
 
-            var checkout = null
+            var checkout = null;
 
             if (sdkVersion < 5) {
                 checkout = new AdyenCheckout(configuration);
@@ -220,12 +213,12 @@ async function handleRedirect() {
 
     var checkout = null
 
-    // Where is this redirectResult coming from?
+    // Redirect result retreived from versionControl.js:6
     const detailsCall = {
         'details': {
-            'redirectResult': redirectResult
+            'redirectResult': await redirectResult
         }
-    }
+    };
 
     const configuration = {
         environment: 'test'
@@ -242,18 +235,17 @@ async function handleRedirect() {
 
     updateRequestContainer(detailsCall);
 
-    checkout = await sdkVersionRedirect(sdkVersion)
+    checkout = await sdkVersionRedirect(sdkVersion);
 
     const dropin = checkout.create('dropin').mount('#dropin-container');
 
     console.info("payment/details call made at: " + timeAndDate.toUTCString());
 
-    // Would be interesting to move this to async/await
     makeDetailsCall(detailsCall)
-        .then(response => {
-            updateResponseContainer(response);
+        .then(async response => {
+            updateResponseContainer(await response);
             console.info("payment/details response at: " + timeAndDate.toUTCString());
-            showFinalResponse(response, dropin);
+            showFinalResponse(await response, dropin);
         })
 
 };
@@ -268,9 +260,9 @@ if (!redirectResult) {
         hideCheckoutForm.classList.add('hiddenForm');
 
         loadCheckout.classList.add('hiddenForm');
-        infoPara.classList.add('hiddenForm')
-        icon.classList.remove('fa-angle-double-down')
-        icon.classList.add('fa-angle-double-right')
+        infoPara.classList.add('hiddenForm');
+        icon.classList.remove('fa-angle-double-down');
+        icon.classList.add('fa-angle-double-right');
 
         const params = await setParams();
         var paymentMethodsConfig = await params.paymentMethodsConfig;
@@ -283,12 +275,11 @@ if (!redirectResult) {
         shopperReference = paymentsDefaultConfig.shopperReference;
         paymentMethodsResponse = await getPaymentMethods(paymentMethodsConfig);
         const initiate = await initiateCheckout(paymentsDefaultConfig);
-        const demo = showCodeDemo()
+        const demo = showCodeDemo();
 
     });
 
 } else {
-    // curious about this functionality,
-    // why the 250ms ?
+    // temporary fix for open issue
     setTimeout(() => { handleRedirect() },250)
 }
