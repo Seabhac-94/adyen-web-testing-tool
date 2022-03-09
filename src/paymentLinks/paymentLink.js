@@ -1,8 +1,6 @@
 function collectFormData(plId) {
-
 	var formData = document.getElementById(plId);
-    return formData.value;
-    
+    return formData.value;    
 }
 
 
@@ -18,79 +16,78 @@ const pblFormParams = {
 
 };
 
-const paymentLinkForm = document.getElementById('paymentLinkForm')
+const paymentLinkForm = document.getElementById('paymentLinkForm');
 
 function createPblForm() {
 
 	for (let [key, value] of Object.entries(pblFormParams)) {
 		
 		let a = document.createElement("div");
-		a.classList.add("pl-inputs")
-		paymentLinkForm.append(a)
-		let b = document.createElement("label");
-		let c = document.createElement("input");
-		a.append(b);
-		a.append(c);
-		b.innerHTML = key;
-		c.type = "text"
-		c.name = key;
-		c.value = value;
-		c.id = `pl-${key}`
+		a.classList.add("pl-inputs");
+		paymentLinkForm.append(a);
+		a.innerHTML = `<label type='text'>${key}</label><input id='pl-${key}' type='text' name=${key} value=${value}>`;
 
 	}
 
 };
 
-createPblForm.call()
+createPblForm.call();
 
-var additionalData = {}
+var additionalData = {};
 
-var extraFieldId = 0
+var extraFieldId = 0;
 
 function addDataToRequest() {
 	
-	let a = document.createElement('div')
-	a.classList.add('pl-inputs')
+	let newField = document.createElement('div')
+	newField.classList.add('pl-inputs')
 
-	let buttonId = `extraField_${extraFieldId}`
-	let paramKey = `paramKey_${extraFieldId}`
-	let valuKey = `valueKey_${extraFieldId}`
-	extraFieldId += 1
+	let buttonId = `extraField_${extraFieldId}`;
+	let paramKey = `paramKey_${extraFieldId}`;
+	let valuKey = `valueKey_${extraFieldId}`;
+	extraFieldId += 1;
 
-	a.innerHTML = `<input id=${paramKey} type="text"> <input id=${valuKey} type="text"> <button id=${buttonId} class="addField">Add field</button>`
-	paymentLinkForm.append(a)
+	newField.innerHTML = `<input id=${paramKey} type='text' placeholder='Parameter'> <input id=${valuKey} type='text' placeholder='Value'> <button id=${buttonId} class='addField'>Add field</button>`
+	paymentLinkForm.append(newField)
 
 	var addFieldButton = document.getElementsByClassName('addField')
 
 	for (var i = 0; i < addFieldButton.length; i++) {
-		let y = addFieldButton[i]
+		let aFBtn= addFieldButton[i]
 
-		y.addEventListener('click', () => {
-			let x = y.id.split('_')
+		aFBtn.addEventListener('click', () => {
+			
+			let keyId = aFBtn.id.split('_');
+			let addedParam = collectFormData(`paramKey_${keyId[1]}`);
+			let addedValue = collectFormData(`valueKey_${keyId[1]}`);
 
-			let addedParam = collectFormData(`paramKey_${x[1]}`)
-			let addedValue = collectFormData(`valueKey_${x[1]}`)
+			if (addedParam !== '') {
 
-			// console.log(y.id, `valueKey_${x[1]}`, `paramKey_${x[1]}`)
-			a.innerHTML = `<label>${addedParam}</label> <span>${addedValue}</span>`
+				newField.innerHTML = `<label>${addedParam}</label> <span>${addedValue}</span>`;
+				additionalData[`${addedParam}`] = addedValue;
 
-			let z = `{'${addedParam}': '${addedValue}'}`
+			} else {
+				
+				document.getElementById(paramKey).className = 'formError';
+				alert(`Parameter needed! Go to https://docs.adyen.com/api-explorer/#/CheckoutService/v68/post/paymentLinks to see available parameters`);
 
-			console.log(z)
-			additionalData[`${addedParam}`] = addedValue
-		})
-	}
+			}
 
-}
+		});
+	};
+
+	// var removeField = document.getElementsByClassName('removeField');
+
+	// for (var i = 0; i < removeField.length; i++) {
+	// 	// console.log(removeField[i])
+	// }
+
+};
 
 
-const addDataButton = document.getElementById('addDataButton')
+const addDataButton = document.getElementById('addDataButton');
 
-addDataButton.addEventListener('click', () => {
-
-	addDataToRequest.call()
-
-})
+addDataButton.addEventListener('click', () => {	addDataToRequest.call() });
 
 
 const createLink = document.getElementById('createPaymentLink');
@@ -112,18 +109,18 @@ createLink.addEventListener('click', function() {
 
 	}
 
-	var paymentLinkRequest = {...standardData, ...additionalData}
+	var paymentLinkRequest = { ...standardData, ...additionalData };
 
 	const a = document.querySelector('.paymentLinkData')
 
 		createPaymentLink(paymentLinkRequest)
 			.then(response => {
-				a.innerText = JSON.stringify(response, null, 2)
-				console.log(response)
+				a.innerText = JSON.stringify(response, null, 2);
+				console.log(response);
 
 				// setTimeout(function (argument) {
 				// 	window.location.href = response.url
 				// }, 2000)
-			})
+			});
 
-})
+});

@@ -19,6 +19,14 @@
         width: max-content;
     }
 
+    .formError {
+        border: 2px solid red;
+    }
+
+    .button-spacing {
+        margin: 10px 0;
+    }
+
     #createPaymentLink {
 
         background: #00112c;
@@ -30,7 +38,26 @@
 
     }
 
-    #createPaymentLink:hover {
+    #addDataButton {
+
+        background: #00112c;
+        color: #fafafa;
+        padding: 8px;
+        border: 0.5px solid;
+        border-radius: 5px;
+        cursor: pointer;
+
+    }
+
+    .addField {
+
+        background: #00112c;
+        color: #fafafa;
+        border-radius: 2px;
+    }
+
+    #createPaymentLink:hover,
+    #addDataButton:hover {
 
         background: #fafafa;
         color: #00112c;
@@ -50,9 +77,14 @@
                
                 <div id="paymentLinkForm"></div>
 
-                <button id="addDataButton">Add Data</button>
-                <button id="createPaymentLink">Create Payment Link</button>
-
+                <div class="button-spacing">
+                    <button id="addDataButton">Add Data To Request</button>
+                </div>
+                
+                <div class="button-spacing">
+                    <button id="createPaymentLink">Create Payment Link</button>
+                </div>
+                
 
                 <div class="paymentLinkWrapper">
                     <pre class="paymentLinkData">

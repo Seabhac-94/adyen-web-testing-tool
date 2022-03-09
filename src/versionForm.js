@@ -40,7 +40,7 @@ function createForm(x, y, z) {
 		z.innerHTML = y[i];
 		a.append(z);
 		
-	}
+	};
 
 };
 
