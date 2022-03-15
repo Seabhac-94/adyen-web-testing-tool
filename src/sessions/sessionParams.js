@@ -17,6 +17,7 @@ const sessionDefaultConfig = {
         stateOrProvince: "North Holland",
         country: "NL"
     },
+    redirectFromIssuerMethod: "GET",
     lineItems: [
         {
             id: '1',

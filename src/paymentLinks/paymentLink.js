@@ -18,7 +18,7 @@ const pblFormParams = {
 
 const paymentLinkForm = document.getElementById('paymentLinkForm');
 
-function createPblForm() {
+(function createPblForm() {
 
 	for (let [key, value] of Object.entries(pblFormParams)) {
 		
@@ -29,9 +29,7 @@ function createPblForm() {
 
 	}
 
-};
-
-createPblForm.call();
+})();
 
 var additionalData = {};
 
@@ -44,15 +42,16 @@ function addDataToRequest() {
 
 	let buttonId = `extraField_${extraFieldId}`;
 	let paramKey = `paramKey_${extraFieldId}`;
-	let valuKey = `valueKey_${extraFieldId}`;
+	let valueKey = `valueKey_${extraFieldId}`;
 	extraFieldId += 1;
 
-	newField.innerHTML = `<input id=${paramKey} type='text' placeholder='Parameter'> <input id=${valuKey} type='text' placeholder='Value'> <button id=${buttonId} class='addField'>Add field</button>`
+	newField.innerHTML = `<input id=${paramKey} type='text' placeholder='Parameter'> <input id=${valueKey} type='text' placeholder='Value'> <button id=${buttonId} class='addField'>Add field</button>`
 	paymentLinkForm.append(newField)
 
 	var addFieldButton = document.getElementsByClassName('addField')
 
 	for (var i = 0; i < addFieldButton.length; i++) {
+		
 		let aFBtn= addFieldButton[i]
 
 		aFBtn.addEventListener('click', () => {
@@ -63,9 +62,14 @@ function addDataToRequest() {
 
 			if (addedParam !== '') {
 
-				newField.innerHTML = `<label>${addedParam}</label> <span>${addedValue}</span>`;
+				newField.innerHTML = `<span id="paramField_${keyId[1]}">${addedParam}</span> <span id="valueField_${keyId[1]}">${addedValue}</span> <button id="removeField_${keyId[1]}" class='removeField'>Delete Field</button> <button id="editField_${keyId[1]}" class='editField'>Edit Field</button>`;
+				newField.id = `newField_${keyId[1]}`
 				additionalData[`${addedParam}`] = addedValue;
 
+				// Calls functions to process the querySelector
+				deleteField.call()
+				editField.call()
+				
 			} else {
 				
 				document.getElementById(paramKey).className = 'formError';
@@ -75,20 +79,45 @@ function addDataToRequest() {
 
 		});
 	};
-
-	// var removeField = document.getElementsByClassName('removeField');
-
-	// for (var i = 0; i < removeField.length; i++) {
-	// 	// console.log(removeField[i])
-	// }
-
 };
 
+
+function deleteField() {
+	var removeFieldButton = document.querySelectorAll('.removeField');
+	
+	for (var i = 0; i < removeFieldButton.length; i++) {
+		let rFBtn = removeFieldButton[i]
+		rFBtn.addEventListener('click', () => {
+			console.log("event")
+			let keyId = rFBtn.id.split('_');
+			let param = document.getElementById(`paramField_${keyId[1]}`)
+			let field = document.getElementById(`newField_${keyId[1]}`)
+			try {
+				delete additionalData[`${param.innerText}`];
+				field.remove()
+			} catch (error) {
+				console.log(error)
+			}
+		})
+	}
+}
+
+
+function editField() {
+
+    var editFieldButton = document.getElementsByClassName('editField');
+
+    for (var i = 0; i < editFieldButton.length; i++) {
+        let eFBtn = editFieldButton[i]
+        eFBtn.addEventListener('click', () => {
+        	console.log("event")
+        })
+    }
+}
 
 const addDataButton = document.getElementById('addDataButton');
 
 addDataButton.addEventListener('click', () => {	addDataToRequest.call() });
-
 
 const createLink = document.getElementById('createPaymentLink');
 
@@ -117,10 +146,6 @@ createLink.addEventListener('click', function() {
 			.then(response => {
 				a.innerText = JSON.stringify(response, null, 2);
 				console.log(response);
-
-				// setTimeout(function (argument) {
-				// 	window.location.href = response.url
-				// }, 2000)
 			});
 
 });

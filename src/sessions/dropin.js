@@ -5,9 +5,12 @@ getClientKey().then(clientKey => {
 
     // Check URL for redirectResult and sessionId
     const queryResultString = window.location.search;
-    const urlParams = new URLSearchParams(queryResultString)
-    const redirectResult = urlParams.get('redirectResult')
-    const sessionId = urlParams.get('sessionId')
+    const urlParams = new URLSearchParams(queryResultString);
+    const redirectResult = urlParams.get('redirectResult');
+    const sessionId = urlParams.get('sessionId');
+    // Support for redirectFromIssuerMethod for split payments.
+    const md = urlParams.get('MD');
+    const paRes = urlParams.get('PaRes');
 
     function initiateSession() {
         sessions()
@@ -82,7 +85,14 @@ getClientKey().then(clientKey => {
 
         const dropinComponent = checkout.create('dropin').mount('#dropin-container')
         // Submit the redirectResult value you extracted from the returnUrl.
-        checkout.submitDetails({ details: { redirectResult } });
+        if(redirectResult) {
+           checkout.submitDetails({details: {redirectResult}}); 
+        } else if(md && paRes) { // Or redirectResult is not present, submit the MD and PaRes in place of the redirectResult
+            checkout.submitDetails({details: {
+                "MD": md,
+                "PaRes": paRes
+            }})
+        }
     }
 
     // If no paramters are present in the URL, mount the Drop-in
