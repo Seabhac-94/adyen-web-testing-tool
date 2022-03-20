@@ -27,18 +27,17 @@
         margin: 10px 0;
     }
 
-    #createPaymentLink {
-
-        background: #00112c;
-        color: #fafafa;
-        padding: 15px;
-        border: 0.5px solid;
-        border-radius: 10px;
-        cursor: pointer;
-
+    #paymentLinkTable {
+        min-width: 80%;
     }
 
-    #addDataButton {
+    .pl-inputs input {
+        width: 80%;
+    }
+
+
+    #addDataButton,
+    #createPaymentLink {
 
         background: #00112c;
         color: #fafafa;
@@ -49,16 +48,20 @@
 
     }
 
-    .addField {
+    .addField,
+    .removeField {
 
         background: #00112c;
         color: #fafafa;
         border: 1px solid;
-        border-radius: 2px;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
     #createPaymentLink:hover,
-    #addDataButton:hover {
+    #addDataButton:hover,
+    .addField:hover,
+    .removeField:hover {
 
         background: #fafafa;
         color: #00112c;
@@ -76,17 +79,26 @@
                 <h1>Payment Links - Currently Under Development</h1>
                 
                
-                <div id="paymentLinkForm"></div>
+                <div id="paymentLinkForm">
+                    
+                    <table id="paymentLinkTable">
+                        <tr>
+                            <td>Parameter</td>
+                            <td>Value</td>
+                            <td>Actions</td>
+                        </tr>
+                    </table>
+
+                </div>
 
                 <div class="button-spacing">
-                    <button id="addDataButton">Add Data To Request</button>
+                    <button id="addDataButton">Add Data To Request</button> <button id="createPaymentLink">Create Payment Link</button>
                 </div>
                 
                 <div class="button-spacing">
-                    <button id="createPaymentLink">Create Payment Link</button>
+                    
                 </div>
                 
-
                 <div class="paymentLinkWrapper">
                     <pre class="paymentLinkData">
                         
