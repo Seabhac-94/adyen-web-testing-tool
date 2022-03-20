@@ -29,10 +29,7 @@ function createPaymentLink() {
             'value' => 1000
         ],
         'reference' => 'Order Reference',
-        'returnUrl' => 'https://your-company.com/...',
         'merchantAccount' => $merchantAccount,
-        'shopperReference' => 'UNIQUE_SHOPPER_ID_6728',
-        'shopperLocale' => 'en_GB'
     ];
 
     // Convert data to JSON

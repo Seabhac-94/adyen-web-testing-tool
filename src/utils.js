@@ -250,12 +250,15 @@ const sessions = (paymentMethod, config = {}) => {
 
 
 // Make a paymentLink
-const createPaymentLink = (data) =>
-    httpPost('paymentLinks', data)
+const createPaymentLink = (data) => {
+    updateRequestContainer(data);
+    return httpPost('paymentLinks', data)
         .then(response => {
+            updateResponseContainer(response);
             return response;
         })
         .catch(console.error);
+}
 
 
 // Function in progress that will save the saved details for the next running of server

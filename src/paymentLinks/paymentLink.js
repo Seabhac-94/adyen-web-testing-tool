@@ -10,9 +10,7 @@ const pblFormParams = {
 	value: [1000],
 	countryCode: ["NL"],
 	reference: ["AdyenPaymentLinkTest"],
-	shopperReference: ["adyenShopper"],
-	description: ["Adyen Payment Link"],
-	shopperLocale: ["en_GB"]
+	returnUrl: ["http://localhost:3000/paymentLinks/return.html"]
 
 };
 
@@ -46,7 +44,7 @@ function addDataToRequest() {
 	let valueKey = `valueKey_${extraFieldId}`;
 	extraFieldId += 1;
 
-	newField.innerHTML = `<td><input id=${paramKey} type='text' placeholder='Parameter'></td> <td><input id=${valueKey} type='text' placeholder='Value'></td> <td><button id=${buttonId} class='addField'>Add field</button></td>`;
+	newField.innerHTML = `<td><input id=${paramKey} type='text' placeholder='Parameter'></td> <td><input id=${valueKey} type='text' placeholder='Value'> <button id=${buttonId} class='addField'>Add field</button></td>`;
 	paymentLinkTable.append(newField);
 
 	var addFieldButton = document.getElementsByClassName('addField');
@@ -63,9 +61,9 @@ function addDataToRequest() {
 
 			if (addedParam !== '') {
 
-				newField.innerHTML = `<td><span id="paramField_${keyId[1]}" value='${addedParam}'>${addedParam}</span></td> <td><span id="valueField_${keyId[1]}" value="${addedValue}">${addedValue}</span></td> <td><button id="removeField_${keyId[1]}" class='removeField'>Delete Field</button></td>`;
+				newField.innerHTML = `<td><span class="addedParamBlock" id="paramField_${keyId[1]}" value='${addedParam}'>${addedParam}</span></td> <td><span class="addedValueBlock" id="valueField_${keyId[1]}" value="${addedValue}">${addedValue}</span> <button id="removeField_${keyId[1]}" class='removeField'>Delete Field</button></td>`;
 				newField.id = `newField_${keyId[1]}`;
-				additionalData[`${addedParam}`] = addedValue;
+				additionalData[addedParam] = addedValue;
 
 				// Calls functions to process the querySelector
 				deleteField.call();
@@ -92,7 +90,7 @@ function deleteField() {
 			let param = document.getElementById(`paramField_${keyId[1]}`);
 			let field = document.getElementById(`newField_${keyId[1]}`);
 			try {
-				delete additionalData[`${param.innerText}`];
+				delete additionalData[param.innerText];
 				field.remove();
 			} catch (error) {
 				console.log(error);
@@ -105,7 +103,7 @@ const addDataButton = document.getElementById('addDataButton');
 addDataButton.addEventListener('click', () => {	addDataToRequest.call() });
 
 const createLink = document.getElementById('createPaymentLink');
-createLink.addEventListener('click', function() {
+createLink.addEventListener('click', () => {
 
 	var standardData = {
 
@@ -114,22 +112,30 @@ createLink.addEventListener('click', function() {
 	  	currency: collectFormData("pl-currency"),
 	    value: collectFormData("pl-value")
 	  },
-
-	  shopperReference: collectFormData("pl-shopperReference"),
-	  description: collectFormData("pl-description"),
 	  countryCode: collectFormData("pl-countryCode"),
-	  shopperLocale: collectFormData("pl-shopperLocale")
+	  returnUrl: collectFormData("pl-returnUrl")
 
 	}
 
 	var paymentLinkRequest = { ...standardData, ...additionalData };
 
-	const a = document.querySelector('.paymentLinkData');
-
 		createPaymentLink(paymentLinkRequest)
 			.then(response => {
-				a.innerText = JSON.stringify(response, null, 2);
-				console.log(response);
+
+				let resultWrapper = document.getElementById('result-wrapper');
+				resultWrapper.classList.remove('hiddenForm');
+				let resultTable = document.getElementById('result-table');
+				resultTable.innerHTML = null
+
+				for (let [key, value] of Object.entries(response)) {
+					let a = document.createElement('tr');
+					resultTable.append(a);
+					a.innerHTML = `<td>${key}</td> <td>${JSON.stringify(value)}</td>`;
+				};
+
+				var goToLink = document.getElementById('goToRes');
+				goToLink.href = response['url'];
+
 			});
 
 });
