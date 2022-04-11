@@ -2,24 +2,27 @@ function setParams() {
 
     const paymentsParams = paymentsConfigParams();
 
-    // We declare these values here to only need to change them in one place
-    const countryCode = paymentsParams.countryCode;
+    // Values from utils.paymentsConfigParams are returned here so that utils can be used for other integrations
+    const { countryCode,
+            shopperLocale,
+            currency,
+            value,
+            shopperReference, 
+            reference, 
+            blockedPaymentMethods, 
+            storePaymentMethod, 
+            shopperInteraction, 
+            recurringProcessingModel, 
+            executeThreeD, 
+            allow3DS2 } = paymentsParams
+
     var remainingAmount = null
     var gcAmount = null;
     var orderAmount = null;
     var amount = {
-                currency: paymentsParams.currency,
-                value: paymentsParams.value
+                currency,
+                value
             };
-    const shopperLocale = paymentsParams.shopperLocale;
-    const shopperReference = paymentsParams.shopperReference;
-    const reference = paymentsParams.reference;
-    const blockedPaymentMethods = paymentsParams.blockedPaymentMethods;
-    const storePaymentMethod = paymentsParams.storePaymentMethod;
-    const shopperInteraction = paymentsParams.shopperInteraction;
-    const recurringProcessingModel = paymentsParams.recurringProcessingModel;
-    const executeThreeD = paymentsParams.executeThreeD;
-    const allow3DS2 = paymentsParams.allow3DS2;
 
     function lineItems() {
         var lineItems = [

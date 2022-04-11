@@ -1,16 +1,16 @@
 function collectFormData(plId) {
 	var formData = document.getElementById(plId);
-    return formData.value;    
+	return formData.value;    
 }
 
 
 const pblFormParams = {
 
-	currency: ["EUR"],
-	value: [1000],
-	countryCode: ["NL"],
-	reference: ["AdyenPaymentLinkTest"],
-	returnUrl: ["http://localhost:3000/paymentLinks/return.html"]
+	currency: "EUR",
+	value: 1000,
+	countryCode: "NL",
+	reference: "AdyenPaymentLinkTest",
+	returnUrl: "http://localhost:3000/paymentLinks/return.html"
 
 };
 
@@ -24,11 +24,23 @@ const paymentLinkTable = document.getElementById('paymentLinkTable');
 		let a = document.createElement("tr");
 		a.classList.add("pl-inputs");
 		paymentLinkTable.append(a);
-		a.innerHTML = `<td type='text'>${key}</td> <td><input id='pl-${key}' type='text' name=${key} value=${value}></td>`;
+		if (key !== 'reference') {
+			a.innerHTML = `<td>${key}</td> <td><input id='pl-${key}' type='text' name=${key} value=${value}></td>`;
+		} else {
+			a.innerHTML =  `<td>${key}</td> <td><input id='pl-${key}' type='text' name=${key} value=${value}> <button id='makeReference'>Generate Reference</button></td>`;
+		}
 
 	}
 
 })();
+
+const makeRef = document.getElementById('makeReference');
+makeRef.addEventListener('click', () => {
+	const referenceField = document.getElementById('pl-reference');
+	const ref = makeReference(10)
+	referenceField.value = `testPayment_${ref}`
+
+});
 
 var additionalData = {};
 
@@ -119,23 +131,28 @@ createLink.addEventListener('click', () => {
 
 	var paymentLinkRequest = { ...standardData, ...additionalData };
 
-		createPaymentLink(paymentLinkRequest)
-			.then(response => {
+	createPaymentLink(paymentLinkRequest)
+		.then(response => {
 
-				let resultWrapper = document.getElementById('result-wrapper');
-				resultWrapper.classList.remove('hiddenForm');
-				let resultTable = document.getElementById('result-table');
-				resultTable.innerHTML = null
+			let resultWrapper = document.getElementById('result-wrapper');
+			resultWrapper.classList.remove('hiddenForm');
+			let resultTable = document.getElementById('result-table');
+			resultTable.innerHTML = null;
 
-				for (let [key, value] of Object.entries(response)) {
-					let a = document.createElement('tr');
-					resultTable.append(a);
-					a.innerHTML = `<td>${key}</td> <td>${JSON.stringify(value)}</td>`;
-				};
+			for (let [key, value] of Object.entries(response)) {
+				let a = document.createElement('tr');
+				resultTable.append(a);
+				a.innerHTML = `<td>${key}</td> <td>${JSON.stringify(value)}</td>`;
+			};
 
-				var goToLink = document.getElementById('goToRes');
-				goToLink.href = response['url'];
+			var goToRes = document.getElementById('goToRes');
+			var goToResBtn =  document.getElementById('goToLink');
+			if (response['url']) {
+				goToResBtn.classList.remove('hiddenForm');
+				goToRes.href = response['url'];
+			}
+			
 
-			});
+		});
 
 });

@@ -94,7 +94,13 @@ function cardConfiguration(paymentMethodsResponse) {
 		socialSecurityNumberMode: getValueOfConfig(component, 'socialSecurityNumberMode'),
 		billingAddressRequired: getValueOfConfig(component, 'billingAddressRequired'),
 		billingAddressAllowedCountries: getValueOfConfig(component, 'billingAddressAllowedCountries'),
-		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate')
+		minimumExpiryDate: getValueOfConfig(component, 'minimumExpiryDate'),
+		onBinLookup: (state, dropin) => {
+			console.log("onBinLookup", state)
+		},
+		onBinValue: (state, dropin) => {
+			console.log("onBinValue", state)
+		}
 
 	}
 

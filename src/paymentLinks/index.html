@@ -37,14 +37,14 @@
         text-overflow: ;
     }
 
-    .goToLink a {
+    #goToLink a {
         text-decoration: none;
         color: #fafafa;
     }
 
     #addDataButton,
     #createPaymentLink,
-    .goToLink {
+    #goToLink {
 
         background: #00112c;
         color: #fafafa;
@@ -56,7 +56,8 @@
     }
 
     .addField,
-    .removeField {
+    .removeField,
+    #makeReference {
 
         background: #00112c;
         color: #fafafa;
@@ -67,10 +68,11 @@
 
     #createPaymentLink:hover,
     #addDataButton:hover,
+    #makeReference:hover,
     .addField:hover,
     .removeField:hover,
-    .goToLink:hover,
-    .goToLink a:hover {
+    #goToLink:hover,
+    #goToLink a:hover {
 
         background: #fafafa;
         color: #00112c;
@@ -110,7 +112,7 @@
                     <table id="result-table">
                         
                     </table>
-                    <button class="goToLink"><a id="goToRes">Go To Link</a></button>
+                    <button id="goToLink" class="hiddenForm"><a id="goToRes">Go To Link</a></button>
                 </div>
 
             </div>
