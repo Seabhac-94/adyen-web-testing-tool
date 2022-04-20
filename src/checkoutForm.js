@@ -24,6 +24,7 @@ const parametersConfig = {
 const flavourConfig = {
 	
 	flavour: [
+		"bankTransfer_IBAN",
 		"boletobancario",
 		"alipay",
 		"clearpay",
@@ -73,6 +74,7 @@ const cardConfig = {
 	hasHolderName: [true, false],
 	holderNameRequired: [true, false],
 	positionHolderNameOnTop: [true, false],
+	showBrandsUnderCardNumber: [true, false],
 	hideCVC: [true, false],
 	socialSecurityNumberMode: ["show", "hide", "auto"],
 	billingAddressRequired: [true, false],

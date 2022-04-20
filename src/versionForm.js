@@ -1,4 +1,10 @@
 const sdkVersionOption = [
+	"5.12.0",
+	"5.11.0",
+	"5.10.0",
+	"5.9.0",
+	"5.8.0",
+	"5.7.0",
 	"5.6.0",
 	"5.5.0",
 	"5.4.0",
@@ -18,12 +24,9 @@ const sdkVersionOption = [
 	"4.0.0"
 ]
 
-
 const apiVersionOption = [68, 67]
 
-
 const parameters = document.getElementById("parameters");
-
 
 // Creates the dropdown options for the form
 function createForm(x, y, z) {
@@ -44,13 +47,11 @@ function createForm(x, y, z) {
 
 };
 
-
 // Create the SDK dropdown
 createForm( "selectSdkVersion", sdkVersionOption, "sdkOption");
 
 // Create the API dropdown
 createForm( "selectApiVersion", apiVersionOption, "apiOption");
-
 
 const loadScriptsButton = document.createElement("button");
 loadScriptsButton.innerHTML = "Load Versioned Scripts";

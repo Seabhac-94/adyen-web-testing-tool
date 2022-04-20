@@ -101,7 +101,6 @@ function cardConfiguration(paymentMethodsResponse) {
 		onBinValue: (state, dropin) => {
 			console.log("onBinValue", state)
 		}
-
 	}
 
 };

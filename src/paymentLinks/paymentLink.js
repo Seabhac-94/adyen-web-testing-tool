@@ -134,6 +134,8 @@ createLink.addEventListener('click', () => {
 	createPaymentLink(paymentLinkRequest)
 		.then(response => {
 
+			updateRequestContainer(paymentLinkRequest);
+			
 			let resultWrapper = document.getElementById('result-wrapper');
 			resultWrapper.classList.remove('hiddenForm');
 			let resultTable = document.getElementById('result-table');
@@ -142,7 +144,7 @@ createLink.addEventListener('click', () => {
 			for (let [key, value] of Object.entries(response)) {
 				let a = document.createElement('tr');
 				resultTable.append(a);
-				a.innerHTML = `<td>${key}</td> <td>${JSON.stringify(value)}</td>`;
+				a.innerHTML = `<td class="result-table-rows">${key}</td> <td class="result-table-rows">${JSON.stringify(value)}</td>`;
 			};
 
 			var goToRes = document.getElementById('goToRes');

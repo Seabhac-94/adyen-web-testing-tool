@@ -251,7 +251,6 @@ const sessions = (paymentMethod, config = {}) => {
 
 // Make a paymentLink
 const createPaymentLink = (data) => {
-    updateRequestContainer(data);
     return httpPost('paymentLinks', data)
         .then(response => {
             updateResponseContainer(response);
