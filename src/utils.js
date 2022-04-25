@@ -144,14 +144,19 @@ const getPaymentMethods = (params) =>
 
 
 // Get balance of gift card
-const getBalance = (data) =>
-    httpPost('paymentMethodsBalance', data)
+const getBalance = (amount, data) => {
+
+    const stateData = { ...data }
+    const req = {amount, ...stateData}
+
+    return httpPost('paymentMethodsBalance', req)
         .then(response => {
             if (response.error) throw 'Call failed';
 
             return response;
         })
         .catch(console.error);
+}
 
 
 // Create an order for split payments
@@ -191,7 +196,6 @@ const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
         }
     }
 
-
     updateRequestContainer(paymentRequest);
 
     return httpPost('payments', paymentRequest)
@@ -215,6 +219,17 @@ const makeDetailsCall = (details) =>
             return response;
         })
         .catch(console.error);
+
+
+// Make a dontation
+const makeDonation = (data) =>
+
+    httpPost('donations', data)
+        .then(response => {
+            return response;
+        })
+        .catch(console.error);
+
 
 
 // Get all recurring payment methods from the local server

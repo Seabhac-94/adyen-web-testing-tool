@@ -17,6 +17,7 @@ require('api/originKeys.php');
 require('api/clientKeys.php');
 require('api/sessions.php');
 require('api/saveCase.php');
+require('api/donations.php');
 
 // Basic routing
 $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -62,6 +63,11 @@ switch($request_uri[0]) {
     case '/paymentsDetails':
         header('Content-Type: application/json');
         echo makeDetailsCall();
+        break;
+
+    case '/donations':
+        header('Content-Type: application/json');
+        echo makeDonation();
         break;
 
     // /paymentLinks

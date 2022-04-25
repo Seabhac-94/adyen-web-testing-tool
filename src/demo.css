@@ -100,6 +100,12 @@ h1 {
     font-weight: 100;
 }
 
+
+#donation-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
 /*#dropinConfiguration,
 #flavourConfiguration,
 #parametersConfiguration {
@@ -163,6 +169,7 @@ h1 {
 .configObjTitle,
 #showComponent,
 #proceedRecurring,
+#donate,
 #sendRecurringReq,
 .recActions button,
 .recButton button {
@@ -192,6 +199,7 @@ h1 {
 #selectImpCode,
 #showComponent,
 #proceedRecurring,
+#donate,
 #sendRecurringReq,
 .recActions button,
 .recButton button {
@@ -247,6 +255,7 @@ input.checkoutDropdown {
 #showComponent:hover,
 #customPayButton:hover,
 #proceedRecurring:hover,
+#donate:hover,
 #sendRecurringReq:hover,
 .recActions button:hover,
 .recButton button:hover {

@@ -45,8 +45,6 @@ function setParams() {
         return lineItems
     }
 
-
-
     const paymentMethodsConfig = {
         shopperReference,
         shopperLocale,

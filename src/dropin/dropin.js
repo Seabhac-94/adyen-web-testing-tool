@@ -77,6 +77,91 @@ function showFinalResponse(response, component, componentFlavour) {
     }
 }
 
+async function handleDonation(response, component) {
+
+    const donationWrapper = document.getElementById('donation-wrapper')
+    donationWrapper.classList.remove('hiddenForm')
+
+    const {donationToken, pspReference} = response;
+
+
+    const donationRequest = {
+        reference: `donation`,
+        returnUrl: window.location.origin,
+        paymentMethod: {
+            type: 'scheme'
+        },
+        donationToken,
+        donationOriginalPspReference: pspReference,
+        shopperInteraction: 'ContAuth'
+    }
+
+
+    function handleOnDonate(state, component) {
+
+        updateStateContainer(state);
+
+        if (state.isValid) {
+
+            var req = {...donationRequest, ...state.data }
+            updateRequestContainer(req);
+            makeDonation(req)
+                .then(async res => {
+                    updateResponseContainer(res);
+                    const { payment, status, reference } = res;
+                    if (payment.resultCode === 'Authorised') {
+                        component.setStatus('success');
+                    } else {
+                        component.setStatus('error');
+                    }
+                    
+                })
+        }
+    };
+ 
+    function handleOnCancel(state, component) {
+        updateStateContainer(state)
+        donation.unmount()
+    };
+     
+    const donationConfig = {
+        amounts: {
+            currency: "EUR",
+            values: [300, 500, 1000]
+        },
+        backgroundUrl: '../donationBanner.jpeg',
+        description: "The Charitable Foundation is Adyen Giving Demo",
+        logoUrl: '../donationLogo.png',
+        name: "The Charitable Foundation",
+        url: "https://adyen.com/",
+        showCancelButton: true,
+        onDonate: handleOnDonate,
+        onCancel: handleOnCancel
+    };
+
+    var checkout = null;
+
+    if (sdkVersion < 5) {
+        checkout = new AdyenCheckout();
+    } else {
+        checkout = await AdyenCheckout();
+    }
+
+    const donation = checkout.create('donation', donationConfig);
+
+    const donationButton = document.getElementById('donate');
+    donationButton.addEventListener('click', () => {
+
+        donationWrapper.firstChild.nextSibling.classList.add('hiddenForm');
+        component.unmount();
+        donation.mount('#donation-container');
+    
+    });
+
+    
+
+}
+
 async function initiateCheckout(paymentsDefaultConfig) {
 
     // 0. Get clientKey
@@ -130,6 +215,10 @@ async function initiateCheckout(paymentsDefaultConfig) {
                             } else {
 
                                 showFinalResponse(response, component, componentFlavour);
+                                if (response.donationToken) {
+                                    handleDonation(response, component);
+                                }
+                                
 
                             }
                         })
@@ -140,7 +229,7 @@ async function initiateCheckout(paymentsDefaultConfig) {
                 },
                 onBalanceCheck: async function(resolve, reject, data) {
                     // Call /paymentMethods/balance
-                    getBalance(data)
+                    getBalance(amount, data)
                         .then(balanceResponse => {
                             resolve(balanceResponse)
                             gcAmount = balanceResponse.balance
@@ -184,6 +273,9 @@ async function initiateCheckout(paymentsDefaultConfig) {
                                 component.handleAction(response.action)
                             } else {
                                 showFinalResponse(response, component);
+                                if (response.donationToken) {
+                                    handleDonation(response, component);
+                                }
                             }
 
                         })
@@ -246,7 +338,10 @@ async function handleRedirect() {
             updateResponseContainer(await response);
             console.info("payment/details response at: " + timeAndDate.toUTCString());
             showFinalResponse(await response, dropin);
-        })
+            if (response.donationToken) {
+                handleDonation(response, dropin);
+            }
+        });
 
 };
 
