@@ -254,14 +254,12 @@ async function initiateCheckout(paymentsDefaultConfig) {
                             if (response.resultCode) {
                                 gcAmount = null;
                                 orderAmount = null;
-                                getPaymentMethods(paymentMethodsConfig)
-                                    .then(paymentMethodsResponse => {
-                                        checkout.update({
-                                            paymentMethodsResponse,
-                                            order: null,
-                                            amount
-                                        })
-                                    })
+                                checkout.update({
+                                    pm,
+                                    order: null,
+                                    amount
+                                })
+                                    
                             }
                         })
                 },
