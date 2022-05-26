@@ -81,12 +81,16 @@ getClientKey().then(clientKey => {
         };
         // Create an instance of AdyenCheckout to handle the shopper returning to your website.
         // Configure the instance with the sessionId you extracted from the returnUrl.
+
+        // const checkoutRedirect = await AdyenCheckout(configuration)
+        // const checkout = await AdyenCheckout(configuration, configuration.session = { id:sessionId });
         const checkout = await AdyenCheckout(configuration);
 
         const dropinComponent = checkout.create('dropin').mount('#dropin-container')
+
         // Submit the redirectResult value you extracted from the returnUrl.
         if(redirectResult) {
-           checkout.submitDetails({details: {redirectResult}}); 
+           checkout.submitDetails({ details: { redirectResult } }); 
         } else if(md && paRes) { // Or redirectResult is not present, submit the MD and PaRes in place of the redirectResult
             checkout.submitDetails({details: {
                 "MD": md,

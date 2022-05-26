@@ -168,12 +168,15 @@ async function initiateCheckout(paymentsDefaultConfig) {
     getClientKey().then(async clientKey => {
             const componentFlavour = await getValueOfConfig('flavour', 'flavour');
             const pm = await paymentMethodsResponse;
+            var locale = await getValueOfConfig('dropin', 'locale');
+            if (!locale) {locale = "en_GB"};
             const configuration = {
                 environment: 'test',
                 clientKey: clientKey,
                 paymentMethodsResponse: pm,
                 removePaymentMethods: ['paysafecard', 'c_cash'],
                 amount,
+                locale,
                 paymentMethodsConfiguration: {
                     paypal: paypalConfiguration(),
                     card: cardConfiguration(pm),

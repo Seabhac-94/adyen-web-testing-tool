@@ -1,4 +1,8 @@
 const sdkVersionOption = [
+	"5.16.0",
+	"5.15.0",
+	"5.14.0",
+	"5.13.0",
 	"5.12.0",
 	"5.11.0",
 	"5.10.0",
@@ -24,7 +28,7 @@ const sdkVersionOption = [
 	"4.0.0"
 ]
 
-const apiVersionOption = [68, 67]
+const apiVersionOption = [69, 68, 67]
 
 const parameters = document.getElementById("parameters");
 

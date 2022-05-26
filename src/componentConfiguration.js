@@ -14,9 +14,6 @@ function dropinOptionalConfig() {
 		customPay.classList.remove("hiddenForm")
 	};
 
-	var locale = getValueOfConfig(component, 'locale');
-	if (!locale) {locale = "en_GB"};
-
 	return {
 
 	    //Configuration
@@ -27,7 +24,6 @@ function dropinOptionalConfig() {
 	    showPaymentMethods: getValueOfConfig(component, 'showPaymentMethods'),
 	    setStatusAutomatically: getValueOfConfig(component, 'setStatusAutomatically'),
 	    instantPaymentTypes,
-	    locale,
 	    showPayButton,
 	    // Events
 	    onSelect: activeComponent => {
@@ -142,8 +138,8 @@ function paypalConfiguration() {
       		actions.resolve(data)
   		},
   		onInit: (data, actions) => {
-  			console.log(data)
-  			actions.resolve(data)
+  			console.log("onInit", data)
+  			actions.enable(data)
   		},
   		onClick: () => {
   			console.log("PayPal Initiated")

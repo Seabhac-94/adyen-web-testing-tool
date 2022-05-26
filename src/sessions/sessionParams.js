@@ -1,6 +1,9 @@
+const ref = makeReference(10)
+
 const sessionDefaultConfig = {
-    shopperReference: 'Checkout Components sample code test',
-    reference: 'Checkout Components sample code test',
+    shopperReference: `shopper_${ref}`,
+    reference: `testPayment_${ref}`,
+    shopperLocale: 'en_GB',
     countryCode: 'NL',
     channel: 'Web',
     returnUrl: window.location.href,

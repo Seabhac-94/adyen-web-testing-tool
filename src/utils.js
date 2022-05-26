@@ -147,7 +147,7 @@ const getPaymentMethods = (params) =>
 const getBalance = (amount, data) => {
 
     const stateData = { ...data }
-    const req = {amount, ...stateData}
+    const req = {amount:{currency:amount.currency}, ...stateData}
 
     return httpPost('paymentMethodsBalance', req)
         .then(response => {
