@@ -21,7 +21,7 @@ function createPaymentLink() {
 
     $apikey = getenv('CHECKOUT_APIKEY');
     $merchantAccount = getenv('MERCHANT_ACCOUNT');
-    $url = "https://checkout-test.adyen.com/v68/paymentLinks";
+    $url = "https://checkout-test.adyen.com/v69/paymentLinks";
 
     $data = [
         'amount' => [

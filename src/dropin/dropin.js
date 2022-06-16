@@ -103,7 +103,7 @@ async function handleDonation(response, component) {
 
         if (state.isValid) {
 
-            var req = {...donationRequest, ...state.data }
+            var req = { ...donationRequest, ...state.data }
             updateRequestContainer(req);
             makeDonation(req)
                 .then(async res => {
