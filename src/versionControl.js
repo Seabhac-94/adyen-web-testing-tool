@@ -46,7 +46,7 @@ function loadCheckoutScripts(){
 		"dropin/componentParams", 
 		"dropin/dropin", 
 		"codeDemo"
-	]
+	];
 
 	var sdkVersion = apiSdkVersions.sdkVersion;
 	var baseStyle = document.createElement("link");
@@ -58,85 +58,89 @@ function loadCheckoutScripts(){
 	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.js";
 	document.body.appendChild(baseScript);
 
-	for (var i = 0; i < additionalScripts.length; i++) {
+	additionalScripts.forEach(element => {
 
 		var scriptToAdd = document.createElement("script");
-		scriptToAdd.src = `../${additionalScripts[i]}.js`;
+		scriptToAdd.src = `../${element}.js`;
 		document.body.appendChild(scriptToAdd);
 
-	}
-
+	});
+	
 };
 
 
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it and calls loadCheckoutScripts() automatically
 
-if (!sdkVersionOnLoad) {
+(async () => {
 
-	var loadScripts = document.getElementById("loadScripts");
+	if (!sdkVersionOnLoad) {
 
-	loadScripts.addEventListener('click', function(){
+		var loadScripts = document.getElementById("loadScripts");
 
-		var apiSdkVersions = retrieveVersionValue();
-		location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
+		loadScripts.addEventListener('click', function(){
 
-	});	
+			var apiSdkVersions = retrieveVersionValue();
+			location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
 
-} else if (!redirectResult) {
+		});	
 
-	const resetButton = document.createElement("button");
-	resetButton.innerHTML = "Reset";
-	resetButton.id = "resetButton";
-	parameters.append(resetButton);
-	const reset = document.getElementById("resetButton");
+	} else if (!redirectResult) {
 
-	reset.addEventListener("click", function() {
-		location.href = "http://localhost:3000/dropin"
-	})
+		const resetButton = document.createElement("button");
+		resetButton.innerHTML = "Reset";
+		resetButton.id = "resetButton";
+		parameters.append(resetButton);
+		const reset = document.getElementById("resetButton");
 
-	// If there's sdkVersions then we can present the loadCheckout button
-	var loadComponentsDiv = document.getElementById('loadComponents');
-	var loadCheckoutButton = document.createElement("button");
-	loadCheckoutButton.innerHTML = "Load Checkout";
-	loadCheckoutButton.id = "loadCheckout";
-	loadComponentsDiv.append(loadCheckoutButton);
+		reset.addEventListener("click", function() {
+			location.href = "http://localhost:3000/dropin"
+		})
 
-	// Disables the forms for version selection once the version configuration has been chosen
+		// If there's sdkVersions then we can present the loadCheckout button
+		var loadComponentsDiv = document.getElementById('loadComponents');
+		var loadCheckoutButton = document.createElement("button");
+		loadCheckoutButton.innerHTML = "Load Checkout";
+		loadCheckoutButton.id = "loadCheckout";
+		loadComponentsDiv.append(loadCheckoutButton);
 
-	var loadScripts = document.getElementById("loadScripts");
-	loadScripts.disabled = true;
+		// Disables the forms for version selection once the version configuration has been chosen
 
-	var selectCheckoutVersion = document.getElementById("selectSdkVersion");
-	selectCheckoutVersion.disabled = true;
+		var loadScripts = document.getElementById("loadScripts");
+		loadScripts.disabled = true;
 
-	var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
-	optionCheckoutVersion.innerText = sdkVersionOnLoad;
-	optionCheckoutVersion.disabled = true;
+		var selectCheckoutVersion = document.getElementById("selectSdkVersion");
+		selectCheckoutVersion.disabled = true;
 
-	var selectApiVersion = document.getElementById("selectApiVersion");
-	selectApiVersion.disabled = true;
+		var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
+		optionCheckoutVersion.innerText = sdkVersionOnLoad;
+		optionCheckoutVersion.disabled = true;
 
-	var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
-	optionApiVersion.innerText = apiVersionOnLoad;
-	optionApiVersion.disabled = true;
+		var selectApiVersion = document.getElementById("selectApiVersion");
+		selectApiVersion.disabled = true;
 
-
-	// Inserts the correct scripts in order
-	loadCheckoutScripts();
+		var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
+		optionApiVersion.innerText = apiVersionOnLoad;
+		optionApiVersion.disabled = true;
 
 
-} else {
+		// Inserts the correct scripts in order
+		loadCheckoutScripts();
 
-	loadCheckoutScripts();
 
-	const getParametersForm = document.getElementById("configurationParametersWrapper");
-	getParametersForm.classList.add("hiddenForm");
+	} else {
 
-	const copyConfiguration = document.getElementById("copyConfiguration");
-	copyConfiguration.classList.add("hiddenForm")
+		let checkoutScripts = await loadCheckoutScripts();
 
-	const info = document.querySelector(".component-info")
-	info.classList.add("hiddenForm")
-	
-}
+		const getParametersForm = document.getElementById("configurationParametersWrapper");
+		getParametersForm.classList.add("hiddenForm");
+
+		const copyConfiguration = document.getElementById("copyConfiguration");
+		copyConfiguration.classList.add("hiddenForm")
+
+		const info = document.querySelector(".component-info")
+		info.classList.add("hiddenForm")
+		
+	}
+
+})();
