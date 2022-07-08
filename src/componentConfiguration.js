@@ -133,8 +133,7 @@ function paypalConfiguration() {
   		},
   		onShippingChange: function(data, actions) {
       		// Listen to shipping changes.
-      		console.log("New shipping address: ")
-      		console.log(data.shipping_address)
+      		console.log("New shipping address: ", data.shipping_address)
       		actions.resolve(data)
   		},
   		onInit: (data, actions) => {

@@ -3,7 +3,7 @@
 **Built on the back of Adyen Web sample code - https://github.com/Adyen/adyen-components-js-sample-code**
 
 
-> ⚠️ **This repository is for demo and tetsing purposes only**
+> ⚠️ **This repository is for demo and tetsing purposes only and is not an official integration respository**
 
 
 ### Additional files and folders
