@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Payment Links</title>
 
-    <link rel="stylesheet" href="../demo.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../demo.css" />
+  </head>
+  <body>
     <style type="text/css">
-    
-    .main {
+      .main {
         width: 100%;
-    }
+      }
 
-    .adyen-checkout__status__text {
+      .adyen-checkout__status__text {
         display: block;
-    }
-    .success-container {
+      }
+      .success-container {
         text-align: center;
         margin-top: 10em;
-    }
-
+      }
     </style>
 
-
     <div class="container container--full-width">
-        <div class="main">
-            <div class="success-container adyen-checkout__status adyen-checkout__status--success">
-                <img height="100" class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded" src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif" alt="Payment successful!">
-                <span class="adyen-checkout__status__text">Payment successful!</span>
-                <p><a href="../paymentLinks/">Start again</a></p>
-            </div>
+      <div class="main">
+        <div
+          class="success-container adyen-checkout__status adyen-checkout__status--success"
+        >
+          <img
+            height="100"
+            class="adyen-checkout__status__icon adyen-checkout__image adyen-checkout__image--loaded"
+            src="https://checkoutshopper-test.adyen.com/checkoutshopper/images/components/success.gif"
+            alt="Payment successful!"
+          />
+          <span class="adyen-checkout__status__text">Payment successful!</span>
+          <p><a href="../paymentLinks/">Start again</a></p>
         </div>
+      </div>
     </div>
 
     <script src="../demo.js"></script>
     <script src="../utils.js"></script>
-</body>
+  </body>
 </html>
