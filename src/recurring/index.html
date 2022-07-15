@@ -1,67 +1,58 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Adyen Checkout Components sample code</title>
 
-    <link rel="stylesheet" href="../demo.css">
-</head>
-<body>
-    <style type="text/css">
-
-
-    </style>
-
+    <link rel="stylesheet" href="../demo.css" />
+  </head>
+  <body>
+    <style type="text/css"></style>
 
     <div class="container container--full-width">
-        <div class="main">
-            <div class="checkout-container">
-                <a href="../">Back</a>
+      <div class="main">
+        <div class="checkout-container">
+          <a href="../">Back</a>
 
-                <h1>Recurring</h1>
+          <h1>Recurring</h1>
 
-                <label for="shopperReference">Shopper Reference: </label>
-                <input id="recurringShopperReference" type="text" name="shopperReference">
+          <label for="shopperReference">Shopper Reference: </label>
+          <input id="recurringShopperReference" type="text" name="shopperReference" />
 
+          <button id="sendRecurringReq">List Recurring Details</button>
 
-                <button id="sendRecurringReq">List Recurring Details</button>
-
-                <div id="recurringContainer" class="recurringWrapper"></div>
-
-            </div>
-
-            <div class="info">
-                <p>
-                    Check the Source Code to see the full implementation.
-                </p>
-
-            </div>
+          <div id="recurringContainer" class="recurringWrapper"></div>
         </div>
 
-        <div class="sidebar">
-            <div class="header">
-                <h2>Current state</h2>
-            </div>
-            <pre class="current-state">{}</pre>
-
-            <div class="request-container">
-                <div class="header">
-                    <h2>Request</h2>
-                </div>
-                <p>The request to the <code>/payments</code> endpoint will be shown here.</p>
-                <pre class="request-code"></pre>
-            </div>
-
-            <div class="response-container">
-                <div class="header">
-                    <h2>Response</h2>
-                </div>
-                <p>The response from the <code>/payments</code> endpoint will be shown here.</p>
-                <pre class="response-code"></pre>
-            </div>
+        <div class="info">
+          <p>Check the Source Code to see the full implementation.</p>
         </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="header">
+          <h2>Current state</h2>
+        </div>
+        <pre class="current-state">{}</pre>
+
+        <div class="request-container">
+          <div class="header">
+            <h2>Request</h2>
+          </div>
+          <p>The request to the <code>/payments</code> endpoint will be shown here.</p>
+          <pre class="request-code"></pre>
+        </div>
+
+        <div class="response-container">
+          <div class="header">
+            <h2>Response</h2>
+          </div>
+          <p>The response from the <code>/payments</code> endpoint will be shown here.</p>
+          <pre class="response-code"></pre>
+        </div>
+      </div>
     </div>
 
     <script src="../demo.js"></script>
@@ -69,7 +60,7 @@
     <script src="../utils.js"></script>
     <script src="/recurring/recurring.js"></script>
 
-<!--     <script src="/paymentLinks/utils.js"></script>
+    <!--     <script src="/paymentLinks/utils.js"></script>
     <script src="/paymentLinks/paymentLink.js"></script> -->
-</body>
+  </body>
 </html>

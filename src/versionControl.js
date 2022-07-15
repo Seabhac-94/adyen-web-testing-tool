@@ -1,146 +1,112 @@
 // This will retrieve values from the returnUrl
 const queryResultString = window.location.search;
 const urlParams = new URLSearchParams(queryResultString);
-var sdkVersionOnLoad = urlParams.get('sdkVersion');
-var apiVersionOnLoad = urlParams.get('apiVersion');
-const redirectResult = urlParams.get('redirectResult');
-
+var sdkVersionOnLoad = urlParams.get("sdkVersion");
+var apiVersionOnLoad = urlParams.get("apiVersion");
+const redirectResult = urlParams.get("redirectResult");
 
 // We retrieve this value as a function, and not natively so that it can be used in multiple pages
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it
 function retrieveVersionValue() {
-	if (!sdkVersionOnLoad) {
+  if (!sdkVersionOnLoad) {
+    var sdkVersion = document.getElementById("selectSdkVersion").value;
+    var apiVersion = document.getElementById("selectApiVersion").value;
+  } else {
+    var sdkVersion = sdkVersionOnLoad;
+    var apiVersion = apiVersionOnLoad;
+  }
 
-		var sdkVersion = document.getElementById("selectSdkVersion").value;
-		var apiVersion = document.getElementById("selectApiVersion").value
-
-	} else {
-
-		var sdkVersion = sdkVersionOnLoad
-		var apiVersion = apiVersionOnLoad
-
-	}
-
-	return {
-
-		sdkVersion,
-		apiVersion
-
-	}
-};
-
+  return {
+    sdkVersion,
+    apiVersion,
+  };
+}
 
 // Global to make it accessible in other scripts when needed
-var apiSdkVersions = retrieveVersionValue()
-
+var apiSdkVersions = retrieveVersionValue();
 
 // Loads the scripts in order to the dropin after the version is selected
-function loadCheckoutScripts(){
+function loadCheckoutScripts() {
+  var additionalScripts = ["demo", "checkoutForm", "componentConfiguration", "utils", "dropin/componentParams", "dropin/dropin", "codeDemo"];
 
-	var additionalScripts = [
-		"demo",
-		"checkoutForm", 
-		"componentConfiguration",
-		"utils", 
-		"dropin/componentParams", 
-		"dropin/dropin", 
-		"codeDemo"
-	];
+  var sdkVersion = apiSdkVersions.sdkVersion;
+  var baseStyle = document.createElement("link");
+  baseStyle.rel = "stylesheet";
+  baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.css";
+  document.getElementsByTagName("head")[0].append(baseStyle);
 
-	var sdkVersion = apiSdkVersions.sdkVersion;
-	var baseStyle = document.createElement("link");
-	baseStyle.rel = "stylesheet";
-	baseStyle.href = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.css";
-	document.getElementsByTagName('head')[0].append(baseStyle);
+  var baseScript = document.createElement("script");
+  baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.js";
+  document.body.appendChild(baseScript);
 
-	var baseScript = document.createElement("script");
-	baseScript.src = "https://checkoutshopper-test.adyen.com/checkoutshopper/sdk/" + sdkVersion + "/adyen.js";
-	document.body.appendChild(baseScript);
-
-	additionalScripts.forEach(element => {
-
-		var scriptToAdd = document.createElement("script");
-		scriptToAdd.src = `../${element}.js`;
-		document.body.appendChild(scriptToAdd);
-
-	});
-	
-};
-
+  additionalScripts.forEach((element) => {
+    var scriptToAdd = document.createElement("script");
+    scriptToAdd.src = `../${element}.js`;
+    document.body.appendChild(scriptToAdd);
+  });
+}
 
 // If there's no value from the URL, then it presumes a new checkout allowing the user to select
 // Else it automatically selects it and calls loadCheckoutScripts() automatically
 
 (async () => {
+  if (!sdkVersionOnLoad) {
+    var loadScripts = document.getElementById("loadScripts");
 
-	if (!sdkVersionOnLoad) {
+    loadScripts.addEventListener("click", function () {
+      var apiSdkVersions = retrieveVersionValue();
+      location.href = "http://localhost:3000/dropin?apiVersion=" + apiSdkVersions.apiVersion + "&sdkVersion=" + apiSdkVersions.sdkVersion;
+    });
+  } else if (!redirectResult) {
+    const resetButton = document.createElement("button");
+    resetButton.innerHTML = "Reset";
+    resetButton.id = "resetButton";
+    parameters.append(resetButton);
+    const reset = document.getElementById("resetButton");
 
-		var loadScripts = document.getElementById("loadScripts");
+    reset.addEventListener("click", function () {
+      location.href = "http://localhost:3000/dropin";
+    });
 
-		loadScripts.addEventListener('click', function(){
+    // If there's sdkVersions then we can present the loadCheckout button
+    var loadComponentsDiv = document.getElementById("loadComponents");
+    var loadCheckoutButton = document.createElement("button");
+    loadCheckoutButton.innerHTML = "Load Checkout";
+    loadCheckoutButton.id = "loadCheckout";
+    loadComponentsDiv.append(loadCheckoutButton);
 
-			var apiSdkVersions = retrieveVersionValue();
-			location.href = "http://localhost:3000/dropin?apiVersion="+apiSdkVersions.apiVersion+"&sdkVersion="+apiSdkVersions.sdkVersion
+    // Disables the forms for version selection once the version configuration has been chosen
 
-		});	
+    var loadScripts = document.getElementById("loadScripts");
+    loadScripts.disabled = true;
 
-	} else if (!redirectResult) {
+    var selectCheckoutVersion = document.getElementById("selectSdkVersion");
+    selectCheckoutVersion.disabled = true;
 
-		const resetButton = document.createElement("button");
-		resetButton.innerHTML = "Reset";
-		resetButton.id = "resetButton";
-		parameters.append(resetButton);
-		const reset = document.getElementById("resetButton");
+    var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName("option")[0];
+    optionCheckoutVersion.innerText = sdkVersionOnLoad;
+    optionCheckoutVersion.disabled = true;
 
-		reset.addEventListener("click", function() {
-			location.href = "http://localhost:3000/dropin"
-		})
+    var selectApiVersion = document.getElementById("selectApiVersion");
+    selectApiVersion.disabled = true;
 
-		// If there's sdkVersions then we can present the loadCheckout button
-		var loadComponentsDiv = document.getElementById('loadComponents');
-		var loadCheckoutButton = document.createElement("button");
-		loadCheckoutButton.innerHTML = "Load Checkout";
-		loadCheckoutButton.id = "loadCheckout";
-		loadComponentsDiv.append(loadCheckoutButton);
+    var optionApiVersion = selectApiVersion.getElementsByTagName("option")[0];
+    optionApiVersion.innerText = apiVersionOnLoad;
+    optionApiVersion.disabled = true;
 
-		// Disables the forms for version selection once the version configuration has been chosen
+    // Inserts the correct scripts in order
+    loadCheckoutScripts();
+  } else {
+    let checkoutScripts = await loadCheckoutScripts();
 
-		var loadScripts = document.getElementById("loadScripts");
-		loadScripts.disabled = true;
+    const getParametersForm = document.getElementById("configurationParametersWrapper");
+    getParametersForm.classList.add("hiddenForm");
 
-		var selectCheckoutVersion = document.getElementById("selectSdkVersion");
-		selectCheckoutVersion.disabled = true;
+    const copyConfiguration = document.getElementById("copyConfiguration");
+    copyConfiguration.classList.add("hiddenForm");
 
-		var optionCheckoutVersion = selectCheckoutVersion.getElementsByTagName('option')[0];
-		optionCheckoutVersion.innerText = sdkVersionOnLoad;
-		optionCheckoutVersion.disabled = true;
-
-		var selectApiVersion = document.getElementById("selectApiVersion");
-		selectApiVersion.disabled = true;
-
-		var optionApiVersion = selectApiVersion.getElementsByTagName('option')[0];
-		optionApiVersion.innerText = apiVersionOnLoad;
-		optionApiVersion.disabled = true;
-
-
-		// Inserts the correct scripts in order
-		loadCheckoutScripts();
-
-
-	} else {
-
-		let checkoutScripts = await loadCheckoutScripts();
-
-		const getParametersForm = document.getElementById("configurationParametersWrapper");
-		getParametersForm.classList.add("hiddenForm");
-
-		const copyConfiguration = document.getElementById("copyConfiguration");
-		copyConfiguration.classList.add("hiddenForm")
-
-		const info = document.querySelector(".component-info")
-		info.classList.add("hiddenForm")
-		
-	}
-
+    const info = document.querySelector(".component-info");
+    info.classList.add("hiddenForm");
+  }
 })();
