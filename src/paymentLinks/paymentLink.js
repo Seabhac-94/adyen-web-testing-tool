@@ -69,9 +69,7 @@ function addDataToRequest() {
         deleteField.call();
       } else {
         document.getElementById(paramKey).className = "formError";
-        alert(
-          `Parameter needed! Go to https://docs.adyen.com/api-explorer/#/CheckoutService/v68/post/paymentLinks to see available parameters`
-        );
+        alert(`Parameter needed! Go to https://docs.adyen.com/api-explorer/#/CheckoutService/v68/post/paymentLinks to see available parameters`);
       }
     });
   }
@@ -126,9 +124,7 @@ createLink.addEventListener("click", () => {
     for (let [key, value] of Object.entries(response)) {
       let a = document.createElement("tr");
       resultTable.append(a);
-      a.innerHTML = `<td class="result-table-rows">${key}</td> <td class="result-table-rows">${JSON.stringify(
-        value
-      )}</td>`;
+      a.innerHTML = `<td class="result-table-rows">${key}</td> <td class="result-table-rows">${JSON.stringify(value)}</td>`;
     }
 
     var goToRes = document.getElementById("goToRes");

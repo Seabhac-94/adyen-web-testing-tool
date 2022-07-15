@@ -50,8 +50,7 @@ getClientKey().then((clientKey) => {
       const dropinComponent = checkout
         .create("dropin", {
           onSelect: (activeComponent) => {
-            if (activeComponent.state && activeComponent.state.data)
-              updateStateContainer(activeComponent.data); // Demo purposes only
+            if (activeComponent.state && activeComponent.state.data) updateStateContainer(activeComponent.data); // Demo purposes only
           },
         })
         .mount("#dropin-container");
@@ -86,9 +85,7 @@ getClientKey().then((clientKey) => {
     // const checkout = await AdyenCheckout(configuration, configuration.session = { id:sessionId });
     const checkout = await AdyenCheckout(configuration);
 
-    const dropinComponent = checkout
-      .create("dropin")
-      .mount("#dropin-container");
+    const dropinComponent = checkout.create("dropin").mount("#dropin-container");
 
     // Submit the redirectResult value you extracted from the returnUrl.
     if (redirectResult) {

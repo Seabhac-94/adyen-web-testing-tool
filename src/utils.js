@@ -21,10 +21,7 @@ function getValueOfConfig(component, param) {
 
 // Deletes the browserInfo to simulate merchant not sending
 function browserInfoError(data) {
-  const noBrowserInfoProvided = getValueOfConfig(
-    "error",
-    "noBrowserInfoProvided"
-  );
+  const noBrowserInfoProvided = getValueOfConfig("error", "noBrowserInfoProvided");
   if (data.browserInfo && noBrowserInfoProvided) {
     delete data.browserInfo;
   }
@@ -47,8 +44,7 @@ function setOrigin() {
 // This creates a unique reference for the payment and shopper
 function makeReference(length) {
   var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   var charactersLength = characters.length;
   for (var i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -91,10 +87,7 @@ function paymentsConfigParams() {
   }
 
   var blockedPaymentMethods = ["applepay"];
-  var addedBlockedPM = getValueOfConfig(
-    "parameters",
-    "blockedPaymentMethods"
-  ).split(/,| |, | ,/);
+  var addedBlockedPM = getValueOfConfig("parameters", "blockedPaymentMethods").split(/,| |, | ,/);
   if (addedBlockedPM) {
     blockedPaymentMethods = blockedPaymentMethods.concat(addedBlockedPM);
   }
@@ -103,10 +96,7 @@ function paymentsConfigParams() {
 
   var shopperInteraction = getValueOfConfig("parameters", "shopperInteraction");
 
-  var recurringProcessingModel = getValueOfConfig(
-    "parameters",
-    "recurringProcessingModel"
-  );
+  var recurringProcessingModel = getValueOfConfig("parameters", "recurringProcessingModel");
 
   var executeThreeD = getValueOfConfig("parameters", "executeThreeD");
 
@@ -190,11 +180,7 @@ const makePayment = (paymentMethod, paymentsDefaultConfig, config = {}) => {
 
   // Updating amounts for Giftcard
   if (window.location.pathname === "/dropin") {
-    if (
-      gcAmount &&
-      orderAmount &&
-      paymentRequest.paymentMethod.type === "giftcard"
-    ) {
+    if (gcAmount && orderAmount && paymentRequest.paymentMethod.type === "giftcard") {
       paymentRequest.amount = gcAmount;
     } else if (gcAmount && orderAmount) {
       amount.value = remainingAmount;
@@ -290,8 +276,7 @@ const createPaymentLink = (data) => {
 const getOriginKey = () =>
   httpPost("originKeys")
     .then((response) => {
-      if (response.error || !response.originKeys)
-        throw "No originKey available";
+      if (response.error || !response.originKeys) throw "No originKey available";
 
       return response.originKeys[Object.keys(response.originKeys)[0]];
     })

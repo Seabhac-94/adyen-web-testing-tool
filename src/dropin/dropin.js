@@ -164,70 +164,76 @@ async function initiateCheckout(paymentsDefaultConfig) {
         ideal: idealConfiguration(),
         paywithgoogle: googlePayConfiguration(),
       },
-      onChange: (state) => {
+      onChange: async (state) => {
         updateStateContainer(state); // Demo purposes only
       },
-      onSubmit: (state, component) => {
+      onSubmit: async (state, component) => {
         browserInfoError(state.data);
-        makePayment(paymentsDefaultConfig, state.data).then(
-          async (response) => {
-            if (response.action) {
-              component.handleAction(response.action);
-            } else if (
-              response.order &&
-              response.order.remainingAmount.value > 0
-            ) {
-              // This handles the flow when there is an order in place for split payments
-              const order = {
-                orderData: response.order.orderData,
-                pspReference: response.order.pspReference,
-              };
+        try {
+          const response = await makePayment(paymentsDefaultConfig, state.data);
+          if (response.action) {
+            component.handleAction(response.action);
+          } else if (response.order && response.order.remainingAmount.value > 0) {
+            // This handles the flow when there is an order in place for split payments
+            const order = {
+              orderData: response.order.orderData,
+              pspReference: response.order.pspReference,
+            };
 
-              const gcPm = await getPaymentMethods({
-                order,
-                amount,
-                countryCode,
-              });
+            const gcPm = await getPaymentMethods({
+              order,
+              amount,
+              countryCode,
+            });
 
-              var remainingAmount = response.order.remainingAmount;
+            var remainingAmount = response.order.remainingAmount;
 
-              checkout.update({
-                paymentMethodsResponse: gcPm,
-                order,
-                amount: remainingAmount,
-              });
-            } else {
-              showFinalResponse(response, component, componentFlavour);
-              if (response.donationToken) {
-                handleDonation(response, component);
-              }
+            checkout.update({
+              paymentMethodsResponse: gcPm,
+              order,
+              amount: remainingAmount,
+            });
+          } else {
+            showFinalResponse(response, component, componentFlavour);
+            if (response.donationToken) {
+              handleDonation(response, component);
             }
           }
-        );
+        } catch (e) {
+          console.error(e);
+        }
       },
-      onError: (error, component) => {
+      onError: async (error, component) => {
         console.info("Error thrown at: " + timeAndDate.toUTCString());
         console.error(error);
       },
-      onBalanceCheck: async function (resolve, reject, data) {
+      onBalanceCheck: async (resolve, reject, data) => {
         // Call /paymentMethods/balance
-        getBalance(amount, data).then((balanceResponse) => {
-          resolve(balanceResponse);
+        try {
+          const balanceResponse = await getBalance(amount, data);
+          resolve(await balanceResponse);
           gcAmount = balanceResponse.balance;
           return gcAmount;
-        });
+        } catch (e) {
+          console.error(e);
+        }
       },
-      onOrderRequest: async function (resolve, reject, data) {
+      onOrderRequest: async (resolve, reject, data) => {
         // Call /orders
-        makeOrder({ amount }).then((response) => {
-          resolve(response);
-          orderAmount = response.amount;
+        try {
+          const orderRequest = await makeOrder({ amount });
+          resolve(await orderRequest);
+          orderAmount = orderRequest.amount;
           return orderAmount;
-        });
+        } catch (e) {
+          console.error(e);
+        }
       },
-      onOrderCancel: async function (order) {
-        cancelOrder(order).then((response) => {
-          if (response.resultCode) {
+      onOrderCancel: async (order) => {
+        // cancel the order
+        try {
+          const cancelReq = await cancelOrder(order);
+          if (cancelReq.resultCode) {
             gcAmount = null;
             orderAmount = null;
             checkout.update({
@@ -236,27 +242,28 @@ async function initiateCheckout(paymentsDefaultConfig) {
               amount,
             });
           }
-        });
+        } catch (e) {
+          console.error(e);
+        }
       },
-      onAdditionalDetails: (state, component) => {
+      onAdditionalDetails: async (state, component) => {
         updateRequestContainer(state.data);
-        console.info(
-          "payment/details call made at: " + timeAndDate.toUTCString()
-        );
-        makeDetailsCall(state.data).then((response) => {
-          console.info(
-            "payment/details response at: " + timeAndDate.toUTCString()
-          );
-          updateResponseContainer(response);
-          if (response.action) {
-            component.handleAction(response.action);
+        console.info("payment/details call attempt made at: " + timeAndDate.toUTCString());
+        try {
+          const detailsResponse = await makeDetailsCall(state.data);
+          console.info("payment/details response at: " + timeAndDate.toUTCString());
+          updateResponseContainer(detailsResponse);
+          if (detailsResponse.action) {
+            component.handleAction(detailsResponse.action);
           } else {
-            showFinalResponse(response, component);
-            if (response.donationToken) {
-              handleDonation(response, component);
+            showFinalResponse(detailsResponse, component);
+            if (detailsResponse.donationToken) {
+              handleDonation(detailsResponse, component);
             }
           }
-        });
+        } catch (e) {
+          console.error(e);
+        }
       },
     };
 
@@ -268,20 +275,16 @@ async function initiateCheckout(paymentsDefaultConfig) {
       checkout = await AdyenCheckout(configuration);
     }
     // 2. Create and mount the Component
-    const selectedComponent = checkout
-      .create(componentFlavour, dropinOptionalConfig())
-      .mount("#dropin-container");
+    const selectedComponent = checkout.create(componentFlavour, dropinOptionalConfig()).mount("#dropin-container");
 
     // Called if custom button is used
-    document
-      .getElementById("customPayButton")
-      .addEventListener("click", function () {
-        selectedComponent.submit();
-      });
+    document.getElementById("customPayButton").addEventListener("click", function () {
+      selectedComponent.submit();
+    });
   });
 }
 
-async function handleRedirect() {
+async function handleRedirect(redirectResult) {
   var checkout = null;
 
   // Redirect result retreived from versionControl.js:6
@@ -308,18 +311,21 @@ async function handleRedirect() {
 
   checkout = await sdkVersionRedirect(sdkVersion);
 
-  const dropin = checkout.create("dropin").mount("#dropin-container");
+  const dropin = await checkout.create("dropin").mount("#dropin-container");
 
   console.info("payment/details call made at: " + timeAndDate.toUTCString());
 
-  makeDetailsCall(detailsCall).then(async (response) => {
-    updateResponseContainer(await response);
+  try {
+    const detailsResponse = await makeDetailsCall(detailsCall);
+    updateResponseContainer(await detailsResponse);
     console.info("payment/details response at: " + timeAndDate.toUTCString());
-    showFinalResponse(await response, dropin);
-    if (response.donationToken) {
-      handleDonation(response, dropin);
+    showFinalResponse(await detailsResponse, dropin);
+    if (detailsResponse.donationToken) {
+      handleDonation(detailsResponse, dropin);
     }
-  });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 // Selects which flow based on result of urlParams
@@ -350,7 +356,11 @@ if (!redirectResult) {
   });
 } else {
   // temporary fix for open issue
+  // (async () => {
+  //    const handleRedirectFlow = await handleRedirect(redirectResult)
+  // })();
+
   setTimeout(() => {
-    handleRedirect();
+    handleRedirect(redirectResult);
   }, 250);
 }

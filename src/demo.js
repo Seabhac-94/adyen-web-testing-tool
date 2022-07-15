@@ -16,21 +16,13 @@ function updateStateContainer(newState) {
 // Demo - Update request container
 function updateRequestContainer(response) {
   const defaultResponseParams = { merchantAccount: "YOUR_MERCHANT_ACCOUNT" };
-  requestContainer.querySelector("pre").innerText = JSON.stringify(
-    { ...defaultResponseParams, ...response },
-    null,
-    2
-  );
+  requestContainer.querySelector("pre").innerText = JSON.stringify({ ...defaultResponseParams, ...response }, null, 2);
   requestContainer.classList.add("request-container--visible");
 }
 
 // Demo - Update server response container
 function updateResponseContainer(response) {
-  responseContainer.querySelector("pre").innerText = JSON.stringify(
-    response,
-    null,
-    2
-  );
+  responseContainer.querySelector("pre").innerText = JSON.stringify(response, null, 2);
   responseContainer.classList.add("response-container--visible");
 }
 

@@ -61,15 +61,10 @@ function recurringPayment(type, storedPaymentMethodId) {
   });
 
   payButton.addEventListener("click", function () {
-    const value = document.getElementById(
-      `${storedPaymentMethodId}_recValue`
-    ).value;
-    const currency = document.getElementById(
-      `${storedPaymentMethodId}_recCurrency`
-    ).value;
+    const value = document.getElementById(`${storedPaymentMethodId}_recValue`).value;
+    const currency = document.getElementById(`${storedPaymentMethodId}_recCurrency`).value;
     const shopperInteraction = document.getElementById("recInteraction").value;
-    const recurringProcessingModel =
-      document.getElementById("recProcessModel").value;
+    const recurringProcessingModel = document.getElementById("recProcessModel").value;
 
     let rPaymentData = {
       amount: {

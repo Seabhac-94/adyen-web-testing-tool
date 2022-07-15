@@ -12,12 +12,7 @@ const parametersConfig = {
   blockedPaymentMethods: ["input"],
   storePaymentMethod: [false, true, ""],
   shopperInteraction: ["ContAuth", "Ecommerce", ""],
-  recurringProcessingModel: [
-    "Subscription",
-    "UnscheduledCardOnFile",
-    "CardOnFile",
-    "",
-  ],
+  recurringProcessingModel: ["Subscription", "UnscheduledCardOnFile", "CardOnFile", ""],
   allow3DS2: [false, true],
   executeThreeD: [false, true],
 };
@@ -94,16 +89,7 @@ const idealConfig = {
 };
 
 const googlePayConfig = {
-  buttonType: [
-    "book",
-    "checkout",
-    "donate",
-    "order",
-    "pay",
-    "plain",
-    "subscribe",
-    "buy",
-  ],
+  buttonType: ["book", "checkout", "donate", "order", "pay", "plain", "subscribe", "buy"],
   buttonColor: ["black", "white", "default"],
   buttonLocale: [
     "ar",
@@ -203,21 +189,13 @@ function createCheckoutForm(x, y, z) {
 // Create forms below
 (function assignCheckoutForm() {
   const createCheckoutFormParams = {
-    parametersConfig: [
-      parametersConfig,
-      "parametersConfiguration",
-      "parameters",
-    ],
+    parametersConfig: [parametersConfig, "parametersConfiguration", "parameters"],
     flavourConfig: [flavourConfig, "flavourConfiguration", "flavour"],
     dropinConfig: [dropinConfig, "dropinConfiguration", "dropin"],
     cardConfig: [cardConfig, "cardConfiguration", "card"],
     paypalConfig: [paypalConfig, "paypalConfiguration", "paypal"],
     idealConfig: [idealConfig, "idealConfiguration", "ideal"],
-    googlePayConfig: [
-      googlePayConfig,
-      "googlePayConfiguration",
-      "paywithgoogle",
-    ],
+    googlePayConfig: [googlePayConfig, "googlePayConfiguration", "paywithgoogle"],
     errorTesting: [errorTesting, "errorTestingConfiguration", "error"],
   };
 
@@ -232,29 +210,10 @@ function createCheckoutForm(x, y, z) {
 (function makeHeadings(b, c, d, e) {
   const headings = {
     parametersConfig: ["h4", "Parameters", "parametersConfiguration", true],
-    componentHeading: [
-      "h4",
-      "Component Selection",
-      "flavourConfiguration",
-      true,
-    ],
-    dropinConfigHeading: [
-      "h4",
-      "Dropin Configuration",
-      "dropinConfiguration",
-      true,
-    ],
-    pmConfigHeading: [
-      "h4",
-      "Payment Method Configuration",
-      "cardConfiguration",
-    ],
-    errorHeading: [
-      "h4",
-      "Error Recreation (version dependant - select one only)",
-      "errorTestingConfiguration",
-      true,
-    ],
+    componentHeading: ["h4", "Component Selection", "flavourConfiguration", true],
+    dropinConfigHeading: ["h4", "Dropin Configuration", "dropinConfiguration", true],
+    pmConfigHeading: ["h4", "Payment Method Configuration", "cardConfiguration"],
+    errorHeading: ["h4", "Error Recreation (version dependant - select one only)", "errorTestingConfiguration", true],
   };
 
   for (let [key, params] of Object.entries(headings)) {
